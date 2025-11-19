@@ -410,6 +410,7 @@ class UserInterface:
                 "📚 Wiki Generator (Enhanced with Templates)",
                 "📝 README Generator (Awesome READMEs with Badges)",
                 "🎓 Script Generator & GitHub Learning (Educational!)",
+                "💾 Backup Manager (Create/Restore Repository Backups)",
                 "🔄 Reset Git History (Keep Files, Fresh Start)",
                 "🔀 Migrate Repository (Move/Transfer)",
                 "🛠️  Install Missing Tools",
@@ -463,7 +464,15 @@ class UserInterface:
                     self.launch_script(str(script_path), "python")
                 else:
                     self.print_status("Script generator not found.", "ERROR")
-            elif choice == 6:  # Reset Git History
+            elif choice == 6:  # Backup Manager
+                script_path = Path("backup-manager.py")
+                if script_path.exists():
+                    self.print_status("Launching Backup Manager...", "INFO")
+                    self.print_status("Create, restore, and manage repository backups", "INFO")
+                    self.launch_script(str(script_path), "python")
+                else:
+                    self.print_status("Backup manager not found.", "ERROR")
+            elif choice == 7:  # Reset Git History
                 script_path = Path("scripts/git-resets/reset_git_history.sh")
                 if script_path.exists():
                     self.print_status("Launching Git History Reset Tool...", "WARNING")
@@ -471,21 +480,21 @@ class UserInterface:
                     self.launch_script(str(script_path), "bash")
                 else:
                     self.print_status("Git history reset script not found.", "ERROR")
-            elif choice == 7:  # Migrate Repository
+            elif choice == 8:  # Migrate Repository
                 script_path = Path("scripts/git-resets/migrate_and_swap_repos.sh")
                 if script_path.exists():
                     self.print_status("Launching Repository Migration Tool...", "INFO")
                     self.launch_script(str(script_path), "bash")
                 else:
                     self.print_status("Repository migration script not found.", "ERROR")
-            elif choice == 8:  # Install tools
+            elif choice == 9:  # Install tools
                 self.show_installation_help(detected)
-            elif choice == 9:  # Open links
+            elif choice == 10:  # Open links
                 self.open_installation_links(detected)
-            elif choice == 10:  # Re-check
+            elif choice == 11:  # Re-check
                 detected = self.detector.detect_all()
                 self.show_environment_status(detected)
-            elif choice == 11:  # Exit
+            elif choice == 12:  # Exit
                 self.print_status("Thank you for using GitSage!", "SUCCESS")
                 sys.exit(0)
 

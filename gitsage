@@ -33,7 +33,7 @@ print_warning() {
 show_help() {
     cat << EOF
 GitSage - Ultimate GitHub Management Tool
-Version: 2.0.0
+Version: 2.1.0
 
 USAGE:
     gitsage <command> [options]
@@ -44,6 +44,7 @@ COMMANDS:
     wiki                Generate wiki documentation
     readme              Generate awesome README with badges
     script              Generate automation scripts & Learn GitHub!
+    backup              Manage repository backups (create, restore, list)
     delete              Safe repository deletion
     manage              Advanced repository management
     reset-history       Reset git history (keep files)
@@ -71,7 +72,7 @@ EOF
 }
 
 show_version() {
-    echo "GitSage v2.0.0"
+    echo "GitSage v2.1.0"
     echo "Ultimate GitHub Management Tool"
     echo ""
     echo "Platform: $(uname -s)"
@@ -157,6 +158,12 @@ cmd_migrate() {
     bash "$SCRIPT_DIR/scripts/git-resets/migrate_and_swap_repos.sh" "$@"
 }
 
+cmd_backup() {
+    print_info "Backup Manager - Automated repository backups"
+    PYTHON=$(check_python)
+    $PYTHON "$SCRIPT_DIR/backup-manager.py" "$@"
+}
+
 # Main command routing
 case "${1:-help}" in
     launch|menu|start)
@@ -194,6 +201,10 @@ case "${1:-help}" in
     migrate|move|transfer)
         shift
         cmd_migrate "$@"
+        ;;
+    backup|backups|bak)
+        shift
+        cmd_backup "$@"
         ;;
     version|--version|-v)
         show_version

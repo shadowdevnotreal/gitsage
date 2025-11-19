@@ -1,4 +1,4 @@
-# GitSage v2.0 🚀
+# GitSage v2.1 🚀
 
 <img width="1024" height="1024" alt="ChatGPT Image Jul 8, 2025, 09_48_49 PM" src="https://github.com/user-attachments/assets/c9c36a88-7467-4557-9aee-103952497c38" />
 
@@ -31,7 +31,23 @@ GitSage is your **all-in-one GitHub companion** that combines powerful automatio
 
 ## ✨ Features
 
-### 🆕 What's New in v2.0
+### 🆕 What's New in v2.1
+
+**💾 Automated Backup System** - IMPLEMENTED!
+- Create backups before destructive operations
+- Compress repositories to tar.gz with SHA256 verification
+- List, restore, and manage all backups
+- Automatic cleanup of old backups
+- Accessible via `gitsage backup` command
+
+**📜 Enhanced Documentation Templates** - ADDED!
+- API Documentation template
+- Mobile App template (iOS/Android)
+- DevOps/Infrastructure template
+- Machine Learning template
+- Located in `templates/readme/` for easy customization
+
+### 🎉 What's New in v2.0
 
 **🎓 Script Generator & GitHub Learning System** - THE GAME CHANGER!
 - Generate custom automation scripts for common GitHub tasks
@@ -46,7 +62,7 @@ GitSage is your **all-in-one GitHub companion** that combines powerful automatio
 - Common troubleshooting solutions
 - Practice exercises included
 
-### Current Features (v2.0)
+### Current Features (v2.1)
 
 ✅ **Interactive Repository Deletion**
 - Multiple safety confirmations before any destructive action
@@ -80,6 +96,21 @@ GitSage is your **all-in-one GitHub companion** that combines powerful automatio
 - Sync and swap repositories
 - Safe operations with multiple confirmations
 
+✅ **Automated Backup System** (New in v2.1!)
+- Create compressed backups (.tar.gz) of repositories
+- SHA256 checksums for integrity verification
+- List all backups with metadata
+- Restore backups to any location
+- Automatic cleanup of old backups
+- Stores backups in `~/.gitsage/backups/`
+
+✅ **Enhanced Templates** (New in v2.1!)
+- 4 new professional README templates
+- API Documentation template
+- Mobile App template
+- DevOps/Infrastructure template
+- Machine Learning template
+
 ✅ **Cross-Platform Launcher**
 - Python-based environment detection
 - Automatic tool availability checking
@@ -91,14 +122,36 @@ GitSage is your **all-in-one GitHub companion** that combines powerful automatio
 - Integration tests for component verification
 - 29+ automated tests ensuring reliability
 
-### Planned Features (v2.0)
+### 🔮 Coming Soon (v2.x+)
 
-See [ROADMAP.md](ROADMAP.md) for upcoming features including:
-- GUI interface
-- PowerShell native support
-- Automated backups
-- Extended API integration
-- More documentation templates
+**Planned Enhancements:**
+
+🎓 **More Learning Content**
+- Advanced Git workflows (rebase, cherry-pick, bisect)
+- GitHub Actions deep-dive tutorials
+- Team collaboration best practices
+- Open source contribution guide
+
+📜 **Additional Script Templates**
+- Automated testing workflows
+- Deployment automation
+- Repository analytics and reporting
+- Bulk repository operations
+- Team workspace setup
+
+🔧 **Enhanced Automation**
+- Watch mode for auto-commit on file changes
+- Scheduled script execution
+- Custom template creation
+- Workflow builder (visual scripting)
+
+🌐 **Better Integration**
+- GitLab and Bitbucket support
+- Jira/Linear issue integration
+- Slack/Discord notifications
+- VS Code extension
+
+See [ROADMAP.md](ROADMAP.md) for detailed planning and timelines.
 
 ## 🚀 Quick Start
 
@@ -141,6 +194,7 @@ python launcher.py
 |--------|---------|----------|
 | `launcher.py` | Main menu with environment detection | Root |
 | `script-generator.py` | Generate scripts & learn GitHub | Root |
+| `backup-manager.py` | Automated repository backups | Root |
 | `delete-repo.sh` | Interactive repository deletion | `scripts/bash/` |
 | `repo-manager.sh` | Advanced repository management | `scripts/bash/` |
 | `wiki-generator.py` | Basic wiki generation | Root |
@@ -176,6 +230,9 @@ chmod +x gitsage
 
 # Generate custom scripts & learn GitHub
 ./gitsage script
+
+# Manage backups (create, restore, list)
+./gitsage backup list
 
 # Safe repository deletion
 ./gitsage delete
@@ -318,6 +375,38 @@ python script-generator.py
 # ... (script continues with educational comments)
 ```
 
+### Backup Management (NEW in v2.1!)
+
+```bash
+# Create a backup of a repository
+./gitsage backup create /path/to/repo --name "myorg/myrepo" --operation "before-deletion"
+# or
+python backup-manager.py create /path/to/repo --name "myorg/myrepo"
+
+# List all backups
+./gitsage backup list
+# Filter by repository
+./gitsage backup list --repo "myorg/myrepo"
+
+# Restore a backup
+./gitsage backup restore backup_id_12345
+# Restore to specific location
+./gitsage backup restore backup_id_12345 --path /path/to/restore
+
+# Delete a backup
+./gitsage backup delete backup_id_12345
+
+# Clean up old backups (keep last 30 days, minimum 10 per repo)
+./gitsage backup cleanup --days 30 --keep 10
+```
+
+**Backup Features:**
+- Automatic compression (tar.gz format)
+- SHA256 integrity verification
+- Metadata tracking (repo name, operation type, timestamp)
+- Stored in `~/.gitsage/backups/`
+- Easy restore to original or new location
+
 ### Git History Management
 
 ```bash
@@ -440,16 +529,18 @@ You are free to use, modify, and distribute this software with attribution.
 
 ## 📊 Project Status
 
-**Current Version**: 2.0.0 🎉
-**Status**: Production Ready & Educational
+**Current Version**: 2.1.0 🎉
+**Status**: Production Ready & Feature-Rich
 **Last Updated**: November 2025
 **Test Coverage**: 29+ automated tests
-**New in v2.0**: Script Generator & Interactive Learning!
+**New in v2.1**: Automated Backups & Enhanced Templates!
 
-GitSage v2.0 is a GAME-CHANGING release combining powerful automation with education:
-- 🆕 **Script generator** (8+ templates, educational mode)
-- 🆕 **Complete beginner's guide** (GITHUB-FOR-BEGINNERS.md)
-- 🆕 **Interactive GitHub learning** (6 comprehensive lessons)
+GitSage v2.1 builds on the revolutionary v2.0 with essential safety features:
+- 🆕 **Automated backup system** (create, restore, manage backups)
+- 🆕 **Enhanced README templates** (API, Mobile, DevOps, ML)
+- 🎓 **Script generator** (8+ templates, educational mode)
+- 📚 **Complete beginner's guide** (GITHUB-FOR-BEGINNERS.md)
+- 🎓 **Interactive GitHub learning** (6 comprehensive lessons)
 - ✅ Repository deletion (production ready, fully tested)
 - ✅ Repository management (production ready, fully tested)
 - ✅ Wiki generation (production ready, multiple formats)
