@@ -11,11 +11,13 @@
 
 ## 🎯 What GitSage Does
 
-GitSage provides three core capabilities:
+GitSage is your complete GitHub management toolkit with five core capabilities:
 
 1. **Safe Repository Deletion** - Interactive Bash script with multiple safety confirmations
 2. **Repository Management** - Advanced Bash tools for Git/GitHub operations
-3. **Wiki Generation** - Automated GitHub Wiki creation from templates
+3. **Wiki Generation** - Automated GitHub Wiki and GitBook creation from templates
+4. **README Generator** - Create awesome READMEs with badges, charts, and professional formatting
+5. **Git History Tools** - Reset history, migrate repositories, and manage Git operations
 
 ## ✨ Features
 
@@ -37,20 +39,41 @@ GitSage provides three core capabilities:
 - Enhanced version with additional customization
 - YAML configuration for project details
 - Automated page structure creation
+- GitBook and GitHub Wiki support
+- Multiple output formats
+
+✅ **README Generator** (New!)
+- Generate awesome READMEs with shields.io badges
+- Multiple templates (CLI tool, library, web app, data science, game)
+- Auto-generated table of contents
+- Professional formatting with features, installation, usage sections
+- YAML-based configuration
+
+✅ **Git History Tools**
+- Reset git history while keeping all files
+- Migrate repositories between accounts/organizations
+- Sync and swap repositories
+- Safe operations with multiple confirmations
 
 ✅ **Cross-Platform Launcher**
 - Python-based environment detection
 - Automatic tool availability checking
 - Guided setup assistance
+- Unified CLI wrapper for all tools
+
+✅ **Test Suite**
+- Comprehensive unit tests for all generators
+- Integration tests for component verification
+- 29+ automated tests ensuring reliability
 
 ### Planned Features (v2.0)
 
 See [ROADMAP.md](ROADMAP.md) for upcoming features including:
-- Python CLI versions
 - GUI interface
 - PowerShell native support
 - Automated backups
-- Comprehensive test suite
+- Extended API integration
+- More documentation templates
 
 ## 🚀 Quick Start
 
@@ -96,6 +119,7 @@ python launcher.py
 | `repo-manager.sh` | Advanced repository management | `scripts/bash/` |
 | `wiki-generator.py` | Basic wiki generation | Root |
 | `wiki-generator-enhanced.py` | Enhanced wiki with templates | Root |
+| `readme-generator.py` | Awesome README with badges | Root |
 | `check_installation.py` | Verify installation | Root |
 
 ### Git Reset Scripts
@@ -121,8 +145,20 @@ chmod +x gitsage
 # Generate wiki
 ./gitsage wiki
 
+# Generate awesome README with badges
+./gitsage readme
+
 # Safe repository deletion
 ./gitsage delete
+
+# Repository management
+./gitsage manage
+
+# Reset git history (keep files)
+./gitsage reset-history
+
+# Migrate repository
+./gitsage migrate
 
 # Check installation
 ./gitsage check
@@ -136,6 +172,7 @@ chmod +x gitsage
 REM Use the batch wrapper
 gitsage.bat launch
 gitsage.bat wiki
+gitsage.bat readme
 gitsage.bat check
 ```
 
@@ -179,6 +216,34 @@ python wiki-generator-enhanced.py
 
 # 3. Deploy to GitHub (follow generated instructions)
 # Wiki files will be in generated-docs/ directory
+```
+
+### README Generation
+
+```bash
+# 1. Configure your project (optional, uses defaults if not provided)
+edit readme-config.yaml
+
+# 2. Generate README with badges and professional formatting
+python readme-generator.py
+
+# 3. Generated README.md will include:
+#    - shields.io badges for license, version, build, etc.
+#    - Table of contents
+#    - Features, installation, usage sections
+#    - Professional formatting based on template type
+```
+
+### Git History Management
+
+```bash
+# Reset git history (keeps all files, fresh start)
+bash scripts/git-resets/reset_git_history.sh
+
+# Migrate repository to new location
+bash scripts/git-resets/migrate_and_swap_repos.sh
+
+# Note: These operations are irreversible - use with caution!
 ```
 
 ## 🛡️ Safety Features
@@ -292,13 +357,18 @@ You are free to use, modify, and distribute this software with attribution.
 ## 📊 Project Status
 
 **Current Version**: 1.0.0
-**Status**: Stable
+**Status**: Stable & Fully Tested
 **Last Updated**: November 2025
+**Test Coverage**: 29+ automated tests
 
-GitSage v1.0 is a focused, stable release with core functionality:
-- ✅ Repository deletion (production ready)
-- ✅ Repository management (production ready)
-- ✅ Wiki generation (production ready)
+GitSage v1.0 is a complete, tested release with comprehensive functionality:
+- ✅ Repository deletion (production ready, fully tested)
+- ✅ Repository management (production ready, fully tested)
+- ✅ Wiki generation (production ready, multiple formats)
+- ✅ README generation (production ready, with badges & templates)
+- ✅ Git history tools (production ready, safe operations)
+- ✅ Comprehensive test suite (29+ tests passing)
+- ✅ Cross-platform CLI wrapper (Linux, macOS, Windows)
 
 For planned enhancements, see [ROADMAP.md](ROADMAP.md).
 
