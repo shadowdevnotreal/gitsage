@@ -90,14 +90,36 @@ GitSage is your **all-in-one GitHub companion** that combines powerful automatio
 - Integration tests for component verification
 - 29+ automated tests ensuring reliability
 
-### Planned Features (v2.0)
+### 🔮 Coming Soon (v2.x+)
 
-See [ROADMAP.md](ROADMAP.md) for upcoming features including:
-- GUI interface
-- PowerShell native support
-- Automated backups
-- Extended API integration
-- More documentation templates
+**Planned Enhancements:**
+
+🎓 **More Learning Content**
+- Advanced Git workflows (rebase, cherry-pick, bisect)
+- GitHub Actions deep-dive tutorials
+- Team collaboration best practices
+- Open source contribution guide
+
+📜 **Additional Script Templates**
+- Automated testing workflows
+- Deployment automation
+- Repository analytics and reporting
+- Bulk repository operations
+- Team workspace setup
+
+🔧 **Enhanced Automation**
+- Watch mode for auto-commit on file changes
+- Scheduled script execution
+- Custom template creation
+- Workflow builder (visual scripting)
+
+🌐 **Better Integration**
+- GitLab and Bitbucket support
+- Jira/Linear issue integration
+- Slack/Discord notifications
+- VS Code extension
+
+See [ROADMAP.md](ROADMAP.md) for detailed planning and timelines.
 
 ## 🚀 Quick Start
 
