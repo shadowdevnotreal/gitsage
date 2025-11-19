@@ -1,8 +1,8 @@
-# GitSage v1.0
+# GitSage v2.0 🚀
 
 ![GitSage Logo](assets/logos/GitSage.png)
 
-> A focused toolkit for GitHub repository deletion, management, and automated wiki generation.
+> The Ultimate GitHub Management & Learning Platform - Automate your workflow while mastering GitHub from novice to expert!
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -10,17 +10,42 @@
 
 ## 🎯 What GitSage Does
 
-GitSage is your complete GitHub management toolkit with five core capabilities:
+GitSage is your **all-in-one GitHub companion** that combines powerful automation with interactive learning!
 
-1. **Safe Repository Deletion** - Interactive Bash script with multiple safety confirmations
-2. **Repository Management** - Advanced Bash tools for Git/GitHub operations
-3. **Wiki Generation** - Automated GitHub Wiki and GitBook creation from templates
-4. **README Generator** - Create awesome READMEs with badges, charts, and professional formatting
-5. **Git History Tools** - Reset history, migrate repositories, and manage Git operations
+### 🌟 Core Capabilities:
+
+1. **📚 Script Generator & GitHub Learning** - Generate custom automation scripts while learning GitHub concepts interactively
+2. **🗑️ Safe Repository Deletion** - Multiple safety confirmations, backups, and verification
+3. **🔧 Repository Management** - Advanced Git/GitHub operations made simple
+4. **📖 Wiki & GitBook Generation** - Professional documentation in minutes
+5. **📝 README Generator** - Awesome READMEs with shields.io badges and templates
+6. **🔄 Git History Tools** - Reset, migrate, and manage repository history safely
+
+### 🎓 Perfect For:
+
+- **Beginners**: Learn GitHub with interactive tutorials and educational script generation
+- **Developers**: Automate repetitive tasks and manage repositories efficiently
+- **Teams**: Consistent workflows with safe, documented operations
+- **Everyone**: From your first commit to advanced Git workflows
 
 ## ✨ Features
 
-### Current Features (v1.0)
+### 🆕 What's New in v2.0
+
+**🎓 Script Generator & GitHub Learning System** - THE GAME CHANGER!
+- Generate custom automation scripts for common GitHub tasks
+- Interactive learning mode teaches Git/GitHub concepts
+- Educational comments in every generated script
+- 8+ script templates (auto-commit, branching, PR automation, backups, and more)
+- Perfect for beginners learning GitHub through hands-on practice
+
+**📚 Complete Beginner's Guide** - [GITHUB-FOR-BEGINNERS.md](GITHUB-FOR-BEGINNERS.md)
+- Friendly, jargon-free GitHub tutorial
+- Step-by-step examples
+- Common troubleshooting solutions
+- Practice exercises included
+
+### Current Features (v2.0)
 
 ✅ **Interactive Repository Deletion**
 - Multiple safety confirmations before any destructive action
@@ -114,6 +139,7 @@ python launcher.py
 | Script | Purpose | Location |
 |--------|---------|----------|
 | `launcher.py` | Main menu with environment detection | Root |
+| `script-generator.py` | Generate scripts & learn GitHub | Root |
 | `delete-repo.sh` | Interactive repository deletion | `scripts/bash/` |
 | `repo-manager.sh` | Advanced repository management | `scripts/bash/` |
 | `wiki-generator.py` | Basic wiki generation | Root |
@@ -147,6 +173,9 @@ chmod +x gitsage
 # Generate awesome README with badges
 ./gitsage readme
 
+# Generate custom scripts & learn GitHub
+./gitsage script
+
 # Safe repository deletion
 ./gitsage delete
 
@@ -172,6 +201,7 @@ REM Use the batch wrapper
 gitsage.bat launch
 gitsage.bat wiki
 gitsage.bat readme
+gitsage.bat script
 gitsage.bat check
 ```
 
@@ -231,6 +261,60 @@ python readme-generator.py
 #    - Table of contents
 #    - Features, installation, usage sections
 #    - Professional formatting based on template type
+```
+
+### Script Generation & Learning (NEW in v2.0!)
+
+```bash
+# Launch the interactive script generator
+python script-generator.py
+# or
+./gitsage script
+
+# Choose from 8+ templates:
+# 1. Auto-Commit & Push - Learn git workflow
+# 2. Feature Branch Workflow - Learn branching
+# 3. Repository Sync - Learn git pull/fetch
+# 4. Backup All Repos - Learn gh CLI
+# 5. PR Automation - Learn pull requests
+# 6. Issue Management - Learn project management
+# 7. Release Automation - Learn versioning
+# 8. CI/CD Setup - Learn GitHub Actions
+
+# Every generated script includes:
+#   - Educational comments explaining each step
+#   - Best practices and tips
+#   - Links to learn more
+#   - Ready-to-use automation
+
+# Learning Mode:
+# Select option for GitHub Learning Mode
+# Interactive tutorials on:
+#   - Git basics
+#   - GitHub workflow
+#   - Branching strategies
+#   - Pull requests
+#   - GitHub CLI
+#   - Common commands
+
+# Generated scripts saved to:
+# generated-scripts/
+```
+
+**Example Generated Script:**
+```bash
+#!/usr/bin/env bash
+# Auto-Commit Script - Generated by GitSage
+#
+# EDUCATIONAL NOTES:
+# This script automates the git commit and push workflow.
+#
+# Basic Git Workflow:
+# 1. git add    - Stage changes for commit
+# 2. git commit - Save changes to local repository
+# 3. git push   - Upload changes to remote (GitHub)
+
+# ... (script continues with educational comments)
 ```
 
 ### Git History Management
@@ -355,12 +439,16 @@ You are free to use, modify, and distribute this software with attribution.
 
 ## 📊 Project Status
 
-**Current Version**: 1.0.0
-**Status**: Stable & Fully Tested
+**Current Version**: 2.0.0 🎉
+**Status**: Production Ready & Educational
 **Last Updated**: November 2025
 **Test Coverage**: 29+ automated tests
+**New in v2.0**: Script Generator & Interactive Learning!
 
-GitSage v1.0 is a complete, tested release with comprehensive functionality:
+GitSage v2.0 is a GAME-CHANGING release combining powerful automation with education:
+- 🆕 **Script generator** (8+ templates, educational mode)
+- 🆕 **Complete beginner's guide** (GITHUB-FOR-BEGINNERS.md)
+- 🆕 **Interactive GitHub learning** (6 comprehensive lessons)
 - ✅ Repository deletion (production ready, fully tested)
 - ✅ Repository management (production ready, fully tested)
 - ✅ Wiki generation (production ready, multiple formats)
