@@ -1,5 +1,8 @@
 # GitHub Repository Manager
 
+<img width="1024" height="1024" alt="ChatGPT Image Jul 8, 2025, 09_48_49 PM" src="https://github.com/user-attachments/assets/0b6a8c7a-e479-4dbc-b24d-920f4225daf2" />
+
+
 > A comprehensive, cross-platform toolkit for safe GitHub repository management and automated documentation generation.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
