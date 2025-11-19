@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Installation and System Check
-==============================
-Verifies that all components are properly installed and working.
+GitSage v1.0 - Installation and System Check
+============================================
+Verifies that core components are properly installed and working.
 """
 
 import sys
@@ -107,22 +107,9 @@ def check_file_exists(file_path):
     return False, "Not found"
 
 
-def check_directory_writable(dir_path):
-    """Check if directory is writable"""
-    dir_path = Path(dir_path).expanduser()
-    try:
-        dir_path.mkdir(parents=True, exist_ok=True)
-        test_file = dir_path / ".write_test"
-        test_file.write_text("test")
-        test_file.unlink()
-        return True, "Writable"
-    except:
-        return False, "Not writable"
-
-
 def main():
     print(f"\n{Colors.BOLD}{Colors.BLUE}{'='*60}{Colors.END}")
-    print(f"{Colors.BOLD}{Colors.BLUE}GitHub Repository Manager - Installation Check{Colors.END}")
+    print(f"{Colors.BOLD}{Colors.BLUE}GitSage v1.0 - Installation Check{Colors.END}")
     print(f"{Colors.BOLD}{Colors.BLUE}{'='*60}{Colors.END}\n")
 
     all_ok = True
@@ -136,128 +123,66 @@ def main():
 
     # Python Packages
     print(f"\n{Colors.BOLD}Python Packages:{Colors.END}")
-    all_ok &= check_item("PyYAML", lambda: check_python_package("yaml"), critical=True)
-    all_ok &= check_item("Rich", lambda: check_python_package("rich"), critical=True)
-    all_ok &= check_item("Pytest", lambda: check_python_package("pytest"), critical=False)
-    all_ok &= check_item("Pytest-cov", lambda: check_python_package("pytest_cov"), critical=False)
+    all_ok &= check_item("PyYAML", lambda: check_python_package("yaml"), critical=False)
+    all_ok &= check_item("Rich", lambda: check_python_package("rich"), critical=False)
 
-    # Core Utilities
-    print(f"\n{Colors.BOLD}Core Utilities:{Colors.END}")
-    all_ok &= check_item(
-        "Backup Manager",
-        lambda: check_file_exists("utils/backup_manager.py"),
-        critical=True
-    )
-    all_ok &= check_item(
-        "Logger",
-        lambda: check_file_exists("utils/logger.py"),
-        critical=True
-    )
-    all_ok &= check_item(
-        "Config Manager",
-        lambda: check_file_exists("utils/config_manager.py"),
-        critical=True
-    )
-    all_ok &= check_item(
-        "Setup Wizard",
-        lambda: check_file_exists("utils/setup_wizard.py"),
-        critical=False
-    )
-
-    # Scripts
-    print(f"\n{Colors.BOLD}Scripts:{Colors.END}")
+    # Core Scripts
+    print(f"\n{Colors.BOLD}Core Scripts:{Colors.END}")
     all_ok &= check_item(
         "Main Launcher",
         lambda: check_file_exists("launcher.py"),
         critical=True
     )
     all_ok &= check_item(
-        "Enhanced Python CLI",
-        lambda: check_file_exists("scripts/python/repo-manager-enhanced.py"),
+        "Repository Manager (Bash)",
+        lambda: check_file_exists("scripts/bash/repo-manager.sh"),
         critical=True
     )
     all_ok &= check_item(
-        "Original Python CLI",
-        lambda: check_file_exists("scripts/python/repo-manager.py"),
+        "Repository Deletion (Bash)",
+        lambda: check_file_exists("scripts/bash/delete-repo.sh"),
         critical=True
     )
     all_ok &= check_item(
-        "Bash Manager",
-        lambda: check_file_exists("repo-manager.sh"),
+        "Wiki Generator (Basic)",
+        lambda: check_file_exists("wiki-generator.py"),
         critical=False
     )
     all_ok &= check_item(
-        "Delete Script",
-        lambda: check_file_exists("delete-repo.sh"),
-        critical=True
-    )
-
-    # Tests
-    print(f"\n{Colors.BOLD}Test Suite:{Colors.END}")
-    all_ok &= check_item(
-        "Tests Directory",
-        lambda: check_file_exists("tests"),
-        critical=False
-    )
-    all_ok &= check_item(
-        "Backup Tests",
-        lambda: check_file_exists("tests/test_backup_manager.py"),
-        critical=False
-    )
-    all_ok &= check_item(
-        "Logger Tests",
-        lambda: check_file_exists("tests/test_logger.py"),
-        critical=False
-    )
-    all_ok &= check_item(
-        "Config Tests",
-        lambda: check_file_exists("tests/test_config_manager.py"),
+        "Wiki Generator (Enhanced)",
+        lambda: check_file_exists("wiki-generator-enhanced.py"),
         critical=False
     )
 
-    # Directories
-    print(f"\n{Colors.BOLD}System Directories:{Colors.END}")
+    # Configuration
+    print(f"\n{Colors.BOLD}Configuration:{Colors.END}")
     all_ok &= check_item(
-        "Home Directory",
-        lambda: check_directory_writable(Path.home()),
-        critical=True
+        "Requirements File",
+        lambda: check_file_exists("requirements.txt"),
+        critical=False
     )
     all_ok &= check_item(
-        "Config Directory",
-        lambda: check_directory_writable(Path.home() / ".repo-manager"),
-        critical=True
-    )
-    all_ok &= check_item(
-        "Backup Directory",
-        lambda: check_directory_writable(Path.home() / ".repo-manager" / "backups"),
-        critical=True
-    )
-    all_ok &= check_item(
-        "Log Directory",
-        lambda: check_directory_writable(Path.home() / ".repo-manager" / "logs"),
-        critical=True
+        "Wiki Config",
+        lambda: check_file_exists("wiki-config.yaml"),
+        critical=False
     )
 
     # Documentation
     print(f"\n{Colors.BOLD}Documentation:{Colors.END}")
     check_item("README", lambda: check_file_exists("README.md"), critical=False)
-    check_item("New Features", lambda: check_file_exists("NEW_FEATURES.md"), critical=False)
-    check_item("Quick Start", lambda: check_file_exists("QUICKSTART.md"), critical=False)
-    check_item("Upgrade Summary", lambda: check_file_exists("UPGRADE_SUMMARY.md"), critical=False)
-
-    # CI/CD
-    print(f"\n{Colors.BOLD}CI/CD:{Colors.END}")
-    check_item("GitHub Actions", lambda: check_file_exists(".github/workflows/ci.yml"), critical=False)
+    check_item("Contributing Guide", lambda: check_file_exists("CONTRIBUTING.md"), critical=False)
+    check_item("License", lambda: check_file_exists("LICENSE"), critical=False)
 
     # Summary
     print(f"\n{Colors.BOLD}{'='*60}{Colors.END}")
     if all_ok:
         print(f"{Colors.GREEN}{Colors.BOLD}✓ All critical checks passed!{Colors.END}")
-        print(f"\n{Colors.GREEN}Your installation is complete and ready to use.{Colors.END}")
+        print(f"\n{Colors.GREEN}GitSage v1.0 is properly installed and ready to use.{Colors.END}")
         print(f"\n{Colors.BOLD}Next steps:{Colors.END}")
-        print(f"  1. Run setup wizard: {Colors.BLUE}python utils/setup_wizard.py{Colors.END}")
-        print(f"  2. Launch manager: {Colors.BLUE}python launcher.py{Colors.END}")
-        print(f"  3. Read quick start: {Colors.BLUE}cat QUICKSTART.md{Colors.END}")
+        print(f"  1. Launch GitSage: {Colors.BLUE}python launcher.py{Colors.END}")
+        print(f"  2. Or run directly: {Colors.BLUE}bash scripts/bash/repo-manager.sh{Colors.END}")
+        print(f"  3. For deletion: {Colors.BLUE}bash scripts/bash/delete-repo.sh{Colors.END}")
+        print(f"  4. Read documentation: {Colors.BLUE}cat README.md{Colors.END}")
         return 0
     else:
         print(f"{Colors.RED}{Colors.BOLD}✗ Some critical checks failed!{Colors.END}")

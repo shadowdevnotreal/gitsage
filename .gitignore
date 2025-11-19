@@ -1,10 +1,10 @@
-# Repository Manager .gitignore
-
-# Business-private folder (keep out of public repo)
-business-private/
+# GitSage .gitignore
 
 # Generated documentation (created by wiki generator)
 generated-docs/
+
+# Business-private folder (keep out of public repo)
+business-private/
 
 # Python
 __pycache__/
@@ -24,9 +24,12 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # Virtual environments
 venv/
@@ -34,6 +37,19 @@ env/
 ENV/
 env.bak/
 venv.bak/
+.venv
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+*.cover
+*.py,cover
+.cache
+nosetests.xml
+coverage.xml
 
 # IDE
 .vscode/
@@ -41,6 +57,9 @@ venv.bak/
 *.swp
 *.swo
 *~
+.project
+.pydevproject
+.settings/
 
 # OS
 .DS_Store
@@ -50,9 +69,12 @@ venv.bak/
 .Trashes
 ehthumbs.db
 Thumbs.db
+Desktop.ini
 
-# Logs
+# Logs and databases
 *.log
+*.sql
+*.sqlite
 logs/
 
 # Temporary files
@@ -64,11 +86,12 @@ tmp/
 # Local configuration
 config.local.yaml
 *.local.yaml
+.env
+.env.local
 
 # Backup files
 *.bak
 *.backup
-*~
 
 # Archives
 *.zip
@@ -80,3 +103,9 @@ NOTES.md
 BUSINESS-*.md
 REVENUE-*.md
 STRATEGY-*.md
+
+# Planning artifacts (temporary)
+issues-inventory.json
+dependency-graph.json
+execution-plan.json
+pattern-library.md

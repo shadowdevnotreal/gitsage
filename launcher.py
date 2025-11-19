@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Cross-Platform GitHub Repository Manager
-========================================
-Universal launcher that detects your environment and guides you through setup and usage.
+GitSage v1.0 - GitHub Repository Management Tools
+=================================================
+Universal launcher for repository deletion, management, and wiki generation.
+Detects your environment and provides appropriate tools.
 """
 
 import os
@@ -14,11 +15,6 @@ import webbrowser
 from pathlib import Path
 import json
 import time
-
-# Print usage instructions for script paths at start
-script_path = Path("scripts/bash/repo-manager.sh")
-print("For Windows:", script_path)
-print("For Bash:   ", str(script_path).replace("\\", "/"))
 
 
 class Colors:
@@ -393,7 +389,7 @@ class UserInterface:
 
     def main_menu(self):
         """Main application menu"""
-        self.print_header("GitHub Repository Manager")
+        self.print_header("GitSage v1.0 - Repository Management Tools")
 
         self.print_status("Detecting environment...", "INFO")
         detected = self.detector.detect_all()
@@ -408,12 +404,10 @@ class UserInterface:
 
         while True:
             choices = [
-                "🗑️  DELETE REPOSITORY (Original Deletion Script)",
-                "🔧 Repository Manager (Advanced - Bash)",
-                "🐍 Repository Manager (Python CLI)",
-                "🐍 Repository Manager (Enhanced - Python with Backup/Logging)",
-                "⚡ Repository Manager (PowerShell)",
-                "🖥️  Repository Manager (GUI)",
+                "🗑️  Repository Deletion (Interactive Bash Script)",
+                "🔧 Repository Manager (Advanced Bash Features)",
+                "📚 Wiki Generator (Basic)",
+                "📚 Wiki Generator (Enhanced with Templates)",
                 "🛠️  Install Missing Tools",
                 "🔗 Open Installation Links",
                 "🔍 Check Environment Again",
@@ -422,59 +416,43 @@ class UserInterface:
 
             choice = self.get_user_choice("What would you like to do?", choices)
 
-            if choice == 0:  # Delete Repository (Original Script)
-                script_path = Path("delete-repo.sh")
+            if choice == 0:  # Delete Repository
+                script_path = Path("scripts/bash/delete-repo.sh")
                 if script_path.exists():
                     self.print_status("Launching Interactive GitHub Repository Deletion Script...", "INFO")
                     self.launch_script(str(script_path), "bash")
                 else:
-                    self.print_status("Deletion script not found. Please check the installation.", "ERROR")
-            elif choice == 1:  # Advanced Bash
-                script_path = Path("repo-manager.sh")
+                    self.print_status("Deletion script not found at scripts/bash/delete-repo.sh", "ERROR")
+            elif choice == 1:  # Repository Manager
+                script_path = Path("scripts/bash/repo-manager.sh")
                 if script_path.exists():
                     self.print_status("Launching Advanced Repository Manager (Bash)...", "INFO")
                     self.launch_script(str(script_path), "bash")
                 else:
-                    self.print_status("Advanced bash script not found. Please check the installation.", "ERROR")
-            elif choice == 2:  # Python CLI
-                script_path = Path("scripts/python/repo-manager.py")
+                    self.print_status("Repository manager not found at scripts/bash/repo-manager.sh", "ERROR")
+            elif choice == 2:  # Wiki Generator Basic
+                script_path = Path("wiki-generator.py")
                 if script_path.exists():
+                    self.print_status("Launching Wiki Generator...", "INFO")
                     self.launch_script(str(script_path), "python")
                 else:
-                    self.print_status("Python CLI script not found. Please check the installation.", "ERROR")
-            elif choice == 3:  # Enhanced Python CLI
-                script_path = Path("scripts/python/repo-manager-enhanced.py")
+                    self.print_status("Wiki generator not found.", "ERROR")
+            elif choice == 3:  # Wiki Generator Enhanced
+                script_path = Path("wiki-generator-enhanced.py")
                 if script_path.exists():
-                    self.print_status("Launching Enhanced Repository Manager (with backup/logging)...", "INFO")
+                    self.print_status("Launching Enhanced Wiki Generator...", "INFO")
                     self.launch_script(str(script_path), "python")
                 else:
-                    self.print_status("Enhanced Python CLI not found. Please check the installation.", "ERROR")
-            elif choice == 4:  # PowerShell
-                script_path = Path("scripts/powershell/repo-manager.ps1")
-                if script_path.exists():
-                    self.launch_script(str(script_path), "powershell")
-                else:
-                    self.print_status("PowerShell script not found. Please check the installation.", "ERROR")
-            elif choice == 5:  # GUI
-                script_path = Path("scripts/gui/repo-manager-gui.py")
-                if script_path.exists():
-                    if self.detected_tools['gui']['tkinter']:
-                        self.print_status("Launching GUI Repository Manager...", "INFO")
-                        self.launch_script(str(script_path), "python")
-                    else:
-                        self.print_status("Tkinter not available. Cannot launch GUI.", "ERROR")
-                        self.print_status("Install tkinter for your Python version to use GUI.", "INFO")
-                else:
-                    self.print_status("GUI script not found. Please check the installation.", "ERROR")
-            elif choice == 6:  # Install tools
+                    self.print_status("Enhanced wiki generator not found.", "ERROR")
+            elif choice == 4:  # Install tools
                 self.show_installation_help(detected)
-            elif choice == 7:  # Open links
+            elif choice == 5:  # Open links
                 self.open_installation_links(detected)
-            elif choice == 8:  # Re-check
+            elif choice == 6:  # Re-check
                 detected = self.detector.detect_all()
                 self.show_environment_status(detected)
-            elif choice == 9:  # Exit
-                self.print_status("Thank you for using Repository Manager!", "SUCCESS")
+            elif choice == 7:  # Exit
+                self.print_status("Thank you for using GitSage!", "SUCCESS")
                 sys.exit(0)
 
 
