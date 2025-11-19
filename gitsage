@@ -42,6 +42,7 @@ COMMANDS:
     launch              Launch interactive menu
     check               Check installation and prerequisites
     wiki                Generate wiki documentation
+    readme              Generate awesome README with badges
     delete              Safe repository deletion
     manage              Advanced repository management
     reset-history       Reset git history (keep files)
@@ -52,6 +53,7 @@ COMMANDS:
 EXAMPLES:
     gitsage launch                  # Interactive menu (easiest)
     gitsage wiki                    # Generate wiki for current project
+    gitsage readme                  # Generate awesome README.md
     gitsage delete                  # Safely delete a repository
     gitsage check                   # Verify installation
 
@@ -113,6 +115,18 @@ cmd_wiki() {
     $PYTHON "$SCRIPT_DIR/wiki-generator-enhanced.py" "$@"
 }
 
+cmd_readme() {
+    print_info "Generating awesome README.md with badges..."
+    PYTHON=$(check_python)
+
+    if [ ! -f "$SCRIPT_DIR/readme-config.yaml" ]; then
+        print_info "Creating default readme-config.yaml..."
+        print_info "Edit readme-config.yaml to customize your README."
+    fi
+
+    $PYTHON "$SCRIPT_DIR/readme-generator.py" "$@"
+}
+
 cmd_delete() {
     print_warning "Starting safe repository deletion..."
     print_warning "This tool has multiple safety confirmations."
@@ -148,6 +162,10 @@ case "${1:-help}" in
     wiki|doc|docs|gitbook)
         shift
         cmd_wiki "$@"
+        ;;
+    readme|read-me|rm-gen)
+        shift
+        cmd_readme "$@"
         ;;
     delete|remove|rm)
         shift
