@@ -107,7 +107,38 @@ python launcher.py
 
 ## 🎮 Usage Examples
 
-### Using the Launcher (Recommended)
+### Using the CLI Wrapper (Easiest)
+
+```bash
+# Make wrapper available (one time setup)
+chmod +x gitsage
+# Optional: Add to PATH or create alias
+
+# Launch interactive menu
+./gitsage launch
+
+# Generate wiki
+./gitsage wiki
+
+# Safe repository deletion
+./gitsage delete
+
+# Check installation
+./gitsage check
+
+# Show all commands
+./gitsage help
+```
+
+**Windows users:**
+```cmd
+REM Use the batch wrapper
+gitsage.bat launch
+gitsage.bat wiki
+gitsage.bat check
+```
+
+### Using the Launcher Directly
 
 ```bash
 # Launch interactive menu
@@ -170,12 +201,22 @@ python wiki-generator-enhanced.py
 
 ## 📖 Documentation
 
-- [Quick Start Guide](docs/user-guides/getting-started.md) - Get up and running
-- [Repository Deletion Guide](DEL-README.md) - Safe deletion walkthrough
-- [Wiki Generator Guide](WIKI-GENERATOR-README.md) - Documentation automation
-- [Contributing Guide](CONTRIBUTING.md) - Help improve GitSage
-- [Changelog](CHANGELOG.md) - Version history
-- [Roadmap](ROADMAP.md) - Planned features
+### Quick References
+- **[Quick Reference](QUICK-REFERENCE.md)** - Fast command lookup for daily tasks
+- **[Quick Start Guide](docs/user-guides/getting-started.md)** - Complete beginner to expert guide
+
+### Comprehensive Guides
+- **[Wiki & GitBook Guide](docs/user-guides/wiki-gitbook-guide.md)** - Create professional documentation
+- **[Repository Management Guide](docs/user-guides/repository-management.md)** - Complete GitHub management
+- **[Repository Deletion Guide](DEL-README.md)** - Safe deletion walkthrough
+- **[Wiki Generator Guide](WIKI-GENERATOR-README.md)** - Documentation automation
+
+### Project Information
+- **[Contributing Guide](CONTRIBUTING.md)** - Help improve GitSage
+- **[Changelog](CHANGELOG.md)** - Version history
+- **[Roadmap](ROADMAP.md)** - Planned features
+- **[Security Policy](SECURITY.md)** - Security and responsible disclosure
+- **[Code of Conduct](CODE_OF_CONDUCT.md)** - Community standards
 
 ## 🤝 Contributing
 
