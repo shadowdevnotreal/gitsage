@@ -1,6 +1,7 @@
 # GitSage v1.0
 
-![GitSage Logo](assets/logos/GitSage.png)
+<img width="1024" height="1024" alt="ChatGPT Image Jul 8, 2025, 09_48_49 PM" src="https://github.com/user-attachments/assets/c9c36a88-7467-4557-9aee-103952497c38" />
+
 
 > A focused toolkit for GitHub repository deletion, management, and automated wiki generation.
 
