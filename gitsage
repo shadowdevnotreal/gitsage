@@ -33,7 +33,7 @@ print_warning() {
 show_help() {
     cat << EOF
 GitSage - Ultimate GitHub Management Tool
-Version: 1.0.0
+Version: 2.0.0
 
 USAGE:
     gitsage <command> [options]
@@ -43,6 +43,7 @@ COMMANDS:
     check               Check installation and prerequisites
     wiki                Generate wiki documentation
     readme              Generate awesome README with badges
+    script              Generate automation scripts & Learn GitHub!
     delete              Safe repository deletion
     manage              Advanced repository management
     reset-history       Reset git history (keep files)
@@ -70,7 +71,7 @@ EOF
 }
 
 show_version() {
-    echo "GitSage v1.0.0"
+    echo "GitSage v2.0.0"
     echo "Ultimate GitHub Management Tool"
     echo ""
     echo "Platform: $(uname -s)"
@@ -127,6 +128,13 @@ cmd_readme() {
     $PYTHON "$SCRIPT_DIR/readme-generator.py" "$@"
 }
 
+cmd_script() {
+    print_info "Launching Script Generator & GitHub Learning System..."
+    print_success "🎓 Generate automation scripts while learning GitHub!"
+    PYTHON=$(check_python)
+    $PYTHON "$SCRIPT_DIR/script-generator.py" "$@"
+}
+
 cmd_delete() {
     print_warning "Starting safe repository deletion..."
     print_warning "This tool has multiple safety confirmations."
@@ -166,6 +174,10 @@ case "${1:-help}" in
     readme|read-me|rm-gen)
         shift
         cmd_readme "$@"
+        ;;
+    script|scripts|generate|learn)
+        shift
+        cmd_script "$@"
         ;;
     delete|remove|rm)
         shift
