@@ -66,6 +66,9 @@ GitSage v2.2 takes your GitHub education to the next level with production-ready
 - Quick reference sections for daily use
 - Best practices and common pitfalls
 
+<details>
+<summary><b>📦 Previous Releases (click to expand)</b></summary>
+
 ### 🆕 What's New in v2.1
 
 **💾 Automated Backup System** - IMPLEMENTED!
@@ -97,7 +100,12 @@ GitSage v2.2 takes your GitHub education to the next level with production-ready
 - Common troubleshooting solutions
 - Practice exercises included
 
-### Current Features (v2.1)
+</details>
+
+<details>
+<summary><b>📋 Complete Feature List (click to expand)</b></summary>
+
+### Current Features (v2.2)
 
 ✅ **Interactive Repository Deletion**
 - Multiple safety confirmations before any destructive action
@@ -118,7 +126,7 @@ GitSage v2.2 takes your GitHub education to the next level with production-ready
 - GitBook and GitHub Wiki support
 - Multiple output formats
 
-✅ **README Generator** (New!)
+✅ **README Generator**
 - Generate awesome READMEs with shields.io badges
 - Multiple templates (CLI tool, library, web app, data science, game)
 - Auto-generated table of contents
@@ -131,7 +139,7 @@ GitSage v2.2 takes your GitHub education to the next level with production-ready
 - Sync and swap repositories
 - Safe operations with multiple confirmations
 
-✅ **Automated Backup System** (New in v2.1!)
+✅ **Automated Backup System**
 - Create compressed backups (.tar.gz) of repositories
 - SHA256 checksums for integrity verification
 - List all backups with metadata
@@ -139,7 +147,7 @@ GitSage v2.2 takes your GitHub education to the next level with production-ready
 - Automatic cleanup of old backups
 - Stores backups in `~/.gitsage/backups/`
 
-✅ **Enhanced Templates** (New in v2.1!)
+✅ **Enhanced Templates**
 - 4 new professional README templates
 - API Documentation template
 - Mobile App template
@@ -156,6 +164,8 @@ GitSage v2.2 takes your GitHub education to the next level with production-ready
 - Comprehensive unit tests for all generators
 - Integration tests for component verification
 - 29+ automated tests ensuring reliability
+
+</details>
 
 ### 🔮 Coming Soon (v2.3+)
 
