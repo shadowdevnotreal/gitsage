@@ -1,0 +1,257 @@
+#!/usr/bin/env bash
+# GitSage - Universal CLI Wrapper
+# Makes GitSage tools easier to use
+
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Helper functions
+print_error() {
+    echo -e "${RED}✗ Error:${NC} $1" >&2
+}
+
+print_success() {
+    echo -e "${GREEN}✓${NC} $1"
+}
+
+print_info() {
+    echo -e "${BLUE}ℹ${NC} $1"
+}
+
+print_warning() {
+    echo -e "${YELLOW}⚠${NC} $1"
+}
+
+show_help() {
+    cat << EOF
+GitSage - Ultimate GitHub Management Tool
+Version: 2.1.0
+
+USAGE:
+    gitsage <command> [options]
+
+COMMANDS:
+    launch              Launch interactive menu
+    check               Check installation and prerequisites
+    wiki                Generate wiki documentation
+    readme              Generate awesome README with badges
+    script              Generate automation scripts & Learn GitHub!
+    backup              Manage repository backups (create, restore, list)
+    delete              Safe repository deletion
+    manage              Advanced repository management
+    reset-history       Reset git history (keep files)
+    migrate             Migrate repository
+    help                Show this help message
+    version             Show version information
+
+EXAMPLES:
+    gitsage launch                  # Interactive menu (easiest)
+    gitsage wiki                    # Generate wiki for current project
+    gitsage readme                  # Generate awesome README.md
+    gitsage delete                  # Safely delete a repository
+    gitsage check                   # Verify installation
+
+DOCUMENTATION:
+    README.md                       # Project overview
+    QUICK-REFERENCE.md              # Quick command reference
+    docs/user-guides/               # Comprehensive guides
+
+For detailed help on a command:
+    gitsage help <command>
+
+Website: https://github.com/shadowdevnotreal/gitsage
+EOF
+}
+
+show_version() {
+    echo "GitSage v2.1.0"
+    echo "Ultimate GitHub Management Tool"
+    echo ""
+    echo "Platform: $(uname -s)"
+    echo "Python: $(python --version 2>&1 || python3 --version 2>&1 || echo 'Not found')"
+    echo "Git: $(git --version 2>&1 || echo 'Not found')"
+    echo "GitHub CLI: $(gh --version 2>&1 | head -n1 || echo 'Not found')"
+}
+
+check_python() {
+    if command -v python3 &> /dev/null; then
+        echo "python3"
+    elif command -v python &> /dev/null; then
+        echo "python"
+    else
+        print_error "Python not found. Please install Python 3.8+"
+        exit 1
+    fi
+}
+
+# Command handlers
+cmd_launch() {
+    print_info "Launching GitSage interactive menu..."
+    PYTHON=$(check_python)
+    $PYTHON "$SCRIPT_DIR/launcher.py" "$@"
+}
+
+cmd_check() {
+    print_info "Checking installation..."
+    PYTHON=$(check_python)
+    $PYTHON "$SCRIPT_DIR/check_installation.py" "$@"
+}
+
+cmd_wiki() {
+    print_info "Generating wiki documentation..."
+    PYTHON=$(check_python)
+
+    if [ ! -f "$SCRIPT_DIR/wiki-config.yaml" ]; then
+        print_warning "wiki-config.yaml not found. Using defaults."
+        print_info "Create wiki-config.yaml to customize output."
+    fi
+
+    $PYTHON "$SCRIPT_DIR/wiki-generator-enhanced.py" "$@"
+}
+
+cmd_readme() {
+    print_info "Generating awesome README.md with badges..."
+    PYTHON=$(check_python)
+
+    if [ ! -f "$SCRIPT_DIR/readme-config.yaml" ]; then
+        print_info "Creating default readme-config.yaml..."
+        print_info "Edit readme-config.yaml to customize your README."
+    fi
+
+    $PYTHON "$SCRIPT_DIR/readme-generator.py" "$@"
+}
+
+cmd_script() {
+    print_info "Launching Script Generator & GitHub Learning System..."
+    print_success "🎓 Generate automation scripts while learning GitHub!"
+    PYTHON=$(check_python)
+    $PYTHON "$SCRIPT_DIR/script-generator.py" "$@"
+}
+
+cmd_delete() {
+    print_warning "Starting safe repository deletion..."
+    print_warning "This tool has multiple safety confirmations."
+    bash "$SCRIPT_DIR/scripts/bash/delete-repo.sh" "$@"
+}
+
+cmd_manage() {
+    print_info "Launching repository manager..."
+    bash "$SCRIPT_DIR/scripts/bash/repo-manager.sh" "$@"
+}
+
+cmd_reset_history() {
+    print_warning "Git history reset tool"
+    print_warning "This will delete all commit history (keeps files)"
+    bash "$SCRIPT_DIR/scripts/git-resets/reset_git_history.sh" "$@"
+}
+
+cmd_migrate() {
+    print_info "Repository migration tool..."
+    bash "$SCRIPT_DIR/scripts/git-resets/migrate_and_swap_repos.sh" "$@"
+}
+
+cmd_backup() {
+    print_info "Backup Manager - Automated repository backups"
+    PYTHON=$(check_python)
+    $PYTHON "$SCRIPT_DIR/backup-manager.py" "$@"
+}
+
+# Main command routing
+case "${1:-help}" in
+    launch|menu|start)
+        shift
+        cmd_launch "$@"
+        ;;
+    check|verify|test)
+        shift
+        cmd_check "$@"
+        ;;
+    wiki|doc|docs|gitbook)
+        shift
+        cmd_wiki "$@"
+        ;;
+    readme|read-me|rm-gen)
+        shift
+        cmd_readme "$@"
+        ;;
+    script|scripts|generate|learn)
+        shift
+        cmd_script "$@"
+        ;;
+    delete|remove|rm)
+        shift
+        cmd_delete "$@"
+        ;;
+    manage|manager|repo)
+        shift
+        cmd_manage "$@"
+        ;;
+    reset|reset-history|clean-history)
+        shift
+        cmd_reset_history "$@"
+        ;;
+    migrate|move|transfer)
+        shift
+        cmd_migrate "$@"
+        ;;
+    backup|backups|bak)
+        shift
+        cmd_backup "$@"
+        ;;
+    version|--version|-v)
+        show_version
+        ;;
+    help|--help|-h|*)
+        if [ $# -eq 2 ]; then
+            # Show help for specific command
+            case "$2" in
+                wiki)
+                    print_info "Wiki Generator Help"
+                    echo ""
+                    echo "Generate GitHub Wiki and GitBook documentation."
+                    echo ""
+                    echo "USAGE:"
+                    echo "    gitsage wiki"
+                    echo ""
+                    echo "CONFIGURATION:"
+                    echo "    Edit wiki-config.yaml to customize output."
+                    echo ""
+                    echo "OUTPUT:"
+                    echo "    generated-docs/ directory with wiki pages"
+                    echo ""
+                    echo "See: docs/user-guides/wiki-gitbook-guide.md"
+                    ;;
+                delete)
+                    print_info "Repository Deletion Help"
+                    echo ""
+                    echo "Safely delete GitHub repositories with confirmations."
+                    echo ""
+                    echo "USAGE:"
+                    echo "    gitsage delete"
+                    echo ""
+                    echo "FEATURES:"
+                    echo "    - Lists all your repositories"
+                    echo "    - Shows repository details"
+                    echo "    - Multiple safety confirmations"
+                    echo "    - Deletes remote and local copies"
+                    echo "    - Verifies deletion"
+                    echo ""
+                    echo "See: DEL-README.md"
+                    ;;
+                *)
+                    show_help
+                    ;;
+            esac
+        else
+            show_help
+        fi
+        ;;
+esac

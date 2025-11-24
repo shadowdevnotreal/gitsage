@@ -1,0 +1,22 @@
+# Python dependencies for Repository Manager
+#
+# Core dependencies for enhanced features:
+PyYAML>=6.0           # Configuration file parsing (config & wiki generator)
+rich>=13.0.0          # Beautiful terminal output (Python CLI)
+
+# Testing dependencies:
+pytest>=7.0.0         # Testing framework
+pytest-cov>=4.0.0     # Code coverage
+pytest-mock>=3.10.0   # Mocking support
+
+# Optional dependencies for enhanced features:
+# colorama>=0.4.0     # For Windows color support (usually not needed with rich)
+# click>=8.0.0        # For advanced CLI features (if needed later)
+
+# Development dependencies (optional):
+# black>=23.0.0       # Code formatting
+# flake8>=6.0.0       # Linting
+# mypy>=1.0.0         # Type checking
+
+# Note: Git and GitHub CLI are external requirements but not Python packages
+# They must be installed separately on your system
