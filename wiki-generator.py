@@ -445,8 +445,10 @@ echo "🔗 View your wiki at: ${REPO_URL%.git}/wiki"
         
         with open(deploy_dir / "deploy-wiki.sh", 'w', encoding='utf-8') as f:
             f.write(wiki_deploy)
-        
-        os.chmod(deploy_dir / "deploy-wiki.sh", 0o755)
+
+        # Make executable (Unix/Linux/macOS only)
+        if sys.platform != 'win32':
+            os.chmod(deploy_dir / "deploy-wiki.sh", 0o755)
         
         # Complete setup script
         setup_script = '''#!/bin/bash
@@ -477,8 +479,10 @@ echo "📖 Wiki: ${REPO_URL%.git}/wiki"
         
         with open(deploy_dir / "setup-docs.sh", 'w', encoding='utf-8') as f:
             f.write(setup_script)
-            
-        os.chmod(deploy_dir / "setup-docs.sh", 0o755)
+
+        # Make executable (Unix/Linux/macOS only)
+        if sys.platform != 'win32':
+            os.chmod(deploy_dir / "setup-docs.sh", 0o755)
         
         print(f"✅ Deployment scripts created in {deploy_dir}")
     

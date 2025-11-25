@@ -1235,8 +1235,9 @@ Press Enter to continue...
         with open(filepath, 'w') as f:
             f.write(script_content)
 
-        # Make executable
-        os.chmod(filepath, 0o755)
+        # Make executable (Unix/Linux/macOS only)
+        if sys.platform != 'win32':
+            os.chmod(filepath, 0o755)
 
         if self.console:
             self.console.print(f"\n[green]✅ Script saved to:[/green] {filepath}")

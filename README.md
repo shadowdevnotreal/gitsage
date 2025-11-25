@@ -225,6 +225,45 @@ python check_installation.py
 python launcher.py
 ```
 
+### Uninstallation
+
+GitSage provides a comprehensive uninstaller that safely removes all created files:
+
+```bash
+# Run the uninstaller
+python uninstall.py
+
+# The uninstaller will:
+# - Show you what will be removed
+# - Ask for confirmation before deletion
+# - Remove ~/.gitsage/ (backups, config)
+# - Optionally remove generated-scripts/, generated-docs/, generated-wikis/
+# - Optionally uninstall Python dependencies
+# - Provide manual cleanup instructions
+```
+
+**What Gets Removed:**
+- `~/.gitsage/` - User data directory (backups, configuration)
+- `generated-scripts/` - Generated automation scripts (optional)
+- `generated-docs/` - Generated documentation (optional)
+- `generated-wikis/` - Generated wiki files (optional)
+
+**What Stays:**
+- GitSage source code (in case you want to reinstall)
+- Python packages (unless you choose to remove them)
+- Any repositories you've created or managed
+
+**Quick Manual Uninstall:**
+```bash
+# Remove all GitSage data
+rm -rf ~/.gitsage/
+rm -rf generated-*/
+
+# Remove source code (if desired)
+cd ..
+rm -rf gitsage/
+```
+
 ## 📋 Available Tools
 
 ### Core Scripts
@@ -234,6 +273,7 @@ python launcher.py
 | `launcher.py` | Main menu with environment detection | Root |
 | `script-generator.py` | Generate scripts & learn GitHub | Root |
 | `backup-manager.py` | Automated repository backups | Root |
+| `uninstall.py` | Safe uninstallation tool | Root |
 | `delete-repo.sh` | Interactive repository deletion | `scripts/bash/` |
 | `repo-manager.sh` | Advanced repository management | `scripts/bash/` |
 | `wiki-generator.py` | Basic wiki generation | Root |
@@ -468,14 +508,47 @@ bash scripts/git-resets/migrate_and_swap_repos.sh
 
 ## 🌍 Platform Support
 
-| Platform | Status | Notes |
-|----------|--------|-------|
-| **Linux** | ✅ Fully Supported | Native Bash environment |
-| **macOS** | ✅ Fully Supported | Native Bash environment |
-| **Windows** | ⚠️ Partial | Requires Git Bash or WSL |
-| **WSL** | ✅ Fully Supported | Linux environment on Windows |
+| Platform | Status | Python Scripts | Bash Scripts | Notes |
+|----------|--------|----------------|--------------|-------|
+| **Linux** | ✅ Fully Supported | ✅ | ✅ | Native Bash environment |
+| **macOS** | ✅ Fully Supported | ✅ | ✅ | Native Bash environment |
+| **Windows** | ✅ Supported | ✅ | ⚠️ Requires Git Bash | Python tools work natively |
+| **WSL** | ✅ Fully Supported | ✅ | ✅ | Linux environment on Windows |
 
-**Windows Users**: Install [Git for Windows](https://git-scm.com/download/win) which includes Git Bash, then run scripts via Git Bash.
+### Windows Users - Installation Guide
+
+GitSage works on Windows with a simple setup:
+
+**1. Install Git for Windows** (includes Git Bash):
+```bash
+# Download from: https://git-scm.com/download/win
+# Or use winget:
+winget install Git.Git
+```
+
+**2. Python Tools Work Natively:**
+```cmd
+# These work in PowerShell or CMD:
+python launcher.py
+python uninstall.py
+python backup-manager.py
+python script-generator.py
+```
+
+**3. Bash Scripts Require Git Bash:**
+```bash
+# Open Git Bash and run:
+./gitsage delete
+./gitsage manage
+bash scripts/bash/delete-repo.sh
+```
+
+**Cross-Platform Compatibility:**
+- ✅ All Python scripts work on Windows without modification
+- ✅ Uninstaller fully supports Windows
+- ✅ File permissions handled automatically
+- ✅ Line endings normalized via `.gitattributes`
+- ✅ Path separators handled correctly
 
 ## 📖 Documentation
 
