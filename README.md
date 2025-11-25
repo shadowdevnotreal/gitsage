@@ -1,7 +1,6 @@
 # GitSage v2.2 🚀
 
-<img width="1024" height="1024" alt="ChatGPT Image Jul 8, 2025, 09_48_49 PM" src="https://github.com/user-attachments/assets/c9c36a88-7467-4557-9aee-103952497c38" />
-
+<img width="1024" height="1024" alt="gitsage" src="https://github.com/user-attachments/assets/84d13255-acc0-46e9-b014-7f033edac85f" />
 
 > The Ultimate GitHub Management & Learning Platform - Automate your workflow while mastering GitHub from novice to expert!
 
