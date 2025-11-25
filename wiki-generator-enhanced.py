@@ -770,7 +770,10 @@ fi
 
         with open(deploy_dir / "deploy-wiki.sh", 'w', encoding='utf-8') as f:
             f.write(wiki_deploy)
-        os.chmod(deploy_dir / "deploy-wiki.sh", 0o755)
+
+        # Make executable (Unix/Linux/macOS only)
+        if sys.platform != 'win32':
+            os.chmod(deploy_dir / "deploy-wiki.sh", 0o755)
 
         # GitBook deploy script
         gitbook_deploy = '''#!/bin/bash
@@ -808,7 +811,10 @@ echo "  3. Netlify: Deploy _book folder"
 
         with open(deploy_dir / "deploy-gitbook.sh", 'w', encoding='utf-8') as f:
             f.write(gitbook_deploy)
-        os.chmod(deploy_dir / "deploy-gitbook.sh", 0o755)
+
+        # Make executable (Unix/Linux/macOS only)
+        if sys.platform != 'win32':
+            os.chmod(deploy_dir / "deploy-gitbook.sh", 0o755)
 
     def generate_all(self, formats: Optional[List[str]] = None) -> None:
         """Generate all enabled formats"""
