@@ -158,7 +158,7 @@ gitsage-web    # Web interface
 | **Installation Check** | Verify setup | `python check_installation.py` |
 | **Uninstaller** | Safe removal | `python uninstall.py` |
 
-### Git Operations
+### Git Operations (Bash)
 
 | Script | Purpose | Location |
 |--------|---------|----------|
@@ -166,6 +166,15 @@ gitsage-web    # Web interface
 | `repo-manager.sh` | Advanced repository management | `scripts/bash/` |
 | `reset_git_history.sh` | Complete history reset | `scripts/git-resets/` |
 | `migrate_repository.sh` | Unified repository migration | `scripts/git-resets/` |
+
+### Git Operations (PowerShell)
+
+| Script | Purpose | Location |
+|--------|---------|----------|
+| `Delete-Repository.ps1` | Safe repository deletion | `scripts/powershell/` |
+| `Manage-Repository.ps1` | Interactive repository manager | `scripts/powershell/` |
+| `Reset-GitHistory.ps1` | Complete history reset | `scripts/powershell/` |
+| `Migrate-Repository.ps1` | Repository migration | `scripts/powershell/` |
 
 ## 🎮 Usage Examples
 
@@ -228,7 +237,7 @@ python backup-manager.py delete backup_id_12345
 # with SHA256 checksums for integrity
 ```
 
-### Repository Operations
+### Repository Operations (Bash)
 
 ```bash
 # Safe repository deletion
@@ -244,6 +253,22 @@ bash scripts/git-resets/reset_git_history.sh
 bash scripts/git-resets/migrate_repository.sh --mode=full
 ```
 
+### Repository Operations (PowerShell)
+
+```powershell
+# Safe repository deletion
+.\scripts\powershell\Delete-Repository.ps1
+
+# Interactive repository manager
+.\scripts\powershell\Manage-Repository.ps1
+
+# Reset git history (keeps files)
+.\scripts\powershell\Reset-GitHistory.ps1
+
+# Migrate repository
+.\scripts\powershell\Migrate-Repository.ps1 -Mode full
+```
+
 ## 🛡️ Safety Features
 
 - **Multiple confirmations** for destructive operations
@@ -255,27 +280,36 @@ bash scripts/git-resets/migrate_repository.sh --mode=full
 
 ## 🌍 Platform Support
 
-| Platform | Python Scripts | Bash Scripts | Web Interface | Notes |
-|----------|----------------|--------------|---------------|-------|
-| **Linux** | ✅ | ✅ | ✅ | Fully supported |
-| **macOS** | ✅ | ✅ | ✅ | Fully supported |
-| **Windows** | ✅ | ⚠️ Git Bash | ✅ | Python tools work natively |
-| **WSL** | ✅ | ✅ | ✅ | Linux on Windows |
+| Platform | Python Scripts | Bash Scripts | PowerShell Scripts | Web Interface | Notes |
+|----------|----------------|--------------|-------------------|---------------|-------|
+| **Linux** | ✅ | ✅ | N/A | ✅ | Fully supported |
+| **macOS** | ✅ | ✅ | ✅ (PS Core) | ✅ | Fully supported |
+| **Windows** | ✅ | ⚠️ Git Bash | ✅ Native | ✅ | Full PowerShell support! |
+| **WSL** | ✅ | ✅ | ✅ (PS Core) | ✅ | Linux on Windows |
 
 ### Windows Setup
 
-```bash
+```powershell
 # 1. Install Git for Windows (includes Git Bash)
 # Download: https://git-scm.com/download/win
+winget install Git.Git
 
-# 2. Python tools work in PowerShell/CMD
+# 2. Install GitHub CLI
+winget install GitHub.cli
+
+# 3. Python tools work in PowerShell/CMD
 python launcher.py
 python backup-manager.py
 
-# 3. Bash scripts require Git Bash
-# Open Git Bash and run:
+# 4. Use native PowerShell scripts (RECOMMENDED for Windows)
+.\scripts\powershell\Delete-Repository.ps1
+.\scripts\powershell\Manage-Repository.ps1
+
+# 5. Or use Bash scripts via Git Bash
 bash scripts/bash/delete-repo.sh
 ```
+
+**Windows Users:** GitSage now has complete PowerShell implementation! Use native PowerShell scripts for the best Windows experience.
 
 ## 📖 Documentation
 
@@ -357,11 +391,13 @@ MIT License - see [LICENSE](LICENSE) for details.
 - ✅ Web interface with modern UI
 - ✅ Script generator with 8+ templates
 - ✅ Automated backup system with SHA256
-- ✅ Safe repository deletion
-- ✅ Repository management tools
+- ✅ Safe repository deletion (Bash + PowerShell)
+- ✅ Repository management tools (Bash + PowerShell)
+- ✅ Git history tools (Bash + PowerShell)
+- ✅ Repository migration (Bash + PowerShell)
 - ✅ Wiki & README generation
-- ✅ Git history tools
 - ✅ Cross-platform support
+- ✅ Complete PowerShell implementation for Windows
 - ✅ Professional package structure
 - ✅ Universal installers
 
