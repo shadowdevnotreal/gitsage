@@ -6,19 +6,18 @@ Universal launcher for repository management, generation, and automation tools.
 """
 
 import os
-import sys
 import subprocess
-import webbrowser
+import sys
 import time
+import webbrowser
 from pathlib import Path
-from typing import List, Tuple, Optional, Dict, Any
+from typing import Any, Dict, List, Optional, Tuple
 
 # Add src to path for development
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from gitsage.__version__ import __version__, PROJECT_NAME
+from gitsage.__version__ import PROJECT_NAME, __version__
 from gitsage.utils import Colors, EnvironmentDetector, InstallationHelper, get_logger
-
 
 logger = get_logger(__name__, use_rich=True)
 
@@ -46,7 +45,7 @@ class UserInterface:
             "SUCCESS": Colors.GREEN,
             "WARNING": Colors.YELLOW,
             "ERROR": Colors.RED,
-            "QUESTION": Colors.MAGENTA
+            "QUESTION": Colors.MAGENTA,
         }
         color = color_map.get(status, Colors.WHITE)
         print(f"{color}[{status}]{Colors.END} {message}")
@@ -68,7 +67,9 @@ class UserInterface:
                 print(f"  {Colors.YELLOW}{i}.{Colors.END} {choice}")
 
             try:
-                choice_input = input(f"\n{Colors.CYAN}Enter your choice (1-{len(choices)}): {Colors.END}")
+                choice_input = input(
+                    f"\n{Colors.CYAN}Enter your choice (1-{len(choices)}): {Colors.END}"
+                )
                 choice_num = int(choice_input)
                 if 1 <= choice_num <= len(choices):
                     return choice_num - 1
@@ -92,69 +93,77 @@ class UserInterface:
         print(f"  Python: {detected['python_version']}")
 
         print(f"\n{Colors.BOLD}Available Environments:{Colors.END}")
-        for shell, available in detected['shells'].items():
+        for shell, available in detected["shells"].items():
             status = f"{Colors.GREEN}✓{Colors.END}" if available else f"{Colors.RED}✗{Colors.END}"
             print(f"  {status} {shell.capitalize()}")
 
         print(f"\n{Colors.BOLD}Git Tools:{Colors.END}")
-        git_tools = detected['git_tools']
+        git_tools = detected["git_tools"]
 
-        if git_tools.get('git'):
-            print(f"  {Colors.GREEN}✓{Colors.END} Git: {git_tools.get('git_version', 'Unknown version')}")
+        if git_tools.get("git"):
+            print(
+                f"  {Colors.GREEN}✓{Colors.END} Git: {git_tools.get('git_version', 'Unknown version')}"
+            )
         else:
             print(f"  {Colors.RED}✗{Colors.END} Git: Not installed")
 
-        if git_tools.get('gh'):
-            auth_status = "Authenticated" if git_tools.get('gh_authenticated') else "Not authenticated"
-            auth_color = Colors.GREEN if git_tools.get('gh_authenticated') else Colors.YELLOW
-            print(f"  {Colors.GREEN}✓{Colors.END} GitHub CLI: {git_tools.get('gh_version', 'Unknown')}")
+        if git_tools.get("gh"):
+            auth_status = (
+                "Authenticated" if git_tools.get("gh_authenticated") else "Not authenticated"
+            )
+            auth_color = Colors.GREEN if git_tools.get("gh_authenticated") else Colors.YELLOW
+            print(
+                f"  {Colors.GREEN}✓{Colors.END} GitHub CLI: {git_tools.get('gh_version', 'Unknown')}"
+            )
             print(f"    {auth_color}Authentication: {auth_status}{Colors.END}")
         else:
             print(f"  {Colors.RED}✗{Colors.END} GitHub CLI: Not installed")
 
         # Show Python packages
-        if 'python_packages' in detected:
+        if "python_packages" in detected:
             print(f"\n{Colors.BOLD}Python Packages:{Colors.END}")
-            packages = detected['python_packages']
+            packages = detected["python_packages"]
             for pkg, installed in packages.items():
-                status = f"{Colors.GREEN}✓{Colors.END}" if installed else f"{Colors.RED}✗{Colors.END}"
+                status = (
+                    f"{Colors.GREEN}✓{Colors.END}" if installed else f"{Colors.RED}✗{Colors.END}"
+                )
                 print(f"  {status} {pkg}")
 
     def show_installation_help(self, detected: Dict[str, Any]) -> None:
         """Show installation guidance."""
         self.print_header("Installation & Setup Help")
 
-        self.installer = InstallationHelper(detected['system'])
-        git_tools = detected['git_tools']
+        self.installer = InstallationHelper(detected["system"])
+        git_tools = detected["git_tools"]
 
-        if not git_tools.get('git'):
+        if not git_tools.get("git"):
             print(f"{Colors.BOLD}Installing Git:{Colors.END}")
             git_info = self.installer.get_git_install_info()
             print(f"  Method: {git_info['method']}")
-            if 'url' in git_info:
+            if "url" in git_info:
                 print(f"  URL: {Colors.UNDERLINE}{git_info['url']}{Colors.END}")
-            if 'command' in git_info:
+            if "command" in git_info:
                 print(f"  Command: {Colors.CYAN}{git_info['command']}{Colors.END}")
             print(f"  Instructions: {git_info['instructions']}\n")
 
-        if not git_tools.get('gh'):
+        if not git_tools.get("gh"):
             print(f"{Colors.BOLD}Installing GitHub CLI:{Colors.END}")
             gh_info = self.installer.get_gh_install_info()
             print(f"  Method: {gh_info['method']}")
-            if 'url' in gh_info:
+            if "url" in gh_info:
                 print(f"  URL: {Colors.UNDERLINE}{gh_info['url']}{Colors.END}")
-            if 'command' in gh_info:
+            if "command" in gh_info:
                 print(f"  Command: {Colors.CYAN}{gh_info['command']}{Colors.END}")
             print(f"  Instructions: {gh_info['instructions']}\n")
 
-        if git_tools.get('gh') and not git_tools.get('gh_authenticated'):
+        if git_tools.get("gh") and not git_tools.get("gh_authenticated"):
             print(f"{Colors.BOLD}Authenticating GitHub CLI:{Colors.END}")
             print(f"  Command: {Colors.CYAN}gh auth login{Colors.END}")
             print(f"  Follow the prompts to authenticate with GitHub\n")
 
         # Python packages
-        if 'python_packages' in detected:
-            packages = detected['python_packages']
+        if "python_packages" in detected:
+            packages = detected["python_packages"]
             if not all(packages.values()):
                 print(f"{Colors.BOLD}Installing Python Packages:{Colors.END}")
                 print(f"  Command: {Colors.CYAN}pip install -r requirements.txt{Colors.END}")
@@ -162,20 +171,20 @@ class UserInterface:
 
     def open_installation_links(self, detected: Dict[str, Any]) -> None:
         """Open installation URLs in browser."""
-        self.installer = InstallationHelper(detected['system'])
-        git_tools = detected['git_tools']
+        self.installer = InstallationHelper(detected["system"])
+        git_tools = detected["git_tools"]
 
         links: List[Tuple[str, str]] = []
 
-        if not git_tools.get('git'):
+        if not git_tools.get("git"):
             git_info = self.installer.get_git_install_info()
-            if 'url' in git_info:
-                links.append(("Git", git_info['url']))
+            if "url" in git_info:
+                links.append(("Git", git_info["url"]))
 
-        if not git_tools.get('gh'):
+        if not git_tools.get("gh"):
             gh_info = self.installer.get_gh_install_info()
-            if 'url' in gh_info:
-                links.append(("GitHub CLI", gh_info['url']))
+            if "url" in gh_info:
+                links.append(("GitHub CLI", gh_info["url"]))
 
         if links:
             self.print_status("Opening installation links in your browser...", "INFO")
@@ -204,7 +213,9 @@ class UserInterface:
             elif script_type == "bash":
                 subprocess.run(["bash", str(script_path)])
             elif script_type == "powershell":
-                subprocess.run(["powershell", "-ExecutionPolicy", "Bypass", "-File", str(script_path)])
+                subprocess.run(
+                    ["powershell", "-ExecutionPolicy", "Bypass", "-File", str(script_path)]
+                )
             else:
                 self.print_status(f"Unknown script type: {script_type}", "ERROR")
                 self.logger.error(f"Unknown script type: {script_type}")
@@ -228,7 +239,7 @@ class UserInterface:
         if self.detector.recommendations:
             print(f"\n{Colors.YELLOW}Recommendations:{Colors.END}")
             for rec in self.detector.recommendations:
-                priority_color = Colors.RED if rec.priority == 'HIGH' else Colors.YELLOW
+                priority_color = Colors.RED if rec.priority == "HIGH" else Colors.YELLOW
                 print(f"  {priority_color}{rec.priority}: {rec.message}{Colors.END}")
 
         # Find the project root (where scripts/ directory is)
@@ -247,7 +258,7 @@ class UserInterface:
                 "🛠️  Install Missing Tools",
                 "🔗 Open Installation Links",
                 "🔍 Check Environment Again",
-                "❌ Exit"
+                "❌ Exit",
             ]
 
             choice = self.get_user_choice("What would you like to do?", choices)
@@ -255,7 +266,9 @@ class UserInterface:
             if choice == 0:  # Delete Repository
                 script_path = project_root / "scripts" / "bash" / "delete-repo.sh"
                 if script_path.exists():
-                    self.print_status("Launching Interactive GitHub Repository Deletion Script...", "INFO")
+                    self.print_status(
+                        "Launching Interactive GitHub Repository Deletion Script...", "INFO"
+                    )
                     self.launch_script(script_path, "bash")
                 else:
                     self.print_status(f"Deletion script not found at {script_path}", "ERROR")
@@ -289,7 +302,9 @@ class UserInterface:
                 script_path = project_root / "script-generator.py"
                 if script_path.exists():
                     self.print_status("Launching Script Generator & GitHub Learning...", "INFO")
-                    self.print_status("Generate custom automation scripts while learning GitHub!", "INFO")
+                    self.print_status(
+                        "Generate custom automation scripts while learning GitHub!", "INFO"
+                    )
                     self.launch_script(script_path, "python")
                 else:
                     self.print_status("Script generator not found.", "ERROR")
@@ -307,7 +322,9 @@ class UserInterface:
                 script_path = project_root / "scripts" / "git-resets" / "reset_git_history.sh"
                 if script_path.exists():
                     self.print_status("Launching Git History Reset Tool...", "WARNING")
-                    self.print_status("This will DELETE all commit history while keeping files.", "WARNING")
+                    self.print_status(
+                        "This will DELETE all commit history while keeping files.", "WARNING"
+                    )
                     self.launch_script(script_path, "bash")
                 else:
                     self.print_status("Git history reset script not found.", "ERROR")

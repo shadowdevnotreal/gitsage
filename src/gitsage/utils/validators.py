@@ -7,6 +7,7 @@ from typing import Optional, Tuple
 
 class ValidationError(Exception):
     """Raised when validation fails."""
+
     pass
 
 
@@ -27,11 +28,10 @@ class Validators:
         Raises:
             ValidationError: If format is invalid
         """
-        pattern = r'^[a-zA-Z0-9_-]+/[a-zA-Z0-9_.-]+$'
+        pattern = r"^[a-zA-Z0-9_-]+/[a-zA-Z0-9_.-]+$"
         if not re.match(pattern, name):
             raise ValidationError(
-                f"Invalid repository name format: {name}. "
-                "Expected format: 'owner/repo'"
+                f"Invalid repository name format: {name}. " "Expected format: 'owner/repo'"
             )
         return True
 
@@ -76,12 +76,12 @@ class Validators:
         """
         # Git branch name rules (simplified)
         invalid_patterns = [
-            r'\.\.',  # Cannot contain '..'
-            r'^\.', # Cannot start with '.'
-            r'/$',  # Cannot end with '/'
-            r'//',  # Cannot contain consecutive slashes
-            r'[~^:\?\*\[]',  # Cannot contain special characters
-            r'\s',  # Cannot contain whitespace
+            r"\.\.",  # Cannot contain '..'
+            r"^\.",  # Cannot start with '.'
+            r"/$",  # Cannot end with '/'
+            r"//",  # Cannot contain consecutive slashes
+            r"[~^:\?\*\[]",  # Cannot contain special characters
+            r"\s",  # Cannot contain whitespace
         ]
 
         for pattern in invalid_patterns:
@@ -111,7 +111,7 @@ class Validators:
         Raises:
             ValidationError: If version format is invalid
         """
-        pattern = r'^\d+\.\d+\.\d+(-[a-zA-Z0-9.-]+)?(\+[a-zA-Z0-9.-]+)?$'
+        pattern = r"^\d+\.\d+\.\d+(-[a-zA-Z0-9.-]+)?(\+[a-zA-Z0-9.-]+)?$"
         if not re.match(pattern, version):
             raise ValidationError(
                 f"Invalid semantic version: {version}. "
@@ -133,11 +133,9 @@ class Validators:
         Raises:
             ValidationError: If URL format is invalid
         """
-        pattern = r'^https?://[^\s/$.?#].[^\s]*$'
+        pattern = r"^https?://[^\s/$.?#].[^\s]*$"
         if not re.match(pattern, url):
-            raise ValidationError(
-                f"Invalid URL format: {url}"
-            )
+            raise ValidationError(f"Invalid URL format: {url}")
         return True
 
     @staticmethod
@@ -154,11 +152,9 @@ class Validators:
         Raises:
             ValidationError: If email format is invalid
         """
-        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
         if not re.match(pattern, email):
-            raise ValidationError(
-                f"Invalid email format: {email}"
-            )
+            raise ValidationError(f"Invalid email format: {email}")
         return True
 
     @staticmethod
@@ -174,14 +170,14 @@ class Validators:
         """
         # Remove invalid characters for filenames
         invalid_chars = r'[<>:"/\\|?*\x00-\x1f]'
-        sanitized = re.sub(invalid_chars, '_', filename)
+        sanitized = re.sub(invalid_chars, "_", filename)
 
         # Remove leading/trailing dots and spaces
-        sanitized = sanitized.strip('. ')
+        sanitized = sanitized.strip(". ")
 
         # Ensure it's not empty
         if not sanitized:
-            sanitized = 'unnamed'
+            sanitized = "unnamed"
 
         return sanitized
 

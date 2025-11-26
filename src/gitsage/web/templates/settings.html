@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - {{ project_name }}{% endblock %}
+
+{% block content %}
+<div class="settings-page">
+    <header class="page-header">
+        <h1>Settings</h1>
+        <p class="subtitle">Configure GitSage preferences</p>
+    </header>
+
+    <section class="section">
+        <h2>General Settings</h2>
+        <form id="generalSettings" class="settings-form">
+            <div class="form-group">
+                <label for="projectName">Project Name</label>
+                <input type="text" id="projectName" value="{{ config.project.name }}">
+            </div>
+
+            <div class="form-group">
+                <label for="projectVersion">Version</label>
+                <input type="text" id="projectVersion" value="{{ config.project.version }}" readonly>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save General Settings</button>
+        </form>
+    </section>
+
+    <section class="section">
+        <h2>Backup Settings</h2>
+        <form id="backupSettings" class="settings-form">
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="backupEnabled" {{ 'checked' if config.backup.enabled else '' }}>
+                    Enable Automatic Backups
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="maxBackups">Max Backups per Repository</label>
+                <input type="number" id="maxBackups" value="{{ config.backup.max_backups_per_repo }}" min="1" max="100">
+            </div>
+
+            <div class="form-group">
+                <label for="retentionDays">Retention Days</label>
+                <input type="number" id="retentionDays" value="{{ config.backup.retention_days }}" min="1" max="365">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Backup Settings</button>
+        </form>
+    </section>
+
+    <section class="section">
+        <h2>Logging Settings</h2>
+        <form id="loggingSettings" class="settings-form">
+            <div class="form-group">
+                <label for="logLevel">Log Level</label>
+                <select id="logLevel">
+                    <option value="DEBUG" {{ 'selected' if config.logging.level == 'DEBUG' else '' }}>DEBUG</option>
+                    <option value="INFO" {{ 'selected' if config.logging.level == 'INFO' else '' }}>INFO</option>
+                    <option value="WARNING" {{ 'selected' if config.logging.level == 'WARNING' else '' }}>WARNING</option>
+                    <option value="ERROR" {{ 'selected' if config.logging.level == 'ERROR' else '' }}>ERROR</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="consoleOutput" {{ 'checked' if config.logging.console_output else '' }}>
+                    Console Output
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="fileOutput" {{ 'checked' if config.logging.file_output else '' }}>
+                    File Output
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Logging Settings</button>
+        </form>
+    </section>
+
+    <section class="section">
+        <h2>Security Settings</h2>
+        <form id="securitySettings" class="settings-form">
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="requireConfirmations" {{ 'checked' if config.security.require_confirmations else '' }}>
+                    Require Confirmations for Destructive Operations
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="backupBeforeDelete" {{ 'checked' if config.security.backup_before_delete else '' }}>
+                    Backup Before Deletion
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Security Settings</button>
+        </form>
+    </section>
+</div>
+
+<style>
+.settings-form {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 600px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-primary);
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+</style>
+
+<script>
+// General Settings
+document.getElementById('generalSettings').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+        projectName: document.getElementById('projectName').value
+    };
+    await saveSettings('general', data);
+});
+
+// Backup Settings
+document.getElementById('backupSettings').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+        enabled: document.getElementById('backupEnabled').checked,
+        maxBackups: parseInt(document.getElementById('maxBackups').value),
+        retentionDays: parseInt(document.getElementById('retentionDays').value)
+    };
+    await saveSettings('backup', data);
+});
+
+// Logging Settings
+document.getElementById('loggingSettings').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+        logLevel: document.getElementById('logLevel').value,
+        consoleOutput: document.getElementById('consoleOutput').checked,
+        fileOutput: document.getElementById('fileOutput').checked
+    };
+    await saveSettings('logging', data);
+});
+
+// Security Settings
+document.getElementById('securitySettings').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+        requireConfirmations: document.getElementById('requireConfirmations').checked,
+        backupBeforeDelete: document.getElementById('backupBeforeDelete').checked
+    };
+    await saveSettings('security', data);
+});
+
+async function saveSettings(category, data) {
+    try {
+        const response = await fetch(`/api/settings/${category}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            window.GitSage.showNotification('Settings saved successfully!', 'success');
+        } else {
+            window.GitSage.showNotification('Failed to save settings: ' + result.error, 'error');
+        }
+    } catch (error) {
+        window.GitSage.showNotification('Error: ' + error.message, 'error');
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+
+{% block title %}Backups - {{ project_name }}{% endblock %}
+
+{% block content %}
+<div class="backups-page">
+    <header class="page-header">
+        <h1>Backup Management</h1>
+        <p class="subtitle">Manage repository backups with SHA256 verification</p>
+    </header>
+
+    <section class="section">
+        <div class="backup-actions">
+            <button class="btn btn-primary" id="createBackupBtn">Create New Backup</button>
+            <button class="btn btn-secondary" id="refreshBackupsBtn">Refresh List</button>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Available Backups</h2>
+        <div id="backupsList" class="backups-grid">
+            <p class="loading">Loading backups...</p>
+        </div>
+    </section>
+
+    <!-- Create Backup Modal -->
+    <div id="createBackupModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create New Backup</h2>
+
+            <form id="createBackupForm">
+                <div class="form-group">
+                    <label for="repoPath">Repository Path</label>
+                    <input type="text" id="repoPath" name="repoPath" placeholder="/path/to/repository" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="repoName">Repository Name</label>
+                    <input type="text" id="repoName" name="repoName" placeholder="owner/repo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="operation">Operation Type</label>
+                    <select id="operation" name="operation">
+                        <option value="manual">Manual Backup</option>
+                        <option value="before-deletion">Before Deletion</option>
+                        <option value="before-migration">Before Migration</option>
+                        <option value="scheduled">Scheduled Backup</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Create Backup</button>
+                    <button type="button" class="btn btn-secondary" id="cancelBackup">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+.backup-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.backups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.backup-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+}
+
+.backup-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 8px rgba(0, 212, 255, 0.1);
+}
+
+.backup-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+}
+
+.backup-info {
+    margin-bottom: 1rem;
+}
+
+.backup-info p {
+    margin: 0.5rem 0;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.backup-info strong {
+    color: var(--text-primary);
+}
+
+.backup-actions-card {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.backup-actions-card button {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    margin: 5% auto;
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+}
+
+.close {
+    color: var(--text-secondary);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: var(--text-primary);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.loading {
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 2rem;
+}
+</style>
+
+<script>
+// Load backups on page load
+async function loadBackups() {
+    const backupsList = document.getElementById('backupsList');
+    backupsList.innerHTML = '<p class="loading">Loading backups...</p>';
+
+    try {
+        const response = await fetch('/api/backups');
+        const data = await response.json();
+
+        if (data.success && data.backups.length > 0) {
+            backupsList.innerHTML = data.backups.map(backup => `
+                <div class="backup-card">
+                    <h3>${backup.name}</h3>
+                    <div class="backup-info">
+                        <p><strong>Size:</strong> ${formatBytes(backup.size)}</p>
+                        <p><strong>Created:</strong> ${formatDate(backup.created)}</p>
+                        <p><strong>Checksum:</strong> ${backup.checksum ? backup.checksum.substring(0, 16) + '...' : 'N/A'}</p>
+                    </div>
+                    <div class="backup-actions-card">
+                        <button class="btn btn-secondary" onclick="restoreBackup('${backup.id}')">Restore</button>
+                        <button class="btn btn-secondary" onclick="downloadBackup('${backup.id}')">Download</button>
+                        <button class="btn btn-secondary" onclick="deleteBackup('${backup.id}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        } else {
+            backupsList.innerHTML = '<p class="text-secondary">No backups found</p>';
+        }
+    } catch (error) {
+        backupsList.innerHTML = '<p class="text-secondary">Error loading backups</p>';
+        console.error('Error loading backups:', error);
+    }
+}
+
+function formatBytes(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+}
+
+function formatDate(timestamp) {
+    return new Date(timestamp * 1000).toLocaleString();
+}
+
+// Modal handling
+const modal = document.getElementById('createBackupModal');
+const createBtn = document.getElementById('createBackupBtn');
+const closeBtn = document.querySelector('.close');
+const cancelBtn = document.getElementById('cancelBackup');
+
+createBtn.onclick = () => modal.style.display = 'block';
+closeBtn.onclick = () => modal.style.display = 'none';
+cancelBtn.onclick = () => modal.style.display = 'none';
+
+window.onclick = (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+};
+
+// Create backup form
+document.getElementById('createBackupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const data = {
+        repoPath: formData.get('repoPath'),
+        repoName: formData.get('repoName'),
+        operation: formData.get('operation')
+    };
+
+    try {
+        const response = await fetch('/api/backups/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            window.GitSage.showNotification('Backup created successfully!', 'success');
+            modal.style.display = 'none';
+            loadBackups();
+        } else {
+            window.GitSage.showNotification('Failed to create backup: ' + result.error, 'error');
+        }
+    } catch (error) {
+        window.GitSage.showNotification('Error: ' + error.message, 'error');
+    }
+});
+
+// Backup actions
+async function restoreBackup(backupId) {
+    if (!confirm('Are you sure you want to restore this backup?')) return;
+
+    try {
+        const response = await fetch(`/api/backups/${backupId}/restore`, {
+            method: 'POST'
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            window.GitSage.showNotification('Backup restored successfully!', 'success');
+        } else {
+            window.GitSage.showNotification('Failed to restore backup: ' + result.error, 'error');
+        }
+    } catch (error) {
+        window.GitSage.showNotification('Error: ' + error.message, 'error');
+    }
+}
+
+function downloadBackup(backupId) {
+    window.location.href = `/api/backups/${backupId}/download`;
+}
+
+async function deleteBackup(backupId) {
+    if (!confirm('Are you sure you want to delete this backup?')) return;
+
+    try {
+        const response = await fetch(`/api/backups/${backupId}`, {
+            method: 'DELETE'
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            window.GitSage.showNotification('Backup deleted successfully!', 'success');
+            loadBackups();
+        } else {
+            window.GitSage.showNotification('Failed to delete backup: ' + result.error, 'error');
+        }
+    } catch (error) {
+        window.GitSage.showNotification('Error: ' + error.message, 'error');
+    }
+}
+
+// Refresh button
+document.getElementById('refreshBackupsBtn').addEventListener('click', loadBackups);
+
+// Initial load
+loadBackups();
+</script>
+{% endblock %}
