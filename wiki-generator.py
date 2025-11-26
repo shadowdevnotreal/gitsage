@@ -848,12 +848,55 @@ echo "  3. Netlify: Deploy _book folder"
         # Show summary
         self._show_summary()
 
+    def show_wiki_setup_instructions(self) -> None:
+        """Display instructions for enabling GitHub Wiki"""
+        username = self.config.get('project', {}).get('github_url', '').split('github.com/')[-1].split('/')[0] or 'username'
+        repo = self.config.get('project', {}).get('github_url', '').split('/')[-1] or 'repo'
+
+        if RICH_AVAILABLE:
+            console.print(Panel.fit(
+                f"""[bold cyan]Enable GitHub Wiki (Required)[/bold cyan]
+
+[yellow]Your wiki pages are ready! But first, enable Wiki in GitHub:[/yellow]
+
+[bold white]Step 1:[/bold white] Go to Repository Settings
+  [dim]https://github.com/{username}/{repo}/settings[/dim]
+
+[bold white]Step 2:[/bold white] Scroll to "Features" section
+
+[bold white]Step 3:[/bold white] Check the "Wikis" checkbox
+
+[bold white]Step 4:[/bold white] Click "Save changes"
+
+[bold white]Step 5:[/bold white] Deploy your wiki pages
+  [dim]./generated-docs/deployment/deploy-wiki.sh https://github.com/{username}/{repo}.wiki.git[/dim]
+
+[green]Takes 30 seconds[/green] | [blue]Learn more: https://docs.github.com/en/communities/documenting-your-project-with-wikis[/blue]
+""",
+                border_style="yellow",
+                title="GitHub Wiki Setup"
+            ))
+        else:
+            print("\n" + "="*70)
+            print(" " * 20 + "ENABLE GITHUB WIKI (Required)")
+            print("="*70)
+            print("\nYour wiki pages are ready! But first, enable Wiki in GitHub:\n")
+            print("Step 1: Go to Repository Settings")
+            print(f"        https://github.com/{username}/{repo}/settings\n")
+            print("Step 2: Scroll to 'Features' section\n")
+            print("Step 3: Check the 'Wikis' checkbox\n")
+            print("Step 4: Click 'Save changes'\n")
+            print("Step 5: Deploy your wiki pages")
+            print(f"        ./generated-docs/deployment/deploy-wiki.sh https://github.com/{username}/{repo}.wiki.git\n")
+            print("Takes 30 seconds | Learn more: https://docs.github.com/en/communities/documenting-your-project-with-wikis")
+            print("="*70 + "\n")
+
     def _show_summary(self) -> None:
         """Show generation summary"""
         duration = (datetime.now() - self.stats["start_time"]).total_seconds()
 
         if RICH_AVAILABLE:
-            rprint("\n[bold green]✅ Documentation Generation Complete![/bold green]\n")
+            rprint("\n[bold green]Documentation Generation Complete![/bold green]\n")
 
             table = Table(show_header=True, header_style="bold magenta")
             table.add_column("Metric", style="cyan")
@@ -866,20 +909,36 @@ echo "  3. Netlify: Deploy _book folder"
 
             console.print(table)
 
-            rprint("\n[bold]📁 Next Steps:[/bold]")
+            # Show Wiki setup instructions if GitHub Wiki was generated
+            if "github-wiki" in self.stats["formats"]:
+                rprint("")  # Blank line
+                self.show_wiki_setup_instructions()
+
+            rprint("\n[bold]Next Steps:[/bold]")
             rprint("  1. Review generated docs in [cyan]generated-docs/[/cyan]")
-            rprint("  2. Deploy wiki: [cyan]./generated-docs/deployment/deploy-wiki.sh <repo-url>[/cyan]")
-            rprint("  3. Build GitBook: [cyan]./generated-docs/deployment/deploy-gitbook.sh[/cyan]")
+            if "github-wiki" in self.stats["formats"]:
+                rprint("  2. [yellow]Enable GitHub Wiki[/yellow] (see instructions above)")
+                rprint("  3. Deploy wiki: [cyan]./generated-docs/deployment/deploy-wiki.sh <repo-url>[/cyan]")
+            if "gitbook" in self.stats["formats"]:
+                rprint(f"  {'4' if 'github-wiki' in self.stats['formats'] else '2'}. Build GitBook: [cyan]./generated-docs/deployment/deploy-gitbook.sh[/cyan]")
         else:
-            print("\n✅ Documentation Generation Complete!\n")
+            print("\nDocumentation Generation Complete!\n")
             print(f"Pages Generated: {self.stats['pages_generated']}")
             print(f"Formats: {', '.join(self.stats['formats'])}")
             print(f"Duration: {duration:.2f}s")
             print(f"Output: {self.output_dir}")
+
+            # Show Wiki setup instructions if GitHub Wiki was generated
+            if "github-wiki" in self.stats["formats"]:
+                self.show_wiki_setup_instructions()
+
             print("\nNext Steps:")
             print("  1. Review generated docs")
-            print("  2. Deploy wiki: ./generated-docs/deployment/deploy-wiki.sh <repo-url>")
-            print("  3. Build GitBook: ./generated-docs/deployment/deploy-gitbook.sh")
+            if "github-wiki" in self.stats["formats"]:
+                print("  2. Enable GitHub Wiki (see instructions above)")
+                print("  3. Deploy wiki: ./generated-docs/deployment/deploy-wiki.sh <repo-url>")
+            if "gitbook" in self.stats["formats"]:
+                print(f"  {'4' if 'github-wiki' in self.stats['formats'] else '2'}. Build GitBook: ./generated-docs/deployment/deploy-gitbook.sh")
 
 
 def main():
