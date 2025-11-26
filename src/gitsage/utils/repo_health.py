@@ -74,7 +74,7 @@ class RepositoryHealthChecker:
                 'status': 'missing',
                 'score': 0,
                 'max_score': 15,
-                'message': '❌ Missing - Your project needs a README!',
+                'message': '[MISSING] Your project needs a README!',
                 'priority': 'critical',
                 'fix_time': '10 minutes',
                 'learn_url': 'https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes'
@@ -100,7 +100,7 @@ class RepositoryHealthChecker:
             'status': 'good' if score >= 12 else 'basic',
             'score': min(score, 15),
             'max_score': 15,
-            'message': f'✓ Exists ({score}/15 quality points)',
+            'message': f'[OK] Exists ({score}/15 quality points)',
             'priority': 'normal',
             'quality_checks': quality_checks
         }
@@ -116,7 +116,7 @@ class RepositoryHealthChecker:
                     'status': 'good',
                     'score': 10,
                     'max_score': 10,
-                    'message': '✓ License file exists',
+                    'message': '[*] License file exists',
                     'priority': 'normal'
                 }
 
@@ -125,7 +125,7 @@ class RepositoryHealthChecker:
             'status': 'missing',
             'score': 0,
             'max_score': 10,
-            'message': '⚠️  Add a license - Learn: choosealicense.com',
+            'message': '[WARN]  Add a license - Learn: choosealicense.com',
             'priority': 'high',
             'fix_time': '2 minutes',
             'learn_url': 'https://choosealicense.com'
@@ -141,7 +141,7 @@ class RepositoryHealthChecker:
                 'status': 'good',
                 'score': 8,
                 'max_score': 8,
-                'message': '✓ Contributing guidelines exist',
+                'message': '[*] Contributing guidelines exist',
                 'priority': 'normal'
             }
 
@@ -150,7 +150,7 @@ class RepositoryHealthChecker:
             'status': 'missing',
             'score': 0,
             'max_score': 8,
-            'message': '💡 Optional - Helps contributors understand how to help',
+            'message': '[!] Optional - Helps contributors understand how to help',
             'priority': 'low',
             'fix_time': '15 minutes',
             'learn_url': 'https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors'
@@ -166,7 +166,7 @@ class RepositoryHealthChecker:
                 'status': 'missing',
                 'score': 0,
                 'max_score': 10,
-                'message': '❌ Critical - Prevents committing secrets & build files',
+                'message': '[FAIL] Critical - Prevents committing secrets & build files',
                 'priority': 'critical',
                 'fix_time': '3 minutes',
                 'learn_url': 'https://git-scm.com/docs/gitignore'
@@ -183,7 +183,7 @@ class RepositoryHealthChecker:
             'status': 'good' if has_common_patterns else 'basic',
             'score': 10 if has_common_patterns else 5,
             'max_score': 10,
-            'message': '✓ .gitignore exists' + ('' if has_common_patterns else ' (basic)'),
+            'message': '[*] .gitignore exists' + ('' if has_common_patterns else ' (basic)'),
             'priority': 'normal'
         }
 
@@ -197,7 +197,7 @@ class RepositoryHealthChecker:
                 'status': 'good',
                 'score': 5,
                 'max_score': 5,
-                'message': '✓ Code of Conduct exists',
+                'message': '[*] Code of Conduct exists',
                 'priority': 'normal'
             }
 
@@ -206,7 +206,7 @@ class RepositoryHealthChecker:
             'status': 'missing',
             'score': 0,
             'max_score': 5,
-            'message': '💡 Optional - Sets community standards',
+            'message': '[!] Optional - Sets community standards',
             'priority': 'low',
             'fix_time': '5 minutes',
             'learn_url': 'https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/adding-a-code-of-conduct-to-your-project'
@@ -222,7 +222,7 @@ class RepositoryHealthChecker:
                 'status': 'good',
                 'score': 5,
                 'max_score': 5,
-                'message': '✓ Security policy exists',
+                'message': '[*] Security policy exists',
                 'priority': 'normal'
             }
 
@@ -231,7 +231,7 @@ class RepositoryHealthChecker:
             'status': 'missing',
             'score': 0,
             'max_score': 5,
-            'message': '💡 Optional - Explains how to report vulnerabilities',
+            'message': '[!] Optional - Explains how to report vulnerabilities',
             'priority': 'low',
             'fix_time': '10 minutes'
         }
@@ -246,7 +246,7 @@ class RepositoryHealthChecker:
                 'status': 'good',
                 'score': 10,
                 'max_score': 10,
-                'message': '✓ CI/CD workflows configured',
+                'message': '[*] CI/CD workflows configured',
                 'priority': 'normal'
             }
 
@@ -255,7 +255,7 @@ class RepositoryHealthChecker:
             'status': 'missing',
             'score': 0,
             'max_score': 10,
-            'message': '💡 Add CI/CD automation for testing & deployment',
+            'message': '[!] Add CI/CD automation for testing & deployment',
             'priority': 'medium',
             'fix_time': '20 minutes',
             'learn_url': 'https://docs.github.com/en/actions/quickstart'
@@ -269,7 +269,7 @@ class RepositoryHealthChecker:
             'status': 'unknown',
             'score': 5,  # Assume enabled
             'max_score': 5,
-            'message': '? Enable in Settings → Features → Issues',
+            'message': '? Enable in Settings -> Features -> Issues',
             'priority': 'low'
         }
 
@@ -281,7 +281,7 @@ class RepositoryHealthChecker:
             'status': 'unknown',
             'score': 3,  # Assume not enabled
             'max_score': 5,
-            'message': '⚠️  Enable in Settings → Features → Wiki',
+            'message': '[WARN]  Enable in Settings -> Features -> Wiki',
             'priority': 'low',
             'fix_time': '30 seconds',
             'learn_url': 'https://docs.github.com/en/communities/documenting-your-project-with-wikis'
@@ -318,7 +318,7 @@ class RepositoryHealthChecker:
             'status': 'unknown',
             'score': 0,
             'max_score': 5,
-            'message': '💡 Protect main branch (require PR reviews)',
+            'message': '[!] Protect main branch (require PR reviews)',
             'priority': 'medium',
             'learn_url': 'https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches'
         }
@@ -334,7 +334,7 @@ class RepositoryHealthChecker:
                 'status': 'good',
                 'score': 6,
                 'max_score': 6,
-                'message': '✓ Documentation directory exists',
+                'message': '[*] Documentation directory exists',
                 'priority': 'normal'
             }
 
@@ -343,7 +343,7 @@ class RepositoryHealthChecker:
             'status': 'missing',
             'score': 0,
             'max_score': 6,
-            'message': '💡 Create docs/ for detailed documentation',
+            'message': '[!] Create docs/ for detailed documentation',
             'priority': 'low',
             'fix_time': '30 minutes'
         }
@@ -406,12 +406,12 @@ class RepositoryHealthChecker:
 
             console.print(Panel(
                 f"[bold {score_color}]{results['overall_score']}/{results['max_score']} points ({score_percent:.1f}%)[/bold {score_color}]",
-                title="🏥 Repository Health Score"
+                title="[HEALTH] Repository Health Score"
             ))
 
             # Critical issues
             if results['critical_issues']:
-                console.print("\n[bold red]❌ Critical Issues:[/bold red]")
+                console.print("\n[bold red][FAIL] Critical Issues:[/bold red]")
                 for issue in results['critical_issues']:
                     console.print(f"  • {issue}")
 
@@ -419,7 +419,7 @@ class RepositoryHealthChecker:
             if results['quick_wins']:
                 console.print("\n[bold green]⚡ Quick Wins (< 5 min):[/bold green]")
                 for win in results['quick_wins'][:3]:
-                    console.print(f"  • {win['name']} ({win['time']}) → +{win['points']} pts")
+                    console.print(f"  • {win['name']} ({win['time']}) -> +{win['points']} pts")
 
             # All checks
             console.print("\n[bold cyan]📋 All Checks:[/bold cyan]")
@@ -430,9 +430,9 @@ class RepositoryHealthChecker:
 
             for name, check in results['checks'].items():
                 status_icon = {
-                    'good': '✓',
+                    'good': '[*]',
                     'basic': '⚠',
-                    'missing': '❌',
+                    'missing': '[FAIL]',
                     'unknown': '?'
                 }.get(check['status'], '?')
 
@@ -447,21 +447,21 @@ class RepositoryHealthChecker:
         else:
             # Plain text output
             print("\n" + "="*60)
-            print("🏥 REPOSITORY HEALTH REPORT")
+            print("[HEALTH] REPOSITORY HEALTH REPORT")
             print("="*60)
 
             score_percent = (results['overall_score'] / results['max_score']) * 100
             print(f"\nOverall Score: {results['overall_score']}/{results['max_score']} ({score_percent:.1f}%)")
 
             if results['critical_issues']:
-                print("\n❌ CRITICAL ISSUES:")
+                print("\n[FAIL] CRITICAL ISSUES:")
                 for issue in results['critical_issues']:
                     print(f"  • {issue}")
 
             if results['quick_wins']:
                 print("\n⚡ QUICK WINS:")
                 for win in results['quick_wins'][:3]:
-                    print(f"  • {win['name']} ({win['time']}) → +{win['points']} pts")
+                    print(f"  • {win['name']} ({win['time']}) -> +{win['points']} pts")
 
             print("\n📋 ALL CHECKS:")
             for name, check in results['checks'].items():

@@ -5,16 +5,16 @@ GitSage README Generator - ENHANCED WITH INTERACTIVE MODE
 Generate awesome README.md files with badges, charts, and professional formatting.
 
 Features:
-- 🎯 **INTERACTIVE WIZARD** - No config files needed!
-- 🤖 Auto-detect project type from codebase
-- 📊 GitHub stats integration
-- ✨ Multiple templates (CLI tool, library, web app, data science, etc.)
-- 🎨 Auto-generated shields.io badges
-- 📈 Project statistics and charts
-- 📚 Table of contents
-- 💡 Code examples
-- 🤝 Contributing guidelines
-- 📜 License detection
+- [>>] **INTERACTIVE WIZARD** - No config files needed!
+- [AUTO] Auto-detect project type from codebase
+- [STATS] GitHub stats integration
+- [+] Multiple templates (CLI tool, library, web app, data science, etc.)
+- [STYLE] Auto-generated shields.io badges
+- [CHART] Project statistics and charts
+- [DOCS] Table of contents
+- [!] Code examples
+- [CONTRIB] Contributing guidelines
+- [LICENSE] License detection
 """
 
 import os
@@ -118,9 +118,9 @@ class ReadmeGenerator:
                 'support': True,
             },
             'features': [
-                '✨ Feature 1 - Brief description',
-                '🚀 Feature 2 - What it does',
-                '💡 Feature 3 - Why it\'s useful',
+                '[+] Feature 1 - Brief description',
+                '[ROCKET] Feature 2 - What it does',
+                '[!] Feature 3 - Why it\'s useful',
             ],
             'technologies': [
                 {'name': 'Python', 'version': '3.8+'},
@@ -154,7 +154,7 @@ class ReadmeGenerator:
         with open(self.config_path, 'w') as f:
             yaml.dump(config, f, default_flow_style=False, sort_keys=False)
 
-        self.print(f"✓ Created default config: {self.config_path}", "green")
+        self.print(f"[*] Created default config: {self.config_path}", "green")
         self.print("  Edit this file to customize your README", "dim")
 
         return config
@@ -253,7 +253,7 @@ class ReadmeGenerator:
             return ""
 
         features = self.config['features']
-        section = "## ✨ Features\n\n"
+        section = "## [+] Features\n\n"
 
         for feature in features:
             section += f"- {feature}\n"
@@ -269,7 +269,7 @@ class ReadmeGenerator:
         install = self.config['installation']
         methods = install.get('methods', [])
 
-        section = "## 📦 Installation\n\n"
+        section = "## [PKG] Installation\n\n"
 
         if 'pip' in methods:
             package = install.get('pip_package', 'package-name')
@@ -292,7 +292,7 @@ class ReadmeGenerator:
 
         template_type = self.config['template']['type']
 
-        section = "## 🚀 Quick Start\n\n"
+        section = "## [ROCKET] Quick Start\n\n"
 
         if template_type == 'cli-tool':
             section += "```bash\n# Run the tool\nmycommand --help\n\n# Basic usage\nmycommand input.txt\n```\n\n"
@@ -308,7 +308,7 @@ class ReadmeGenerator:
         if not self.config['sections'].get('usage'):
             return ""
 
-        section = "## 💻 Usage\n\n"
+        section = "## [CODE] Usage\n\n"
 
         examples = self.config.get('usage_examples', [])
         for example in examples:
@@ -323,7 +323,7 @@ class ReadmeGenerator:
         if not self.config['sections'].get('contributing'):
             return ""
 
-        section = "## 🤝 Contributing\n\n"
+        section = "## [CONTRIB] Contributing\n\n"
         section += "Contributions are welcome! Please feel free to submit a Pull Request.\n\n"
 
         guidelines_file = self.config['contributing'].get('guidelines_file')
@@ -347,7 +347,7 @@ class ReadmeGenerator:
         project = self.config['project']
         license_name = project.get('license', 'MIT')
 
-        section = "## 📜 License\n\n"
+        section = "## [LICENSE] License\n\n"
         section += f"This project is licensed under the {license_name} License - see the [LICENSE](LICENSE) file for details.\n\n"
 
         return section
@@ -361,12 +361,12 @@ class ReadmeGenerator:
         if not any(support.values()):
             return ""
 
-        section = "## 💬 Support\n\n"
+        section = "## [CHAT] Support\n\n"
 
         if support.get('email'):
             section += f"- 📧 Email: {support['email']}\n"
         if support.get('discord'):
-            section += f"- 💬 Discord: {support['discord']}\n"
+            section += f"- [CHAT] Discord: {support['discord']}\n"
         if support.get('forum'):
             section += f"- 💭 Forum: {support['forum']}\n"
 
@@ -385,7 +385,7 @@ class ReadmeGenerator:
 
     def generate(self, output_path="README.md") -> str:
         """Generate complete README"""
-        self.print("\n🎨 Generating README.md...\n", "bold blue")
+        self.print("\n[STYLE] Generating README.md...\n", "bold blue")
 
         readme = ""
         readme += self.generate_header()
@@ -404,7 +404,7 @@ class ReadmeGenerator:
         with open(output_path, 'w') as f:
             f.write(readme)
 
-        self.print(f"✓ README generated: {output_path}", "green bold")
+        self.print(f"[*] README generated: {output_path}", "green bold")
         self.print(f"  {len(readme)} characters", "dim")
         self.print(f"  {len(readme.splitlines())} lines", "dim")
 
@@ -425,7 +425,7 @@ class ReadmeGenerator:
         console = Console()
 
         console.print(Panel.fit(
-            "[bold cyan]🎯 README Generator - Interactive Wizard[/bold cyan]\n"
+            "[bold cyan][>>] README Generator - Interactive Wizard[/bold cyan]\n"
             "[dim]Answer the questions below to create an awesome README![/dim]",
             border_style="cyan"
         ))
@@ -447,7 +447,7 @@ class ReadmeGenerator:
         # Auto-detect project information
         auto_detected = {}
         if GITSAGE_UTILS_AVAILABLE:
-            console.print("\n[bold yellow]🔍 Analyzing your codebase...[/bold yellow]")
+            console.print("\n[bold yellow][SEARCH] Analyzing your codebase...[/bold yellow]")
             detector = ProjectDetector()
             detection = detector.detect()
             stats_gen = GitHubStatsGenerator()
@@ -462,13 +462,13 @@ class ReadmeGenerator:
                 'repo': repo_info.get('repo', 'repo'),
             }
 
-            console.print(f"[green]✓[/green] Detected: {auto_detected.get('project_type', 'Unknown')}")
+            console.print(f"[green][*][/green] Detected: {auto_detected.get('project_type', 'Unknown')}")
             if auto_detected.get('languages'):
                 langs = ', '.join(list(auto_detected['languages'].keys())[:3])
-                console.print(f"[green]✓[/green] Languages: {langs}")
+                console.print(f"[green][*][/green] Languages: {langs}")
 
         # Project Information
-        console.print("\n[bold cyan]📝 Project Information[/bold cyan]")
+        console.print("\n[bold cyan][EDIT] Project Information[/bold cyan]")
 
         project_name = Prompt.ask(
             "Project name",
@@ -507,7 +507,7 @@ class ReadmeGenerator:
         config['project']['license'] = license_choices[int(license_choice) - 1]
 
         # Template Type
-        console.print("\n[bold cyan]🎨 Template Type[/bold cyan]")
+        console.print("\n[bold cyan][STYLE] Template Type[/bold cyan]")
 
         template_types = {
             '1': 'cli-tool',
@@ -520,7 +520,7 @@ class ReadmeGenerator:
 
         console.print("Choose template:")
         for key, val in template_types.items():
-            prefix = "[bold green]→[/bold green]" if val == auto_detected.get('project_type') else " "
+            prefix = "[bold green]->[/bold green]" if val == auto_detected.get('project_type') else " "
             console.print(f"  {prefix} {key}. {val}")
 
         # Determine default based on auto-detection
@@ -535,7 +535,7 @@ class ReadmeGenerator:
         config['template']['style'] = 'professional'
 
         # Badges
-        console.print("\n[bold cyan]🎖️  Badges[/bold cyan]")
+        console.print("\n[bold cyan][BADGE]  Badges[/bold cyan]")
 
         all_badges = [
             'license', 'version', 'stars', 'forks', 'issues',
@@ -563,7 +563,7 @@ class ReadmeGenerator:
                     config['badges']['shields'] = ['license', 'version', 'stars', 'maintained']
 
         # Features
-        console.print("\n[bold cyan]✨ Features[/bold cyan]")
+        console.print("\n[bold cyan][+] Features[/bold cyan]")
         if Confirm.ask("Add features list?", default=True):
             console.print("Enter features (one per line, empty line to finish):")
             features = []
@@ -571,19 +571,19 @@ class ReadmeGenerator:
                 feature = Prompt.ask(f"Feature {len(features) + 1}", default="")
                 if not feature:
                     break
-                features.append(f"✨ {feature}")
+                features.append(f"[+] {feature}")
                 if len(features) >= 5:
                     if not Confirm.ask("Add more features?", default=False):
                         break
 
             config['features'] = features if features else [
-                "✨ Easy to use",
-                "🚀 Fast and efficient",
-                "📦 Lightweight"
+                "[+] Easy to use",
+                "[ROCKET] Fast and efficient",
+                "[PKG] Lightweight"
             ]
 
         # Sections
-        console.print("\n[bold cyan]📚 Sections to Include[/bold cyan]")
+        console.print("\n[bold cyan][DOCS] Sections to Include[/bold cyan]")
 
         section_defaults = {
             'features': True,
@@ -602,7 +602,7 @@ class ReadmeGenerator:
 
         # Installation
         if config['sections']['installation']:
-            console.print("\n[bold cyan]📦 Installation[/bold cyan]")
+            console.print("\n[bold cyan][PKG] Installation[/bold cyan]")
             install_methods = []
 
             if Confirm.ask("Install via pip/npm?", default=True):
@@ -620,18 +620,18 @@ class ReadmeGenerator:
 
         # Support
         if config['sections']['support']:
-            console.print("\n[bold cyan]💬 Support Channels[/bold cyan]")
+            console.print("\n[bold cyan][CHAT] Support Channels[/bold cyan]")
             config['support']['email'] = Prompt.ask("Support email (optional)", default="")
             config['support']['discord'] = Prompt.ask("Discord server (optional)", default="")
 
-        console.print("\n[bold green]✓ Configuration complete![/bold green]")
+        console.print("\n[bold green][*] Configuration complete![/bold green]")
 
         # Save config option
         if Confirm.ask("\nSave configuration for future use?", default=True):
             config_path = Prompt.ask("Config file name", default="readme-config.yaml")
             with open(config_path, 'w') as f:
                 yaml.dump(config, f, default_flow_style=False, sort_keys=False)
-            console.print(f"[green]✓[/green] Saved to {config_path}")
+            console.print(f"[green][*][/green] Saved to {config_path}")
 
         return config
 
@@ -657,7 +657,7 @@ Examples:
     )
 
     parser.add_argument('--interactive', '-i', action='store_true',
-                       help='🎯 Interactive wizard mode (no config file needed!)')
+                       help='[>>] Interactive wizard mode (no config file needed!)')
     parser.add_argument('--config', default='readme-config.yaml',
                        help='Config file path')
     parser.add_argument('--output', default='README.md',
@@ -666,9 +666,9 @@ Examples:
                        choices=['cli-tool', 'library', 'web-app', 'data-science', 'game', 'npm-package'],
                        help='Use template')
     parser.add_argument('--analyze', action='store_true',
-                       help='🔍 Analyze project and show detected information')
+                       help='[SEARCH] Analyze project and show detected information')
     parser.add_argument('--health-check', action='store_true',
-                       help='🏥 Show repository health report')
+                       help='[HEALTH] Show repository health report')
 
     args = parser.parse_args()
 
@@ -698,9 +698,9 @@ Examples:
         if not os.path.exists(args.config):
             if RICH_AVAILABLE:
                 console = Console()
-                console.print("\n[yellow]⚠️  No config file found. Launching interactive wizard...[/yellow]\n")
+                console.print("\n[yellow][WARN]  No config file found. Launching interactive wizard...[/yellow]\n")
             else:
-                print("\n⚠️  No config file found. Use --interactive for wizard mode or create config file.\n")
+                print("\n[WARN]  No config file found. Use --interactive for wizard mode or create config file.\n")
                 sys.exit(1)
 
         # Create generator without config, then run wizard

@@ -141,7 +141,7 @@ class GitHubStatsGenerator:
 
     def generate_stats_section(self) -> str:
         """Generate comprehensive stats section for README"""
-        stats_md = f"""## 📊 Repository Stats
+        stats_md = f"""## [STATS] Repository Stats
 
 ![Contributors](https://img.shields.io/github/contributors/{self.username}/{self.repo})
 ![Last Commit](https://img.shields.io/github/last-commit/{self.username}/{self.repo})
@@ -164,14 +164,14 @@ class GitHubStatsGenerator:
 
     def generate_trophy_section(self) -> str:
         """Generate GitHub trophy section"""
-        return f"""## 🏆 GitHub Trophies
+        return f"""## [TROPHY] GitHub Trophies
 
 [![trophy](https://github-profile-trophy.vercel.app/?username={self.username}&theme=onedark&no-frame=true&no-bg=true&margin-w=4)](https://github.com/{self.username})
 """
 
     def generate_contribution_graph(self) -> str:
         """Generate contribution activity graph"""
-        return f"""## 📈 Contribution Activity
+        return f"""## [CHART] Contribution Activity
 
 [![{self.username}'s Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username={self.username}&theme=react-dark)](https://github.com/{self.username}/{self.repo})
 """

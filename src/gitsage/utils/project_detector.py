@@ -339,7 +339,7 @@ class ProjectDetector:
 
             # Languages table
             if results['languages']:
-                lang_table = Table(title="📝 Detected Languages")
+                lang_table = Table(title="[EDIT] Detected Languages")
                 lang_table.add_column("Language", style="cyan")
                 lang_table.add_column("Files", style="green")
 
@@ -353,23 +353,23 @@ class ProjectDetector:
                 console.print(Panel(
                     f"[bold green]{results['detected_type']}[/bold green]\n"
                     f"Confidence: {results['confidence']*100:.1f}%",
-                    title="🎯 Detected Project Type"
+                    title="[>>] Detected Project Type"
                 ))
 
             # Technologies
             if results['frameworks'] or results['technologies']:
                 tech_list = results['frameworks'] + results['technologies']
-                console.print(f"\n[bold cyan]🔧 Technologies:[/bold cyan] {', '.join(tech_list)}")
+                console.print(f"\n[bold cyan][TOOL] Technologies:[/bold cyan] {', '.join(tech_list)}")
 
             # Suggestions
             if results['suggestions']:
-                console.print("\n[bold yellow]💡 Suggestions:[/bold yellow]")
+                console.print("\n[bold yellow][!] Suggestions:[/bold yellow]")
                 for suggestion in results['suggestions']:
                     console.print(f"  • {suggestion}")
         else:
             # Plain text output
             print("\n" + "="*60)
-            print("📝 PROJECT ANALYSIS")
+            print("[EDIT] PROJECT ANALYSIS")
             print("="*60)
 
             if results['languages']:
@@ -378,17 +378,17 @@ class ProjectDetector:
                     print(f"  • {lang}: {count} files")
 
             if results['detected_type']:
-                print(f"\n🎯 Project Type: {results['detected_type']}")
+                print(f"\n[>>] Project Type: {results['detected_type']}")
                 print(f"   Confidence: {results['confidence']*100:.1f}%")
 
             if results['frameworks']:
-                print(f"\n🔧 Frameworks: {', '.join(results['frameworks'])}")
+                print(f"\n[TOOL] Frameworks: {', '.join(results['frameworks'])}")
 
             if results['technologies']:
-                print(f"\n🛠️  Technologies: {', '.join(results['technologies'])}")
+                print(f"\n[TOOLS]  Technologies: {', '.join(results['technologies'])}")
 
             if results['suggestions']:
-                print("\n💡 Suggestions:")
+                print("\n[!] Suggestions:")
                 for suggestion in results['suggestions']:
                     print(f"  • {suggestion}")
 
