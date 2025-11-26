@@ -1,15 +1,17 @@
 """Configuration management for GitSage."""
 
 import os
-import yaml
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Dict, Any, Optional
-from dataclasses import dataclass, field, asdict
+from typing import Any, Dict, Optional
+
+import yaml
 
 
 @dataclass
 class ProjectConfig:
     """Project metadata configuration."""
+
     name: str = "GitHub Repository Manager"
     tagline: str = "Safe and powerful GitHub repository management"
     description: str = "A comprehensive toolkit for GitHub repository management"
@@ -24,6 +26,7 @@ class ProjectConfig:
 @dataclass
 class BackupConfig:
     """Backup system configuration."""
+
     enabled: bool = True
     backup_dir: Path = field(default_factory=lambda: Path.home() / ".gitsage" / "backups")
     max_backups_per_repo: int = 10
@@ -35,6 +38,7 @@ class BackupConfig:
 @dataclass
 class GeneratorConfig:
     """Generator settings configuration."""
+
     output_dir: Path = field(default_factory=lambda: Path("generated-docs"))
     scripts_dir: Path = field(default_factory=lambda: Path("generated-scripts"))
     wikis_dir: Path = field(default_factory=lambda: Path("generated-wikis"))
@@ -45,6 +49,7 @@ class GeneratorConfig:
 @dataclass
 class LoggingConfig:
     """Logging configuration."""
+
     enabled: bool = True
     log_dir: Path = field(default_factory=lambda: Path.home() / ".gitsage" / "logs")
     level: str = "INFO"
@@ -57,6 +62,7 @@ class LoggingConfig:
 @dataclass
 class SecurityConfig:
     """Security settings."""
+
     require_confirmations: bool = True
     allow_force_operations: bool = False
     validate_repo_names: bool = True
@@ -66,6 +72,7 @@ class SecurityConfig:
 @dataclass
 class GitSageConfig:
     """Main GitSage configuration."""
+
     project: ProjectConfig = field(default_factory=ProjectConfig)
     backup: BackupConfig = field(default_factory=BackupConfig)
     generator: GeneratorConfig = field(default_factory=GeneratorConfig)
@@ -73,7 +80,7 @@ class GitSageConfig:
     security: SecurityConfig = field(default_factory=SecurityConfig)
 
     @classmethod
-    def from_file(cls, config_file: Path) -> 'GitSageConfig':
+    def from_file(cls, config_file: Path) -> "GitSageConfig":
         """
         Load configuration from YAML file.
 
@@ -86,47 +93,47 @@ class GitSageConfig:
         if not config_file.exists():
             return cls()
 
-        with open(config_file, 'r', encoding='utf-8') as f:
+        with open(config_file, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f) or {}
 
         config = cls()
 
         # Load project config
-        if 'project' in data:
-            for key, value in data['project'].items():
+        if "project" in data:
+            for key, value in data["project"].items():
                 if hasattr(config.project, key):
                     setattr(config.project, key, value)
 
         # Load backup config
-        if 'backup' in data:
-            for key, value in data['backup'].items():
+        if "backup" in data:
+            for key, value in data["backup"].items():
                 if hasattr(config.backup, key):
-                    if key == 'backup_dir':
+                    if key == "backup_dir":
                         setattr(config.backup, key, Path(value))
                     else:
                         setattr(config.backup, key, value)
 
         # Load generator config
-        if 'generator' in data:
-            for key, value in data['generator'].items():
+        if "generator" in data:
+            for key, value in data["generator"].items():
                 if hasattr(config.generator, key):
-                    if key.endswith('_dir'):
+                    if key.endswith("_dir"):
                         setattr(config.generator, key, Path(value))
                     else:
                         setattr(config.generator, key, value)
 
         # Load logging config
-        if 'logging' in data:
-            for key, value in data['logging'].items():
+        if "logging" in data:
+            for key, value in data["logging"].items():
                 if hasattr(config.logging, key):
-                    if key == 'log_dir':
+                    if key == "log_dir":
                         setattr(config.logging, key, Path(value))
                     else:
                         setattr(config.logging, key, value)
 
         # Load security config
-        if 'security' in data:
-            for key, value in data['security'].items():
+        if "security" in data:
+            for key, value in data["security"].items():
                 if hasattr(config.security, key):
                     setattr(config.security, key, value)
 
@@ -139,6 +146,7 @@ class GitSageConfig:
         Returns:
             Configuration as dictionary
         """
+
         def convert_paths(obj: Any) -> Any:
             """Convert Path objects to strings."""
             if isinstance(obj, Path):
@@ -149,13 +157,15 @@ class GitSageConfig:
                 return [convert_paths(item) for item in obj]
             return obj
 
-        return convert_paths({
-            'project': asdict(self.project),
-            'backup': asdict(self.backup),
-            'generator': asdict(self.generator),
-            'logging': asdict(self.logging),
-            'security': asdict(self.security),
-        })
+        return convert_paths(
+            {
+                "project": asdict(self.project),
+                "backup": asdict(self.backup),
+                "generator": asdict(self.generator),
+                "logging": asdict(self.logging),
+                "security": asdict(self.security),
+            }
+        )
 
     def save(self, config_file: Path) -> None:
         """
@@ -166,11 +176,11 @@ class GitSageConfig:
         """
         config_file.parent.mkdir(parents=True, exist_ok=True)
 
-        with open(config_file, 'w', encoding='utf-8') as f:
+        with open(config_file, "w", encoding="utf-8") as f:
             yaml.dump(self.to_dict(), f, default_flow_style=False, sort_keys=False)
 
     @classmethod
-    def load_or_create(cls, config_file: Optional[Path] = None) -> 'GitSageConfig':
+    def load_or_create(cls, config_file: Optional[Path] = None) -> "GitSageConfig":
         """
         Load configuration from file or create default.
 
@@ -195,7 +205,7 @@ class GitSageConfig:
 class ConfigManager:
     """Manages GitSage configuration across the application."""
 
-    _instance: Optional['ConfigManager'] = None
+    _instance: Optional["ConfigManager"] = None
     _config: Optional[GitSageConfig] = None
 
     def __new__(cls):
@@ -223,6 +233,7 @@ class ConfigManager:
         """Get current configuration."""
         if self._config is None:
             self.reload()
+        assert self._config is not None  # reload() always sets _config
         return self._config
 
     def get_project_config(self) -> ProjectConfig:

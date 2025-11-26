@@ -2,9 +2,9 @@
 
 import logging
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Optional
-from datetime import datetime
 
 
 class GitSageLogger:
@@ -20,7 +20,7 @@ class GitSageLogger:
         log_file: Optional[Path] = None,
         level: int = logging.INFO,
         console_output: bool = True,
-        file_output: bool = True
+        file_output: bool = True,
     ) -> logging.Logger:
         """
         Set up a logger with file and console handlers.
@@ -43,8 +43,7 @@ class GitSageLogger:
 
         # Create formatter
         formatter = logging.Formatter(
-            GitSageLogger.DEFAULT_FORMAT,
-            datefmt=GitSageLogger.DATE_FORMAT
+            GitSageLogger.DEFAULT_FORMAT, datefmt=GitSageLogger.DATE_FORMAT
         )
 
         # Console handler
@@ -63,7 +62,7 @@ class GitSageLogger:
             # Ensure log directory exists
             log_file.parent.mkdir(parents=True, exist_ok=True)
 
-            file_handler = logging.FileHandler(log_file, mode='a', encoding='utf-8')
+            file_handler = logging.FileHandler(log_file, mode="a", encoding="utf-8")
             file_handler.setLevel(level)
             file_handler.setFormatter(formatter)
             logger.addHandler(file_handler)
@@ -82,14 +81,16 @@ class GitSageLogger:
             Configured logger instance
         """
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        log_file = GitSageLogger.DEFAULT_LOG_DIR / operation_name / f"{operation_name}_{timestamp}.log"
+        log_file = (
+            GitSageLogger.DEFAULT_LOG_DIR / operation_name / f"{operation_name}_{timestamp}.log"
+        )
 
         return GitSageLogger.setup_logger(
             name=f"gitsage.{operation_name}",
             log_file=log_file,
             level=logging.DEBUG,
             console_output=False,  # Operation logs go to file only
-            file_output=True
+            file_output=True,
         )
 
     @staticmethod
@@ -130,6 +131,7 @@ class RichLogger:
         if use_rich:
             try:
                 from rich.console import Console
+
                 self.console = Console()
             except ImportError:
                 self.use_rich = False

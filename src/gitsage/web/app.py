@@ -4,13 +4,12 @@ import os
 from pathlib import Path
 from typing import Optional
 
-from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
+from flask import Flask, flash, jsonify, redirect, render_template, request, url_for
 from flask_cors import CORS
 
-from gitsage.__version__ import __version__, PROJECT_NAME
-from gitsage.utils import EnvironmentDetector, get_logger
+from gitsage.__version__ import PROJECT_NAME, __version__
 from gitsage.config import get_config
-
+from gitsage.utils import EnvironmentDetector, get_logger
 
 logger = get_logger(__name__)
 
@@ -28,9 +27,9 @@ def create_app(config: Optional[dict] = None) -> Flask:
     app = Flask(__name__)
 
     # Load configuration
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
-    app.config['GITSAGE_VERSION'] = __version__
-    app.config['PROJECT_NAME'] = PROJECT_NAME
+    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret-key-change-in-production")
+    app.config["GITSAGE_VERSION"] = __version__
+    app.config["PROJECT_NAME"] = PROJECT_NAME
 
     if config:
         app.config.update(config)
@@ -45,103 +44,275 @@ def create_app(config: Optional[dict] = None) -> Flask:
     def inject_globals():
         """Inject global variables into templates."""
         return {
-            'version': __version__,
-            'project_name': PROJECT_NAME,
+            "version": __version__,
+            "project_name": PROJECT_NAME,
         }
 
     # Routes
-    @app.route('/')
+    @app.route("/")
     def index():
         """Home page."""
         detector = EnvironmentDetector()
         env_info = detector.detect_all()
 
-        return render_template('index.html', env_info=env_info)
+        return render_template("index.html", env_info=env_info)
 
-    @app.route('/api/environment')
+    @app.route("/api/environment")
     def api_environment():
         """API endpoint for environment information."""
         detector = EnvironmentDetector()
         env_info = detector.detect_all()
 
-        return jsonify({
-            'success': True,
-            'data': env_info,
-            'recommendations': [
-                {
-                    'priority': rec.priority,
-                    'message': rec.message,
-                    'action': rec.action
-                }
-                for rec in detector.recommendations
-            ]
-        })
+        return jsonify(
+            {
+                "success": True,
+                "data": env_info,
+                "recommendations": [
+                    {"priority": rec.priority, "message": rec.message, "action": rec.action}
+                    for rec in detector.recommendations
+                ],
+            }
+        )
 
-    @app.route('/api/config')
+    @app.route("/api/config")
     def api_config():
         """API endpoint for configuration."""
         config_data = gitsage_config.to_dict()
-        return jsonify({
-            'success': True,
-            'data': config_data
-        })
+        return jsonify({"success": True, "data": config_data})
 
-    @app.route('/generators')
+    @app.route("/generators")
     def generators():
         """Generators page."""
-        return render_template('generators.html')
+        return render_template("generators.html")
 
-    @app.route('/backups')
+    @app.route("/repositories")
+    def repositories():
+        """Repositories browser page."""
+        return render_template("repositories.html")
+
+    @app.route("/backups")
     def backups():
         """Backups page."""
-        backup_dir = Path.home() / '.gitsage' / 'backups'
+        backup_dir = Path.home() / ".gitsage" / "backups"
         backups = []
 
         if backup_dir.exists():
-            for backup_file in backup_dir.glob('*.tar.gz'):
-                backups.append({
-                    'name': backup_file.name,
-                    'size': backup_file.stat().st_size,
-                    'created': backup_file.stat().st_mtime
-                })
+            for backup_file in backup_dir.glob("*.tar.gz"):
+                backups.append(
+                    {
+                        "name": backup_file.name,
+                        "size": backup_file.stat().st_size,
+                        "created": backup_file.stat().st_mtime,
+                    }
+                )
 
-        return render_template('backups.html', backups=backups)
+        return render_template("backups.html", backups=backups)
 
-    @app.route('/settings')
+    @app.route("/settings")
     def settings():
         """Settings page."""
-        return render_template('settings.html', config=gitsage_config)
+        return render_template("settings.html", config=gitsage_config)
 
-    @app.route('/api/settings', methods=['GET', 'POST'])
+    @app.route("/api/settings", methods=["GET", "POST"])
     def api_settings():
         """API endpoint for settings."""
-        if request.method == 'POST':
+        if request.method == "POST":
             # Update settings
             data = request.get_json()
             # TODO: Update configuration
-            return jsonify({'success': True, 'message': 'Settings updated'})
+            return jsonify({"success": True, "message": "Settings updated"})
         else:
-            return jsonify({
-                'success': True,
-                'data': gitsage_config.to_dict()
-            })
+            return jsonify({"success": True, "data": gitsage_config.to_dict()})
 
-    @app.route('/about')
+    @app.route("/about")
     def about():
         """About page."""
-        return render_template('about.html')
+        return render_template("about.html")
+
+    # API Endpoints for Script Generation
+    @app.route("/api/generate-script", methods=["POST"])
+    def api_generate_script():
+        """Generate a script based on template."""
+        try:
+            data = request.get_json()
+            script_type = data.get("scriptType")
+            script_name = data.get("scriptName", "generated-script")
+            educational = data.get("educationalMode", True)
+
+            # TODO: Implement actual script generation
+            script_content = f"""#!/usr/bin/env bash
+# Generated Script: {script_name}
+# Type: {script_type}
+# Generated by GitSage v{__version__}
+
+echo "This is a placeholder for {script_type} script"
+echo "Script generation will be fully implemented"
+"""
+
+            return jsonify({"success": True, "script": script_content, "name": script_name})
+        except Exception as e:
+            logger.error(f"Script generation error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    # API Endpoints for Repository Browser
+    @app.route("/api/repositories")
+    def api_repositories():
+        """Get list of repositories from GitHub."""
+        try:
+            import subprocess
+
+            result = subprocess.run(
+                [
+                    "gh",
+                    "repo",
+                    "list",
+                    "--json",
+                    "name,description,url,isPrivate,stargazerCount,forkCount,primaryLanguage,defaultBranchRef,createdAt,updatedAt",
+                ],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+
+            if result.returncode == 0:
+                import json
+
+                repos = json.loads(result.stdout)
+                formatted_repos = [
+                    {
+                        "name": repo.get("name"),
+                        "full_name": repo.get("name"),
+                        "description": repo.get("description"),
+                        "url": repo.get("url"),
+                        "private": repo.get("isPrivate", False),
+                        "stars": repo.get("stargazerCount", 0),
+                        "forks": repo.get("forkCount", 0),
+                        "language": (
+                            repo.get("primaryLanguage", {}).get("name")
+                            if repo.get("primaryLanguage")
+                            else None
+                        ),
+                        "default_branch": (
+                            repo.get("defaultBranchRef", {}).get("name")
+                            if repo.get("defaultBranchRef")
+                            else "main"
+                        ),
+                        "created": repo.get("createdAt"),
+                        "updated": repo.get("updatedAt"),
+                        "clone_url": repo.get("url") + ".git" if repo.get("url") else None,
+                    }
+                    for repo in repos
+                ]
+
+                return jsonify({"success": True, "repositories": formatted_repos})
+            else:
+                return (
+                    jsonify({"success": False, "error": "GitHub CLI not authenticated or failed"}),
+                    500,
+                )
+
+        except Exception as e:
+            logger.error(f"Repository fetch error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    # API Endpoints for Backup Management
+    @app.route("/api/backups")
+    def api_backups():
+        """Get list of backups."""
+        try:
+            backup_dir = Path.home() / ".gitsage" / "backups"
+            backups = []
+
+            if backup_dir.exists():
+                import hashlib
+
+                for i, backup_file in enumerate(backup_dir.glob("*.tar.gz")):
+                    # Try to read checksum if exists
+                    checksum_file = backup_file.with_suffix(".tar.gz.sha256")
+                    checksum = None
+                    if checksum_file.exists():
+                        checksum = checksum_file.read_text().strip().split()[0]
+
+                    backups.append(
+                        {
+                            "id": f"backup_{i}",
+                            "name": backup_file.name,
+                            "path": str(backup_file),
+                            "size": backup_file.stat().st_size,
+                            "created": backup_file.stat().st_mtime,
+                            "checksum": checksum,
+                        }
+                    )
+
+            return jsonify({"success": True, "backups": backups})
+        except Exception as e:
+            logger.error(f"Backup list error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @app.route("/api/backups/create", methods=["POST"])
+    def api_create_backup():
+        """Create a new backup."""
+        try:
+            data = request.get_json()
+            # TODO: Implement actual backup creation
+            return jsonify(
+                {
+                    "success": True,
+                    "message": "Backup creation will be fully implemented",
+                    "backup_id": "temp_id",
+                }
+            )
+        except Exception as e:
+            logger.error(f"Backup creation error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @app.route("/api/backups/<backup_id>/restore", methods=["POST"])
+    def api_restore_backup(backup_id):
+        """Restore a backup."""
+        try:
+            # TODO: Implement actual backup restoration
+            return jsonify(
+                {"success": True, "message": "Backup restoration will be fully implemented"}
+            )
+        except Exception as e:
+            logger.error(f"Backup restore error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @app.route("/api/backups/<backup_id>", methods=["DELETE"])
+    def api_delete_backup(backup_id):
+        """Delete a backup."""
+        try:
+            # TODO: Implement actual backup deletion
+            return jsonify({"success": True, "message": "Backup deleted"})
+        except Exception as e:
+            logger.error(f"Backup deletion error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @app.route("/api/settings/<category>", methods=["POST"])
+    def api_update_settings(category):
+        """Update settings for a specific category."""
+        try:
+            data = request.get_json()
+            # TODO: Implement actual settings update
+            return jsonify({"success": True, "message": f"{category} settings updated"})
+        except Exception as e:
+            logger.error(f"Settings update error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
 
     # Error handlers
     @app.errorhandler(404)
     def not_found(error):
         """Handle 404 errors."""
-        return render_template('error.html', error_code=404, error_message='Page not found'), 404
+        return render_template("error.html", error_code=404, error_message="Page not found"), 404
 
     @app.errorhandler(500)
     def internal_error(error):
         """Handle 500 errors."""
         logger.error(f"Internal server error: {error}")
-        return render_template('error.html', error_code=500, error_message='Internal server error'), 500
+        return (
+            render_template("error.html", error_code=500, error_message="Internal server error"),
+            500,
+        )
 
     return app
 
@@ -154,12 +325,8 @@ def main():
     print("Access at: http://localhost:5000")
     print("Press Ctrl+C to stop")
 
-    app.run(
-        host='0.0.0.0',
-        port=5000,
-        debug=True
-    )
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
