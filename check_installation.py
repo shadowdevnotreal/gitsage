@@ -150,7 +150,7 @@ def main():
     )
     all_ok &= check_item(
         "Wiki Generator (Enhanced)",
-        lambda: check_file_exists("wiki-generator-enhanced.py"),
+        lambda: check_file_exists("wiki-generator.py"),
         critical=False
     )
 

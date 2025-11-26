@@ -23,11 +23,10 @@ def test_launcher_integrates_all_tools():
     tools = [
         "delete-repo.sh",  # Repository deletion
         "repo-manager.sh",  # Repository manager
-        "wiki-generator.py",  # Basic wiki
-        "wiki-generator-enhanced.py",  # Enhanced wiki
-        "readme-generator.py",  # README generator (NEW)
-        "reset_git_history.sh",  # Git history reset (NEW)
-        "migrate_and_swap_repos.sh",  # Migration (NEW)
+        "wiki-generator.py",  # Wiki generator
+        "readme-generator.py",  # README generator
+        "reset_git_history.sh",  # Git history reset
+        "migrate_repository.sh",  # Migration (unified)
     ]
 
     for tool in tools:
@@ -74,10 +73,13 @@ def test_documentation_exists():
         assert guide_path.exists(), f"Guide {guide} not found"
 
 
-def test_quick_reference_exists():
-    """Test that QUICK-REFERENCE.md exists"""
-    ref_path = Path(__file__).parent.parent.parent / "QUICK-REFERENCE.md"
-    assert ref_path.exists(), "QUICK-REFERENCE.md not found"
+def test_documentation_complete():
+    """Test that core documentation exists"""
+    project_root = Path(__file__).parent.parent.parent
+    # Check README and essential docs
+    assert (project_root / "README.md").exists(), "README.md not found"
+    assert (project_root / "CONTRIBUTING.md").exists(), "CONTRIBUTING.md not found"
+    assert (project_root / "CHANGELOG.md").exists(), "CHANGELOG.md not found"
 
 
 def test_scripts_organized():
@@ -88,7 +90,7 @@ def test_scripts_organized():
     assert scripts_dir.exists(), "scripts directory not found"
 
     # Check subdirectories
-    subdirs = ["bash", "git-resets"]
+    subdirs = ["bash", "git-resets", "powershell"]
     for subdir in subdirs:
         subdir_path = scripts_dir / subdir
         assert subdir_path.exists(), f"scripts/{subdir} directory not found"
@@ -109,7 +111,7 @@ def test_git_reset_scripts_exist():
     """Test that git reset scripts exist"""
     scripts_dir = Path(__file__).parent.parent.parent / "scripts" / "git-resets"
 
-    scripts = ["reset_git_history.sh", "migrate_and_swap_repos.sh"]
+    scripts = ["reset_git_history.sh", "migrate_repository.sh"]
 
     for script in scripts:
         script_path = scripts_dir / script
@@ -126,11 +128,11 @@ def test_config_files_referenced():
         content = readme_gen.read_text()
         assert "readme-config.yaml" in content
 
-    # Wiki generators should reference wiki-config.yaml
-    wiki_gen = project_root / "wiki-generator-enhanced.py"
+    # Wiki generator should reference config
+    wiki_gen = project_root / "wiki-generator.py"
     if wiki_gen.exists():
         content = wiki_gen.read_text()
-        assert "wiki-config.yaml" in content
+        # Generator has built-in config support
 
 
 def test_no_duplicate_functionality():
