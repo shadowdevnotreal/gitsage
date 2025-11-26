@@ -351,7 +351,7 @@ python {project["main_script"]}
 | ⚙️ **Fully Configurable** | Customize every aspect to your workflow |
 | 🧪 **Well Tested** | 60+ automated tests ensuring reliability |
 | 🌍 **Cross-Platform** | Works on Windows, macOS, and Linux |
-| 🎨 **Multiple Interfaces** | CLI, GUI, Bash, PowerShell options |
+| 🎨 **Multiple Interfaces** | CLI and Web interface options |
 
 ---
 

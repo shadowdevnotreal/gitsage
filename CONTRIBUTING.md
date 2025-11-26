@@ -154,7 +154,7 @@ tests/
 ├── test_deletion.py          # Tests for deletion functionality
 ├── test_history_reset.py     # Tests for Git history reset
 ├── test_environment.py       # Tests for environment detection
-├── test_gui.py              # Tests for GUI components
+├── test_web.py              # Tests for web interface components
 └── fixtures/                # Test data and fixtures
 ```
 
