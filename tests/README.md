@@ -41,4 +41,3 @@ When adding tests:
 
 **v1.0**: No tests implemented yet. Test structure planned for v2.0.
 
-See ROADMAP.md for test implementation timeline.

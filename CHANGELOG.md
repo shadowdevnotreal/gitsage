@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This release represents a complete reorganization and documentation cleanup of GitSage. Previous documentation made claims about features that didn't exist. v1.0 is an honest, stable release with working core functionality.
 
 ### Added
-- **Comprehensive ROADMAP.md** - Clear plan for v2.0 features
+- **Comprehensive planning** - Clear future development direction
 - **Accurate README.md** - Honest about what works vs. what's planned
 - **Organized directory structure**:
   - `scripts/bash/` - Bash scripts organized properly
@@ -65,15 +65,14 @@ This release represents a complete reorganization and documentation cleanup of G
 - Cross-platform (requires Bash)
 
 ✅ **Wiki Generation** (Production Ready)
-- Basic generator: `wiki-generator.py`
-- Enhanced generator: `wiki-generator-enhanced.py`
-- YAML configuration: `wiki-config.yaml`
+- Wiki generator: `wiki-generator.py`
+- YAML configuration support
 - Template-driven page creation
+- Multiple output formats
 
 ✅ **Git History Reset Tools** (Production Ready)
 - `scripts/git-resets/reset_git_history.sh`
-- `scripts/git-resets/migrate_and_swap_repos.sh`
-- `scripts/git-resets/migrate_sync_swap.sh`
+- `scripts/git-resets/migrate_repository.sh` (unified migration tool)
 
 ✅ **Cross-Platform Launcher** (Production Ready)
 - Environment detection
@@ -119,9 +118,7 @@ Planned features:
 
 ## [Unreleased] - Future Work
 
-### Planned for v2.0 (Q1-Q2 2026)
-
-See [ROADMAP.md](ROADMAP.md) for complete roadmap.
+### Future Development
 
 **Completed:**
 - ✅ utils/ module implementation (backup, logging, config)
@@ -130,13 +127,15 @@ See [ROADMAP.md](ROADMAP.md) for complete roadmap.
 - ✅ Enhanced documentation
 - ✅ Web interface (Flask-based)
 - ✅ PowerShell installer (install.ps1 for Windows)
+- ✅ PowerShell repository management scripts (COMPLETE IMPLEMENTATION!)
+  - Delete-Repository.ps1 - Safe repository deletion
+  - Manage-Repository.ps1 - Interactive repository manager
+  - Reset-GitHistory.ps1 - Git history reset tool
+  - Migrate-Repository.ps1 - Repository migration tool
 
 **Remaining:**
-- PowerShell repo management scripts (medium priority - installer exists)
 - Advanced automation features (medium priority)
 - Enterprise features (low priority)
-
-**Note:** PowerShell installer (install.ps1) is implemented. PowerShell repo management tools are planned for future releases.
 
 ---
 
@@ -199,4 +198,4 @@ When contributing:
 
 ---
 
-**For detailed future plans, see [ROADMAP.md](ROADMAP.md)**
+**See README.md for current feature status and GitHub Issues for planned features.**

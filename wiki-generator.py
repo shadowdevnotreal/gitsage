@@ -890,16 +890,16 @@ def main():
         epilog="""
 Examples:
   # Generate all enabled formats
-  python wiki-generator-enhanced.py --all
+  python wiki-generator.py --all
 
   # Generate specific format
-  python wiki-generator-enhanced.py --format github-wiki
+  python wiki-generator.py --format github-wiki
 
   # Generate multiple formats
-  python wiki-generator-enhanced.py --format github-wiki gitbook
+  python wiki-generator.py --format github-wiki gitbook
 
   # List available templates and themes
-  python wiki-generator-enhanced.py --list
+  python wiki-generator.py --list
         """
     )
 
@@ -944,10 +944,10 @@ Examples:
         generator.generate_all(formats=args.format)
     else:
         if RICH_AVAILABLE:
-            rprint("[yellow]Usage: python wiki-generator-enhanced.py --all[/yellow]")
+            rprint("[yellow]Usage: python wiki-generator.py --all[/yellow]")
             rprint("[dim]Run with --help for more options[/dim]")
         else:
-            print("Usage: python wiki-generator-enhanced.py --all")
+            print("Usage: python wiki-generator.py --all")
             print("Run with --help for more options")
 
 

@@ -89,7 +89,6 @@ This will check all prerequisites and show what's working.
 3. Run GitSage as on Linux
 
 **Option 3: PowerShell**
-- Coming in v2.0 (see ROADMAP.md)
 
 ### macOS
 
@@ -146,7 +145,7 @@ bash scripts/bash/repo-manager.sh
 python wiki-generator.py
 
 # Enhanced wiki generation
-python wiki-generator-enhanced.py
+python wiki-generator.py
 ```
 
 ---
@@ -180,7 +179,7 @@ python launcher.py
 python wiki-generator.py
 
 # Using enhanced generator (recommended)
-python wiki-generator-enhanced.py
+python wiki-generator.py
 ```
 
 **Steps:**
@@ -193,7 +192,7 @@ python wiki-generator-enhanced.py
 
 ```bash
 # Enhanced generator creates GitBook-compatible structure
-python wiki-generator-enhanced.py
+python wiki-generator.py
 
 # Files will be in generated-docs/ with:
 # - SUMMARY.md (GitBook structure)
@@ -264,8 +263,8 @@ bash scripts/bash/repo-manager.sh
 
 **Resources:**
 - Script help: `bash scripts/bash/repo-manager.sh --help`
-- Wiki generator guide: WIKI-GENERATOR-README.md
-- Deletion guide: DEL-README.md
+- Wiki generator guide: scripts/powershell/README.md
+- Deletion guide: README.md (deletion safety notes)
 
 ### 🚀 Expert (Command Line Pro)
 
@@ -281,7 +280,6 @@ bash scripts/bash/repo-manager.sh
 
 **Resources:**
 - CONTRIBUTING.md
-- ROADMAP.md
 - Source code in scripts/
 
 ---
@@ -399,7 +397,7 @@ bash scripts/bash/delete-repo.sh
 # auto-update-wiki.sh
 
 cd /path/to/your/project
-python /path/to/gitsage/wiki-generator-enhanced.py
+python /path/to/gitsage/wiki-generator.py
 cd generated-docs
 git add .
 git commit -m "Auto-update wiki"
@@ -435,7 +433,7 @@ jobs:
       - name: Install dependencies
         run: pip install PyYAML rich
       - name: Generate wiki
-        run: python wiki-generator-enhanced.py
+        run: python wiki-generator.py
       - name: Deploy wiki
         run: |
           cd generated-docs
@@ -472,8 +470,8 @@ jobs:
 **After Getting Started:**
 
 1. **Read specific guides:**
-   - Repository Deletion: `DEL-README.md`
-   - Wiki Generation: `WIKI-GENERATOR-README.md`
+   - Repository Deletion: `README.md (deletion safety notes)`
+   - Wiki Generation: `scripts/powershell/README.md`
    - Contributing: `CONTRIBUTING.md`
 
 2. **Explore features:**

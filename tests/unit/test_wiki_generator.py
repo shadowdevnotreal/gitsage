@@ -33,8 +33,8 @@ def test_basic_wiki_generator_exists():
 
 def test_enhanced_wiki_generator_exists():
     """Test that enhanced wiki generator exists"""
-    generator_path = Path(__file__).parent.parent.parent / "wiki-generator-enhanced.py"
-    assert generator_path.exists(), "wiki-generator-enhanced.py not found"
+    generator_path = Path(__file__).parent.parent.parent / "wiki-generator.py"
+    assert generator_path.exists(), "wiki-generator.py not found"
 
     # Check it has essential content
     content = generator_path.read_text()
@@ -64,7 +64,7 @@ def test_wiki_sections_format(sample_wiki_config):
 def test_generated_docs_directory():
     """Test that wiki generators reference generated-docs directory"""
     basic_path = Path(__file__).parent.parent.parent / "wiki-generator.py"
-    enhanced_path = Path(__file__).parent.parent.parent / "wiki-generator-enhanced.py"
+    enhanced_path = Path(__file__).parent.parent.parent / "wiki-generator.py"
 
     if basic_path.exists():
         content = basic_path.read_text()
@@ -77,7 +77,7 @@ def test_generated_docs_directory():
 
 def test_wiki_deployment_script_referenced():
     """Test that deployment scripts are mentioned"""
-    enhanced_path = Path(__file__).parent.parent.parent / "wiki-generator-enhanced.py"
+    enhanced_path = Path(__file__).parent.parent.parent / "wiki-generator.py"
 
     if enhanced_path.exists():
         content = enhanced_path.read_text()
@@ -87,7 +87,7 @@ def test_wiki_deployment_script_referenced():
 
 def test_gitbook_support():
     """Test that enhanced generator mentions GitBook"""
-    enhanced_path = Path(__file__).parent.parent.parent / "wiki-generator-enhanced.py"
+    enhanced_path = Path(__file__).parent.parent.parent / "wiki-generator.py"
 
     if enhanced_path.exists():
         content = enhanced_path.read_text()
@@ -97,7 +97,7 @@ def test_gitbook_support():
 
 def test_wiki_page_generation():
     """Test that wiki generators create markdown pages"""
-    enhanced_path = Path(__file__).parent.parent.parent / "wiki-generator-enhanced.py"
+    enhanced_path = Path(__file__).parent.parent.parent / "wiki-generator.py"
 
     if enhanced_path.exists():
         content = enhanced_path.read_text()
