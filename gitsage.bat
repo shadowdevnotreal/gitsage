@@ -96,7 +96,7 @@ echo Website: https://github.com/shadowdevnotreal/gitsage
 goto :eof
 
 :version
-echo GitSage v1.0.0
+echo GitSage v2.2.0.0
 echo Ultimate GitHub Management Tool
 echo.
 echo Platform: Windows

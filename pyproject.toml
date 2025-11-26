@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gitsage"
-version = "1.0.0"
-description = "A focused toolkit for GitHub repository deletion, management, and automated wiki generation"
+version = "2.2.0"
+description = "The Ultimate GitHub Management & Learning Platform - Automate your workflow while mastering GitHub"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
@@ -51,11 +51,17 @@ Issues = "https://github.com/shadowdevnotreal/gitsage/issues"
 Changelog = "https://github.com/shadowdevnotreal/gitsage/blob/main/CHANGELOG.md"
 
 [project.scripts]
-gitsage = "launcher:main"
-gitsage-wiki = "wiki-generator:main"
+gitsage = "gitsage.cli.launcher:main"
+gitsage-wiki = "gitsage.generators.wiki_generator:main"
+gitsage-backup = "gitsage.managers.backup_manager:main"
+gitsage-script = "gitsage.generators.script_generator:main"
 
 [tool.setuptools]
-packages = []  # No packages yet, just scripts
+packages = ["gitsage"]
+package-dir = {"": "src"}
+
+[tool.setuptools.package-data]
+gitsage = ["py.typed"]
 
 [tool.black]
 line-length = 100
@@ -84,8 +90,16 @@ multi_line_output = 3
 python_version = "3.8"
 warn_return_any = true
 warn_unused_configs = true
-disallow_untyped_defs = false
+disallow_untyped_defs = true
 ignore_missing_imports = true
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+check_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
 
 [tool.pytest.ini_options]
 minversion = "7.0"
@@ -96,13 +110,14 @@ python_classes = ["Test*"]
 python_functions = ["test_*"]
 
 [tool.coverage.run]
-source = ["."]
+source = ["src/gitsage"]
 omit = [
     "*/tests/*",
     "*/test_*.py",
     "*/__pycache__/*",
     "*/venv/*",
     "*/env/*",
+    "src/gitsage/__version__.py",
 ]
 
 [tool.coverage.report]

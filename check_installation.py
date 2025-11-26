@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-GitSage v1.0 - Installation and System Check
+GitSage v2.2.0 - Installation and System Check
 ============================================
 Verifies that core components are properly installed and working.
 """
@@ -109,7 +109,7 @@ def check_file_exists(file_path):
 
 def main():
     print(f"\n{Colors.BOLD}{Colors.BLUE}{'='*60}{Colors.END}")
-    print(f"{Colors.BOLD}{Colors.BLUE}GitSage v1.0 - Installation Check{Colors.END}")
+    print(f"{Colors.BOLD}{Colors.BLUE}GitSage v2.2.0 - Installation Check{Colors.END}")
     print(f"{Colors.BOLD}{Colors.BLUE}{'='*60}{Colors.END}\n")
 
     all_ok = True
@@ -177,7 +177,7 @@ def main():
     print(f"\n{Colors.BOLD}{'='*60}{Colors.END}")
     if all_ok:
         print(f"{Colors.GREEN}{Colors.BOLD}✓ All critical checks passed!{Colors.END}")
-        print(f"\n{Colors.GREEN}GitSage v1.0 is properly installed and ready to use.{Colors.END}")
+        print(f"\n{Colors.GREEN}GitSage v2.2.0 is properly installed and ready to use.{Colors.END}")
         print(f"\n{Colors.BOLD}Next steps:{Colors.END}")
         print(f"  1. Launch GitSage: {Colors.BLUE}python launcher.py{Colors.END}")
         print(f"  2. Or run directly: {Colors.BLUE}bash scripts/bash/repo-manager.sh{Colors.END}")
