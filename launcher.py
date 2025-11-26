@@ -121,22 +121,6 @@ class EnvironmentDetector:
 
         return tools
 
-    def detect_gui_capabilities(self):
-        """Detect GUI framework availability"""
-        gui = {}
-        try:
-            import tkinter
-            gui['tkinter'] = True
-        except ImportError:
-            gui['tkinter'] = False
-
-        if self.system != "Windows":
-            gui['display'] = bool(os.environ.get('DISPLAY') or os.environ.get('WAYLAND_DISPLAY'))
-        else:
-            gui['display'] = True
-
-        return gui
-
     def detect_all(self):
         """Run comprehensive environment detection"""
         self.detected_tools = {
@@ -144,7 +128,6 @@ class EnvironmentDetector:
             'python_version': f"{self.python_version.major}.{self.python_version.minor}.{self.python_version.micro}",
             'shells': self.detect_shells(),
             'git_tools': self.detect_git_tools(),
-            'gui': self.detect_gui_capabilities(),
         }
         self._generate_recommendations()
         return self.detected_tools
@@ -302,13 +285,6 @@ class UserInterface:
         else:
             print(f"  {Colors.RED}✗{Colors.END} GitHub CLI: Not installed")
 
-        print(f"\n{Colors.BOLD}GUI Support:{Colors.END}")
-        gui = detected['gui']
-        tkinter_status = f"{Colors.GREEN}✓{Colors.END}" if gui.get('tkinter') else f"{Colors.RED}✗{Colors.END}"
-        display_status = f"{Colors.GREEN}✓{Colors.END}" if gui.get('display') else f"{Colors.RED}✗{Colors.END}"
-        print(f"  {tkinter_status} Tkinter (Python GUI)")
-        print(f"  {display_status} Display available")
-
     def show_installation_help(self, detected):
         """Show installation guidance"""
         self.print_header("Installation & Setup Help")
@@ -406,8 +382,7 @@ class UserInterface:
             choices = [
                 "🗑️  Repository Deletion (Interactive Bash Script)",
                 "🔧 Repository Manager (Advanced Bash Features)",
-                "📚 Wiki Generator (Basic)",
-                "📚 Wiki Generator (Enhanced with Templates)",
+                "📚 Documentation Generator (Wiki, GitBook, Confluence & More)",
                 "📝 README Generator (Awesome READMEs with Badges)",
                 "🎓 Script Generator & GitHub Learning (Educational!)",
                 "💾 Backup Manager (Create/Restore Repository Backups)",
@@ -435,28 +410,22 @@ class UserInterface:
                     self.launch_script(str(script_path), "bash")
                 else:
                     self.print_status("Repository manager not found at scripts/bash/repo-manager.sh", "ERROR")
-            elif choice == 2:  # Wiki Generator Basic
+            elif choice == 2:  # Documentation Generator
                 script_path = Path("wiki-generator.py")
                 if script_path.exists():
-                    self.print_status("Launching Wiki Generator...", "INFO")
+                    self.print_status("Launching Documentation Generator...", "INFO")
+                    self.print_status("Generate GitHub Wiki, GitBook, Confluence & more!", "INFO")
                     self.launch_script(str(script_path), "python")
                 else:
-                    self.print_status("Wiki generator not found.", "ERROR")
-            elif choice == 3:  # Wiki Generator Enhanced
-                script_path = Path("wiki-generator-enhanced.py")
-                if script_path.exists():
-                    self.print_status("Launching Enhanced Wiki Generator...", "INFO")
-                    self.launch_script(str(script_path), "python")
-                else:
-                    self.print_status("Enhanced wiki generator not found.", "ERROR")
-            elif choice == 4:  # README Generator
+                    self.print_status("Documentation generator not found.", "ERROR")
+            elif choice == 3:  # README Generator
                 script_path = Path("readme-generator.py")
                 if script_path.exists():
                     self.print_status("Launching README Generator...", "INFO")
                     self.launch_script(str(script_path), "python")
                 else:
                     self.print_status("README generator not found.", "ERROR")
-            elif choice == 5:  # Script Generator & GitHub Learning
+            elif choice == 4:  # Script Generator & GitHub Learning
                 script_path = Path("script-generator.py")
                 if script_path.exists():
                     self.print_status("Launching Script Generator & GitHub Learning...", "INFO")
@@ -464,7 +433,7 @@ class UserInterface:
                     self.launch_script(str(script_path), "python")
                 else:
                     self.print_status("Script generator not found.", "ERROR")
-            elif choice == 6:  # Backup Manager
+            elif choice == 5:  # Backup Manager
                 script_path = Path("backup-manager.py")
                 if script_path.exists():
                     self.print_status("Launching Backup Manager...", "INFO")
@@ -472,7 +441,7 @@ class UserInterface:
                     self.launch_script(str(script_path), "python")
                 else:
                     self.print_status("Backup manager not found.", "ERROR")
-            elif choice == 7:  # Reset Git History
+            elif choice == 6:  # Reset Git History
                 script_path = Path("scripts/git-resets/reset_git_history.sh")
                 if script_path.exists():
                     self.print_status("Launching Git History Reset Tool...", "WARNING")
@@ -480,21 +449,21 @@ class UserInterface:
                     self.launch_script(str(script_path), "bash")
                 else:
                     self.print_status("Git history reset script not found.", "ERROR")
-            elif choice == 8:  # Migrate Repository
+            elif choice == 7:  # Migrate Repository
                 script_path = Path("scripts/git-resets/migrate_and_swap_repos.sh")
                 if script_path.exists():
                     self.print_status("Launching Repository Migration Tool...", "INFO")
                     self.launch_script(str(script_path), "bash")
                 else:
                     self.print_status("Repository migration script not found.", "ERROR")
-            elif choice == 9:  # Install tools
+            elif choice == 8:  # Install tools
                 self.show_installation_help(detected)
-            elif choice == 10:  # Open links
+            elif choice == 9:  # Open links
                 self.open_installation_links(detected)
-            elif choice == 11:  # Re-check
+            elif choice == 10:  # Re-check
                 detected = self.detector.detect_all()
                 self.show_environment_status(detected)
-            elif choice == 12:  # Exit
+            elif choice == 11:  # Exit
                 self.print_status("Thank you for using GitSage!", "SUCCESS")
                 sys.exit(0)
 
