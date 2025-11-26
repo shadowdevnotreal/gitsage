@@ -30,6 +30,9 @@ requires-python = ">=3.8"
 dependencies = [
     "PyYAML>=6.0",
     "rich>=13.0.0",
+    "Flask>=3.0.0",
+    "Flask-CORS>=4.0.0",
+    "GitPython>=3.1.40",
 ]
 
 [project.optional-dependencies]
@@ -52,6 +55,7 @@ Changelog = "https://github.com/shadowdevnotreal/gitsage/blob/main/CHANGELOG.md"
 
 [project.scripts]
 gitsage = "gitsage.cli.launcher:main"
+gitsage-web = "gitsage.web.app:main"
 gitsage-wiki = "gitsage.generators.wiki_generator:main"
 gitsage-backup = "gitsage.managers.backup_manager:main"
 gitsage-script = "gitsage.generators.script_generator:main"

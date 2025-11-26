@@ -1,22 +1,26 @@
-# Python dependencies for Repository Manager
-#
-# Core dependencies for enhanced features:
-PyYAML>=6.0           # Configuration file parsing (config & wiki generator)
-rich>=13.0.0          # Beautiful terminal output (Python CLI)
+# GitSage Requirements
+# ====================
 
-# Testing dependencies:
+# Core dependencies
+PyYAML>=6.0           # Configuration file parsing
+rich>=13.0.0          # Beautiful terminal output
+
+# Web interface dependencies
+Flask>=3.0.0          # Web framework
+Flask-CORS>=4.0.0     # CORS support for API
+
+# Optional but recommended
+GitPython>=3.1.40     # Python Git library
+
+# Testing dependencies
 pytest>=7.0.0         # Testing framework
 pytest-cov>=4.0.0     # Code coverage
 pytest-mock>=3.10.0   # Mocking support
 
-# Optional dependencies for enhanced features:
-# colorama>=0.4.0     # For Windows color support (usually not needed with rich)
-# click>=8.0.0        # For advanced CLI features (if needed later)
-
-# Development dependencies (optional):
+# Development dependencies (install with pip install -e ".[dev]")
 # black>=23.0.0       # Code formatting
 # flake8>=6.0.0       # Linting
 # mypy>=1.0.0         # Type checking
 
-# Note: Git and GitHub CLI are external requirements but not Python packages
+# Note: Git and GitHub CLI are external requirements
 # They must be installed separately on your system

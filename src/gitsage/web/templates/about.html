@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}About - {{ project_name }}{% endblock %}
+
+{% block content %}
+<div class="about-page">
+    <header class="page-header">
+        <h1>About {{ project_name }}</h1>
+        <p class="subtitle">Version {{ version }}</p>
+    </header>
+
+    <section class="section">
+        <h2>What is GitSage?</h2>
+        <p>
+            GitSage is the ultimate GitHub management and learning platform that combines powerful automation
+            with interactive educational content. It's designed for developers at all skill levels - from beginners
+            learning GitHub to advanced users automating complex workflows.
+        </p>
+    </section>
+
+    <section class="section">
+        <h2>Key Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon">📚</div>
+                <h3>Script Generator</h3>
+                <p>Generate custom automation scripts while learning GitHub concepts interactively</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">💾</div>
+                <h3>Backup System</h3>
+                <p>Automated repository backups with SHA256 verification and easy restoration</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">📖</div>
+                <h3>Wiki & Documentation</h3>
+                <p>Professional documentation generation for GitHub Wiki, GitBook, and more</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🔧</div>
+                <h3>Repository Management</h3>
+                <p>Safe repository deletion, migration, and history management tools</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🎓</div>
+                <h3>Learning Platform</h3>
+                <p>Advanced Git tutorials, GitHub Actions guides, and open source contribution help</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🌐</div>
+                <h3>Web Interface</h3>
+                <p>Modern web UI for accessing GitSage functionality from your browser</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Technology Stack</h2>
+        <ul class="tech-list">
+            <li><strong>Backend:</strong> Python 3.8+</li>
+            <li><strong>Web Framework:</strong> Flask</li>
+            <li><strong>CLI:</strong> Rich, Typer</li>
+            <li><strong>Configuration:</strong> YAML, Dataclasses</li>
+            <li><strong>Git Integration:</strong> GitPython, GitHub CLI</li>
+        </ul>
+    </section>
+
+    <section class="section">
+        <h2>License</h2>
+        <p>
+            GitSage is open source software licensed under the MIT License.
+            You are free to use, modify, and distribute it with attribution.
+        </p>
+    </section>
+
+    <section class="section">
+        <h2>Links</h2>
+        <ul class="links-list">
+            <li><a href="https://github.com/shadowdevnotreal/gitsage" target="_blank">GitHub Repository</a></li>
+            <li><a href="https://github.com/shadowdevnotreal/gitsage/issues" target="_blank">Report Issues</a></li>
+            <li><a href="https://github.com/shadowdevnotreal/gitsage/blob/main/CONTRIBUTING.md" target="_blank">Contributing Guide</a></li>
+            <li><a href="https://github.com/shadowdevnotreal/gitsage/blob/main/docs/" target="_blank">Documentation</a></li>
+        </ul>
+    </section>
+</div>
+
+<style>
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.feature-card .icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.tech-list, .links-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.tech-list li, .links-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.links-list a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.links-list a:hover {
+    text-decoration: underline;
+}
+</style>
+{% endblock %}

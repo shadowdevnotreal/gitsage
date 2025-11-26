@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Error {{ error_code }} - {{ project_name }}{% endblock %}
+
+{% block content %}
+<div class="error-page">
+    <div class="error-container">
+        <h1 class="error-code">{{ error_code }}</h1>
+        <p class="error-message">{{ error_message }}</p>
+        <a href="{{ url_for('index') }}" class="btn btn-primary">Go to Dashboard</a>
+    </div>
+</div>
+
+<style>
+.error-page {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-container {
+    text-align: center;
+}
+
+.error-code {
+    font-size: 6rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.error-message {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: var(--dark-bg);
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+}
+</style>
+{% endblock %}

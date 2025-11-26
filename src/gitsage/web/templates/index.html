@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - {{ project_name }}{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <header class="page-header">
+        <h1>Welcome to {{ project_name }}</h1>
+        <p class="subtitle">The Ultimate GitHub Management & Learning Platform</p>
+    </header>
+
+    <section class="section">
+        <h2>Environment Status</h2>
+        <div class="env-status">
+            <div class="status-card">
+                <h3>System Information</h3>
+                <ul>
+                    <li><strong>OS:</strong> {{ env_info.system }}</li>
+                    <li><strong>Python:</strong> {{ env_info.python_version }}</li>
+                </ul>
+            </div>
+
+            <div class="status-card">
+                <h3>Git Tools</h3>
+                <ul>
+                    <li>
+                        {% if env_info.git_tools.git %}
+                            <span class="badge badge-success">✓</span>
+                        {% else %}
+                            <span class="badge badge-error">✗</span>
+                        {% endif %}
+                        <strong>Git:</strong> {{ env_info.git_tools.git_version }}
+                    </li>
+                    <li>
+                        {% if env_info.git_tools.gh %}
+                            <span class="badge badge-success">✓</span>
+                        {% else %}
+                            <span class="badge badge-error">✗</span>
+                        {% endif %}
+                        <strong>GitHub CLI:</strong> {{ env_info.git_tools.gh_version }}
+                    </li>
+                    {% if env_info.git_tools.gh %}
+                    <li>
+                        {% if env_info.git_tools.gh_authenticated %}
+                            <span class="badge badge-success">✓</span> Authenticated
+                        {% else %}
+                            <span class="badge badge-warning">!</span> Not authenticated
+                        {% endif %}
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            {% if env_info.python_packages %}
+            <div class="status-card">
+                <h3>Python Packages</h3>
+                <ul>
+                    {% for pkg, installed in env_info.python_packages.items() %}
+                    <li>
+                        {% if installed %}
+                            <span class="badge badge-success">✓</span>
+                        {% else %}
+                            <span class="badge badge-error">✗</span>
+                        {% endif %}
+                        {{ pkg }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Quick Actions</h2>
+        <div class="actions-grid">
+            <a href="{{ url_for('generators') }}" class="action-card">
+                <div class="icon">📚</div>
+                <h3>Generators</h3>
+                <p>Generate scripts, wikis, and READMEs</p>
+            </a>
+
+            <a href="{{ url_for('backups') }}" class="action-card">
+                <div class="icon">💾</div>
+                <h3>Backups</h3>
+                <p>Manage repository backups</p>
+            </a>
+
+            <a href="{{ url_for('settings') }}" class="action-card">
+                <div class="icon">⚙️</div>
+                <h3>Settings</h3>
+                <p>Configure GitSage</p>
+            </a>
+
+            <a href="https://github.com/shadowdevnotreal/gitsage/blob/main/docs/learning/" target="_blank" class="action-card">
+                <div class="icon">🎓</div>
+                <h3>Learning</h3>
+                <p>Advanced Git tutorials</p>
+            </a>
+        </div>
+    </section>
+</div>
+{% endblock %}
