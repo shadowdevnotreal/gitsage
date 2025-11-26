@@ -14,12 +14,14 @@ GitSage is your **all-in-one GitHub companion** that combines powerful automatio
 
 ### 🌟 Core Capabilities:
 
-1. **📚 Script Generator & GitHub Learning** - Generate custom automation scripts while learning GitHub concepts interactively
-2. **🗑️ Safe Repository Deletion** - Multiple safety confirmations, backups, and verification
-3. **🔧 Repository Management** - Advanced Git/GitHub operations made simple
-4. **📖 Wiki & GitBook Generation** - Professional documentation in minutes
-5. **📝 README Generator** - Awesome READMEs with shields.io badges and templates
-6. **🔄 Git History Tools** - Reset, migrate, and manage repository history safely
+1. **🌐 Web Interface (NEW!)** - Modern web UI for accessing GitSage from your browser
+2. **📚 Script Generator & GitHub Learning** - Generate custom automation scripts while learning GitHub concepts interactively
+3. **💾 Automated Backup System** - SHA256-verified backups with easy restoration
+4. **🗑️ Safe Repository Deletion** - Multiple safety confirmations, backups, and verification
+5. **🔧 Repository Management** - Unified migration tools and advanced Git operations
+6. **📖 Wiki & GitBook Generation** - Professional documentation in minutes
+7. **📝 README Generator** - Awesome READMEs with shields.io badges and templates
+8. **🔄 Git History Tools** - Reset, migrate, and manage repository history safely
 
 ### 🎓 Perfect For:
 
@@ -200,23 +202,42 @@ See [ROADMAP.md](ROADMAP.md) for detailed planning and timelines.
 # Required
 - Git 2.0+
 - GitHub CLI (gh) authenticated
-- Python 3.8+ (for launcher and wiki generator)
-- Bash shell (for core scripts)
+- Python 3.8+
+- Bash shell (for scripts on Linux/macOS, Git Bash on Windows)
 
 # Optional
-- PyYAML (for wiki generator)
-- Rich (for enhanced terminal output)
+- Flask & Flask-CORS (for web interface)
+- GitPython (for enhanced Git operations)
 ```
 
 ### Installation
+
+**Automated Installation (Recommended):**
 
 ```bash
 # Clone the repository
 git clone https://github.com/shadowdevnotreal/gitsage.git
 cd gitsage
 
-# Install Python dependencies (optional but recommended)
+# Linux/macOS
+./install.sh
+
+# Windows (PowerShell as Administrator)
+.\install.ps1
+```
+
+**Manual Installation:**
+
+```bash
+# Clone the repository
+git clone https://github.com/shadowdevnotreal/gitsage.git
+cd gitsage
+
+# Install Python dependencies
 pip install -r requirements.txt
+
+# Or install in development mode
+pip install -e ".[dev]"
 
 # Run installation check
 python check_installation.py
@@ -270,24 +291,32 @@ rm -rf gitsage/
 
 | Script | Purpose | Location |
 |--------|---------|----------|
+| `install.sh` / `install.ps1` | **Universal installers** for each OS | Root |
 | `launcher.py` | Main menu with environment detection | Root |
 | `script-generator.py` | Generate scripts & learn GitHub | Root |
 | `backup-manager.py` | Automated repository backups | Root |
 | `uninstall.py` | Safe uninstallation tool | Root |
 | `delete-repo.sh` | Interactive repository deletion | `scripts/bash/` |
 | `repo-manager.sh` | Advanced repository management | `scripts/bash/` |
-| `wiki-generator.py` | Basic wiki generation | Root |
-| `wiki-generator-enhanced.py` | Enhanced wiki with templates | Root |
+| `wiki-generator.py` | Professional wiki generation | Root |
 | `readme-generator.py` | Awesome README with badges | Root |
 | `check_installation.py` | Verify installation | Root |
 
-### Git Reset Scripts
+### Web Interface (NEW!)
+
+| Component | Purpose | Access |
+|-----------|---------|--------|
+| Web Dashboard | Modern UI for GitSage | `gitsage-web` or `python -m gitsage.web.app` |
+| API Endpoints | RESTful API for automation | `http://localhost:5000/api/` |
+| Environment Status | Real-time system check | Dashboard |
+| Settings Manager | Web-based configuration | Settings page |
+
+### Git Tools
 
 | Script | Purpose | Location |
 |--------|---------|----------|
 | `reset_git_history.sh` | Complete history reset | `scripts/git-resets/` |
-| `migrate_and_swap_repos.sh` | Repository migration | `scripts/git-resets/` |
-| `migrate_sync_swap.sh` | Sync and swap repos | `scripts/git-resets/` |
+| `migrate_repository.sh` | **Unified repository migration** | `scripts/git-resets/` |
 
 ## 🎮 Usage Examples
 
@@ -300,6 +329,10 @@ chmod +x gitsage
 
 # Launch interactive menu
 ./gitsage launch
+
+# Launch web interface (NEW!)
+gitsage-web
+# Access at http://localhost:5000
 
 # Generate wiki
 ./gitsage wiki
@@ -322,8 +355,8 @@ chmod +x gitsage
 # Reset git history (keep files)
 ./gitsage reset-history
 
-# Migrate repository
-./gitsage migrate
+# Migrate repository (unified tool)
+scripts/git-resets/migrate_repository.sh --mode=full
 
 # Check installation
 ./gitsage check
