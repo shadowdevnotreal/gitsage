@@ -129,11 +129,14 @@ See [ROADMAP.md](ROADMAP.md) for complete roadmap.
 - ✅ Comprehensive test suite
 - ✅ Enhanced documentation
 - ✅ Web interface (Flask-based)
+- ✅ PowerShell installer (install.ps1 for Windows)
 
 **Remaining:**
-- PowerShell native version (medium priority)
+- PowerShell repo management scripts (medium priority - installer exists)
 - Advanced automation features (medium priority)
 - Enterprise features (low priority)
+
+**Note:** PowerShell installer (install.ps1) is implemented. PowerShell repo management tools are planned for future releases.
 
 ---
 
