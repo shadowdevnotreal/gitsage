@@ -40,7 +40,6 @@ This release represents a complete reorganization and documentation cleanup of G
   - All references to non-existent `utils/` modules
   - Claims about "60+ tests" (no tests exist yet)
   - References to non-existent Python CLI versions
-  - Claims about GUI and PowerShell versions
   - False feature claims about backups, logging, config management
 
 ### Fixed
@@ -102,15 +101,19 @@ This release represents a complete reorganization and documentation cleanup of G
 - PyYAML (for wiki generator)
 - Rich (for enhanced terminal output)
 
-### Not Yet Implemented (Planned for v2.0)
+### Not Yet Implemented (Planned for Future)
 
-See [ROADMAP.md](ROADMAP.md) for details on planned features:
-- Python CLI versions of repo manager
-- GUI interface (Tkinter)
-- PowerShell native version
-- Utility modules (backup_manager, logger, config_manager, setup_wizard)
-- Comprehensive test suite
-- Advanced features (batch operations, templates, migration tools)
+Planned features:
+- PowerShell native version (lower priority)
+- Advanced features (batch operations, templates)
+
+### Implemented in v2.0+
+
+- ✅ Python CLI launcher with environment detection
+- ✅ Web interface (Flask-based) replacing GUI concept
+- ✅ Utility modules (backup_manager, logger, config_manager)
+- ✅ Comprehensive test suite
+- ✅ Script generator with educational content
 
 ---
 
@@ -120,21 +123,20 @@ See [ROADMAP.md](ROADMAP.md) for details on planned features:
 
 See [ROADMAP.md](ROADMAP.md) for complete roadmap.
 
-**High Priority:**
-- utils/ module implementation (backup, logging, config)
-- Python CLI versions
-- Comprehensive test suite (>80% coverage)
-- Enhanced documentation
+**Completed:**
+- ✅ utils/ module implementation (backup, logging, config)
+- ✅ Python CLI launcher
+- ✅ Comprehensive test suite
+- ✅ Enhanced documentation
+- ✅ Web interface (Flask-based)
+- ✅ PowerShell installer (install.ps1 for Windows)
 
-**Medium Priority:**
-- GUI interface (Tkinter)
-- PowerShell native version
-- Advanced features
+**Remaining:**
+- PowerShell repo management scripts (medium priority - installer exists)
+- Advanced automation features (medium priority)
+- Enterprise features (low priority)
 
-**Low Priority:**
-- Web interface
-- SaaS platform
-- Enterprise features
+**Note:** PowerShell installer (install.ps1) is implemented. PowerShell repo management tools are planned for future releases.
 
 ---
 
