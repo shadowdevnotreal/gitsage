@@ -6,10 +6,18 @@ Complete PowerShell implementation of GitSage repository management tools for Wi
 
 All core GitSage functionality now available in native PowerShell:
 
+### Repository Management
 - **Delete-Repository.ps1** - Safe repository deletion with multiple confirmations
 - **Manage-Repository.ps1** - Interactive repository manager with Git operations
 - **Reset-GitHistory.ps1** - Reset Git history while keeping files
 - **Migrate-Repository.ps1** - Migrate repositories between accounts/organizations
+
+### Interactive Tools (NEW!)
+- **Launch-GitSage.ps1** - Main launcher with interactive menu
+- **Generate-ReadmeInteractive.ps1** - Interactive README generator with smart detection
+- **Generate-Wiki.ps1** - Complete documentation wiki generator
+- **Test-RepositoryHealth.ps1** - Repository health checker and beautification scorer
+- **Initialize-Repository.ps1** - One-command complete repository setup
 
 ## 📋 Prerequisites
 
@@ -54,6 +62,57 @@ cd path\to\gitsage\scripts\powershell
 ```
 
 ## 📖 Usage
+
+### Quick Start - Interactive Tools
+
+```powershell
+# Launch main menu (easiest way to get started)
+.\Launch-GitSage.ps1
+
+# Or run one-command setup wizard
+.\Initialize-Repository.ps1
+```
+
+### Interactive README Generator
+
+```powershell
+# Interactive wizard with auto-detection
+.\Generate-ReadmeInteractive.ps1 -Interactive
+
+# Analyze project only
+.\Generate-ReadmeInteractive.ps1 -Analyze
+
+# Show health report
+.\Generate-ReadmeInteractive.ps1 -HealthCheck
+```
+
+### Documentation Wiki Generator
+
+```powershell
+# Generate all wiki pages
+.\Generate-Wiki.ps1 -All
+
+# Generate specific page
+.\Generate-Wiki.ps1 -Page Home
+
+# Show GitHub Wiki setup instructions
+.\Generate-Wiki.ps1 -ShowSetup
+```
+
+### Repository Health Checker
+
+```powershell
+# Full detailed report
+.\Test-RepositoryHealth.ps1 -Full
+
+# Quick summary only
+.\Test-RepositoryHealth.ps1 -Quick
+
+# Beautification score with achievements
+.\Test-RepositoryHealth.ps1 -Beauty
+```
+
+### Repository Management
 
 ### Delete Repository
 
