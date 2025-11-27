@@ -4,9 +4,8 @@ Transform your GitHub repository into professional documentation in minutes!
 
 ## Overview
 
-GitSage provides two powerful generators:
-1. **Basic Wiki Generator** (`wiki-generator.py`) - Simple, fast wiki creation
-2. **Enhanced Wiki Generator** (`wiki-generator-enhanced.py`) - Advanced features with GitBook support
+GitSage provides a comprehensive documentation generator:
+- **Enhanced Wiki Generator** (`wiki-generator.py`) - Complete multi-format documentation generation with GitBook, Confluence, Notion support and advanced features
 
 Both create:
 - ✅ GitHub Wiki pages
@@ -54,7 +53,7 @@ content:
 
 ```bash
 # Using enhanced generator (recommended)
-python wiki-generator-enhanced.py
+python wiki-generator.py
 
 # OR using basic generator
 python wiki-generator.py
@@ -173,7 +172,7 @@ The enhanced generator uses customizable templates:
 
 ```python
 # Templates are built-in but can be customized
-# Located in wiki-generator-enhanced.py
+# Located in wiki-generator.py
 
 # Home page template
 HOME_TEMPLATE = """
@@ -329,7 +328,7 @@ git push origin gh-pages
 Create your own templates by modifying the generator:
 
 ```python
-# In wiki-generator-enhanced.py
+# In wiki-generator.py
 
 CUSTOM_TEMPLATE = """
 # {page_title}
@@ -511,7 +510,7 @@ content:
 python -c "import yaml; yaml.safe_load(open('wiki-config.yaml'))"
 
 # Validate configuration
-python wiki-generator-enhanced.py --validate
+python wiki-generator.py --validate
 ```
 
 ### Issue: Deployment fails
@@ -594,7 +593,7 @@ gitbook serve
 ```bash
 # Update documentation
 cd your-project
-python /path/to/gitsage/wiki-generator-enhanced.py
+python /path/to/gitsage/wiki-generator.py
 
 # Review changes
 cd generated-docs
@@ -624,7 +623,7 @@ git commit -m "Update documentation for v2.0"
 # .git/hooks/pre-commit
 
 # Auto-generate documentation before commits
-python /path/to/gitsage/wiki-generator-enhanced.py
+python /path/to/gitsage/wiki-generator.py
 
 # Add generated docs
 git add generated-docs/
@@ -651,7 +650,7 @@ jobs:
       - name: Generate docs
         run: |
           pip install PyYAML rich
-          python wiki-generator-enhanced.py
+          python wiki-generator.py
       - name: Deploy to wiki
         run: |
           cd generated-docs
@@ -689,7 +688,7 @@ content:
 
 ```bash
 # Generate docs for specific version
-python wiki-generator-enhanced.py --version 2.0
+python wiki-generator.py --version 2.0
 
 # Creates versioned structure
 generated-docs/
@@ -720,7 +719,7 @@ A: Yes! Just authenticate with `gh auth login`.
 A: Re-run the generator. It will overwrite files in `generated-docs/`.
 
 **Q: Can I customize the templates?**
-A: Yes! Edit the template strings in `wiki-generator-enhanced.py`.
+A: Yes! Edit the template strings in `wiki-generator.py`.
 
 **Q: Does this work with monorepos?**
 A: Yes! Configure `wiki-config.yaml` for each project.
@@ -734,7 +733,7 @@ A: Place images in `generated-docs/images/` and reference: `![Alt](images/img.pn
 
 Next steps:
 1. Configure `wiki-config.yaml` for your project
-2. Run `python wiki-generator-enhanced.py`
+2. Run `python wiki-generator.py`
 3. Review generated docs in `generated-docs/`
 4. Deploy to GitHub Wiki or GitBook
 

@@ -196,7 +196,7 @@ Summary:
 Move repository to new location with history:
 
 ```bash
-bash scripts/git-resets/migrate_and_swap_repos.sh
+bash scripts/git-resets/migrate_repository.sh
 ```
 
 **Use Cases:**
@@ -503,7 +503,7 @@ echo "Backup complete: $BACKUP_DIR"
 0 0 1 * * /path/to/cleanup-old-repos.sh
 
 # Update wiki documentation on commit
-*/15 * * * * cd /path/to/project && python /path/to/gitsage/wiki-generator-enhanced.py
+*/15 * * * * cd /path/to/project && python /path/to/gitsage/wiki-generator.py
 ```
 
 ---
@@ -664,7 +664,7 @@ bash scripts/bash/repo-manager.sh
 bash scripts/git-resets/reset_git_history.sh
 
 # Migration
-bash scripts/git-resets/migrate_and_swap_repos.sh
+bash scripts/git-resets/migrate_repository.sh
 
 # Sync and Swap
 bash scripts/git-resets/migrate_sync_swap.sh
@@ -706,7 +706,7 @@ gh pr create
 **3. Maintain**
 ```bash
 # Generate documentation
-python /path/to/gitsage/wiki-generator-enhanced.py
+python /path/to/gitsage/wiki-generator.py
 
 # Update wiki
 cd generated-docs
@@ -764,7 +764,7 @@ if gh api "repos/$REPO" | jq -r '.has_wiki' | grep -q true; then
 fi
 
 # Generate local documentation
-python /path/to/gitsage/wiki-generator-enhanced.py
+python /path/to/gitsage/wiki-generator.py
 ```
 
 ### Monitoring

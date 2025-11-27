@@ -330,7 +330,7 @@ class UserInterface:
                     self.print_status("Git history reset script not found.", "ERROR")
 
             elif choice == 7:  # Migrate Repository
-                script_path = project_root / "scripts" / "git-resets" / "migrate_and_swap_repos.sh"
+                script_path = project_root / "scripts" / "git-resets" / "migrate_repository.sh"
                 if script_path.exists():
                     self.print_status("Launching Repository Migration Tool...", "INFO")
                     self.launch_script(script_path, "bash")
