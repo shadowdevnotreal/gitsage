@@ -1,0 +1,437 @@
+{% extends "base.html" %}
+
+{% block title %}Health Checker - {{ project_name }}{% endblock %}
+
+{% block content %}
+<div class="health-checker-page">
+    <header class="page-header">
+        <h1>Repository Health Checker</h1>
+        <p class="subtitle">Analyze repository health with 13 checks and gamified beautification scoring</p>
+    </header>
+
+    <div class="tool-container">
+        <!-- Quick Actions -->
+        <section class="section card">
+            <h2>[HEALTH] Health Analysis</h2>
+            <div class="action-buttons">
+                <button id="runHealthCheckBtn" class="btn btn-primary">
+                    <span class="btn-icon">[>>]</span> Run Health Check
+                </button>
+                <button id="runBeautificationBtn" class="btn btn-primary">
+                    <span class="btn-icon">[*]</span> Check Beautification Score
+                </button>
+            </div>
+        </section>
+
+        <!-- Health Check Results -->
+        <section class="section card" id="healthSection" style="display: none;">
+            <h2>[STATS] Health Check Results</h2>
+            <div id="healthScore" class="score-display"></div>
+            <div id="healthChecks" class="checks-list"></div>
+            <div id="healthRecommendations" class="recommendations-box"></div>
+        </section>
+
+        <!-- Beautification Score -->
+        <section class="section card" id="beautificationSection" style="display: none;">
+            <h2>[*] Beautification Score</h2>
+            <div id="beautificationScore" class="score-display"></div>
+            <div id="beautificationLevel" class="level-display"></div>
+            <div id="beautificationCategories" class="categories-grid"></div>
+            <div id="beautificationAchievements" class="achievements-list"></div>
+        </section>
+
+        <!-- Quick Wins -->
+        <section class="section card" id="quickWinsSection" style="display: none;">
+            <h2>[ROCKET] Quick Wins (< 5 minutes)</h2>
+            <div id="quickWinsList" class="quick-wins-list"></div>
+        </section>
+
+        <!-- Critical Issues -->
+        <section class="section card" id="criticalSection" style="display: none;">
+            <h2>[!] Critical Issues</h2>
+            <div id="criticalIssuesList" class="critical-issues-list"></div>
+        </section>
+    </div>
+</div>
+
+<style>
+.health-checker-page {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tool-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-icon {
+    margin-right: 0.5rem;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: var(--dark-bg);
+}
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+}
+
+.score-display {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 2rem 0;
+    padding: 2rem;
+    background: var(--darker-bg);
+    border-radius: 8px;
+}
+
+.score-display.good {
+    color: #4caf50;
+    border: 2px solid #4caf50;
+}
+
+.score-display.warning {
+    color: #ff9800;
+    border: 2px solid #ff9800;
+}
+
+.score-display.critical {
+    color: #f44336;
+    border: 2px solid #f44336;
+}
+
+.level-display {
+    text-align: center;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--darker-bg);
+    border-radius: 4px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.checks-list {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.check-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: var(--darker-bg);
+    border-radius: 4px;
+    border-left: 4px solid;
+}
+
+.check-item.pass {
+    border-left-color: #4caf50;
+}
+
+.check-item.warn {
+    border-left-color: #ff9800;
+}
+
+.check-item.fail {
+    border-left-color: #f44336;
+}
+
+.check-icon {
+    font-weight: bold;
+    margin-right: 1rem;
+    min-width: 60px;
+}
+
+.check-details {
+    flex: 1;
+}
+
+.check-why {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.category-card {
+    padding: 1rem;
+    background: var(--darker-bg);
+    border-radius: 4px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.category-name {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.category-progress {
+    height: 20px;
+    background: var(--dark-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.category-progress-bar {
+    height: 100%;
+    background: var(--primary-color);
+    transition: width 0.3s;
+}
+
+.category-score {
+    text-align: center;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.achievements-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.achievement-card {
+    padding: 1rem;
+    background: var(--darker-bg);
+    border-radius: 4px;
+    border: 2px solid var(--primary-color);
+}
+
+.achievement-card h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.recommendations-box,
+.quick-wins-list,
+.critical-issues-list {
+    margin-top: 1rem;
+}
+
+.recommendation-item,
+.quick-win-item,
+.critical-item {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background: var(--darker-bg);
+    border-radius: 4px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.critical-item {
+    border-left-color: #f44336;
+}
+
+.quick-win-item {
+    border-left-color: #4caf50;
+}
+</style>
+
+<script>
+// Run health check
+document.getElementById('runHealthCheckBtn').addEventListener('click', async () => {
+    try {
+        const response = await fetch('/api/check-health', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            displayHealthResults(result.data);
+            document.getElementById('healthSection').style.display = 'block';
+            showNotification('Health check completed!', 'success');
+        } else {
+            showNotification('Failed to run health check: ' + result.error, 'error');
+        }
+    } catch (error) {
+        showNotification('Error: ' + error.message, 'error');
+    }
+});
+
+// Run beautification check
+document.getElementById('runBeautificationBtn').addEventListener('click', async () => {
+    try {
+        const response = await fetch('/api/beautification-score', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            displayBeautificationResults(result.data);
+            document.getElementById('beautificationSection').style.display = 'block';
+            showNotification('Beautification score calculated!', 'success');
+        } else {
+            showNotification('Failed to calculate score: ' + result.error, 'error');
+        }
+    } catch (error) {
+        showNotification('Error: ' + error.message, 'error');
+    }
+});
+
+function displayHealthResults(data) {
+    const percentage = Math.round((data.overall_score / data.max_score) * 100);
+    const scoreClass = percentage >= 80 ? 'good' : percentage >= 60 ? 'warning' : 'critical';
+
+    // Display score
+    document.getElementById('healthScore').innerHTML = `
+        <div class="${scoreClass}">
+            ${data.overall_score}/${data.max_score} (${percentage}%)
+        </div>
+    `;
+
+    // Display checks
+    const checksContainer = document.getElementById('healthChecks');
+    checksContainer.innerHTML = '';
+
+    Object.entries(data.checks || {}).forEach(([name, check]) => {
+        const checkClass = check.status === '[OK]' ? 'pass' : check.status === '[WARN]' ? 'warn' : 'fail';
+        const checkItem = document.createElement('div');
+        checkItem.className = `check-item ${checkClass}`;
+        checkItem.innerHTML = `
+            <div class="check-icon">${check.status}</div>
+            <div class="check-details">
+                <strong>${name}</strong>: ${check.message}
+                ${check.why ? `<div class="check-why">[!] WHY: ${check.why}</div>` : ''}
+            </div>
+        `;
+        checksContainer.appendChild(checkItem);
+    });
+
+    // Display recommendations
+    if (data.recommendations && data.recommendations.length > 0) {
+        const recsContainer = document.getElementById('healthRecommendations');
+        recsContainer.innerHTML = '<h3>[>>] Recommendations:</h3>';
+        data.recommendations.forEach(rec => {
+            const recItem = document.createElement('div');
+            recItem.className = 'recommendation-item';
+            recItem.textContent = rec;
+            recsContainer.appendChild(recItem);
+        });
+    }
+
+    // Display quick wins
+    if (data.quick_wins && data.quick_wins.length > 0) {
+        document.getElementById('quickWinsSection').style.display = 'block';
+        const quickWinsContainer = document.getElementById('quickWinsList');
+        quickWinsContainer.innerHTML = '';
+        data.quick_wins.forEach(win => {
+            const winItem = document.createElement('div');
+            winItem.className = 'quick-win-item';
+            winItem.textContent = win;
+            quickWinsContainer.appendChild(winItem);
+        });
+    }
+
+    // Display critical issues
+    if (data.critical_issues && data.critical_issues.length > 0) {
+        document.getElementById('criticalSection').style.display = 'block';
+        const criticalContainer = document.getElementById('criticalIssuesList');
+        criticalContainer.innerHTML = '';
+        data.critical_issues.forEach(issue => {
+            const issueItem = document.createElement('div');
+            issueItem.className = 'critical-item';
+            issueItem.textContent = issue;
+            criticalContainer.appendChild(issueItem);
+        });
+    }
+}
+
+function displayBeautificationResults(data) {
+    const score = data.total_score || 0;
+    const maxScore = data.max_score || 100;
+    const percentage = Math.round((score / maxScore) * 100);
+    const scoreClass = percentage >= 80 ? 'good' : percentage >= 60 ? 'warning' : 'critical';
+
+    // Display score
+    document.getElementById('beautificationScore').innerHTML = `
+        <div class="${scoreClass}">
+            ${score}/${maxScore} (${percentage}%)
+        </div>
+    `;
+
+    // Display level
+    document.getElementById('beautificationLevel').innerHTML = `
+        [${data.level || 'BEGINNER'}] ${data.level_desc || 'Just Getting Started'}
+    `;
+
+    // Display categories
+    const categoriesContainer = document.getElementById('beautificationCategories');
+    categoriesContainer.innerHTML = '';
+
+    Object.entries(data.categories || {}).forEach(([name, score]) => {
+        const maxCategoryScore = data.max_scores ? data.max_scores[name] : 20;
+        const categoryPercentage = Math.round((score / maxCategoryScore) * 100);
+
+        const categoryCard = document.createElement('div');
+        categoryCard.className = 'category-card';
+        categoryCard.innerHTML = `
+            <div class="category-name">${name}</div>
+            <div class="category-progress">
+                <div class="category-progress-bar" style="width: ${categoryPercentage}%"></div>
+            </div>
+            <div class="category-score">${score}/${maxCategoryScore} (${categoryPercentage}%)</div>
+        `;
+        categoriesContainer.appendChild(categoryCard);
+    });
+
+    // Display achievements
+    if (data.achievements && data.achievements.length > 0) {
+        const achievementsContainer = document.getElementById('beautificationAchievements');
+        achievementsContainer.innerHTML = '<h3>[TROPHY] Achievements Unlocked:</h3>';
+        data.achievements.forEach(achievement => {
+            const achievementCard = document.createElement('div');
+            achievementCard.className = 'achievement-card';
+            achievementCard.innerHTML = `<h4>[*] ${achievement}</h4>`;
+            achievementsContainer.appendChild(achievementCard);
+        });
+    }
+}
+
+function showNotification(message, type) {
+    if (window.GitSage && window.GitSage.showNotification) {
+        window.GitSage.showNotification(message, type);
+    } else {
+        alert(message);
+    }
+}
+</script>
+{% endblock %}

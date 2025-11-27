@@ -1,0 +1,469 @@
+{% extends "base.html" %}
+
+{% block title %}Setup Wizard - {{ project_name }}{% endblock %}
+
+{% block content %}
+<div class="setup-wizard-page">
+    <header class="page-header">
+        <h1>Repository Setup Wizard</h1>
+        <p class="subtitle">Complete repository setup in one command! Analysis → Health Check → README → Wiki</p>
+    </header>
+
+    <div class="wizard-container">
+        <!-- Start Button -->
+        <section class="section card" id="startSection">
+            <h2>[>>] Welcome to GitSage Setup Wizard</h2>
+            <p>This wizard will guide you through setting up your repository with professional documentation and best practices.</p>
+            <p><strong>What we'll do:</strong></p>
+            <ul class="wizard-steps">
+                <li>[1/6] Analyze your project type and technologies</li>
+                <li>[2/6] Check repository health (13 comprehensive checks)</li>
+                <li>[3/6] Calculate beautification score (5 levels, 8 achievements)</li>
+                <li>[4/6] Provide recommendations and quick wins</li>
+                <li>[5/6] Guide you to generate README and Wiki</li>
+                <li>[6/6] Show final summary and next steps</li>
+            </ul>
+            <button id="startWizardBtn" class="btn btn-primary btn-large">
+                <span class="btn-icon">[ROCKET]</span> Start Setup Wizard
+            </button>
+        </section>
+
+        <!-- Progress Tracker -->
+        <section class="section card" id="progressSection" style="display: none;">
+            <h2>[>>] Setup Progress</h2>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="progress-steps" id="progressSteps"></div>
+        </section>
+
+        <!-- Step Results -->
+        <div id="stepResults"></div>
+
+        <!-- Final Summary -->
+        <section class="section card" id="summarySection" style="display: none;">
+            <h2>[OK] Setup Complete!</h2>
+            <div id="summaryContent"></div>
+            <div class="next-actions">
+                <h3>[>>] Next Steps:</h3>
+                <button class="btn btn-primary" onclick="window.location.href='/readme-generator'">
+                    <span class="btn-icon">[DOCS]</span> Generate README
+                </button>
+                <button class="btn btn-primary" onclick="window.location.href='/wiki-generator'">
+                    <span class="btn-icon">[DOCS]</span> Generate Wiki
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.href='/health-checker'">
+                    <span class="btn-icon">[HEALTH]</span> View Details
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.reload()">
+                    <span class="btn-icon">[ROCKET]</span> Run Again
+                </button>
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+.setup-wizard-page {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.wizard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+.wizard-steps {
+    list-style: none;
+    padding-left: 0;
+    margin: 1.5rem 0;
+}
+
+.wizard-steps li {
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    background: var(--darker-bg);
+    border-left: 4px solid var(--primary-color);
+    border-radius: 4px;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.btn-icon {
+    margin-right: 0.5rem;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: var(--dark-bg);
+}
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+}
+
+.btn-secondary {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    border-color: var(--primary-color);
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 30px;
+    background: var(--darker-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+.progress-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.step-indicator {
+    text-align: center;
+    padding: 1rem;
+    background: var(--darker-bg);
+    border-radius: 4px;
+    border: 2px solid transparent;
+}
+
+.step-indicator.active {
+    border-color: var(--primary-color);
+    background: var(--card-bg);
+}
+
+.step-indicator.completed {
+    border-color: #4caf50;
+}
+
+.step-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.step-name {
+    font-size: 0.9rem;
+}
+
+.step-result {
+    margin: 1rem 0;
+    padding: 1.5rem;
+    background: var(--darker-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.step-result h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.result-item {
+    padding: 1rem;
+    background: var(--card-bg);
+    border-radius: 4px;
+}
+
+.result-item strong {
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.next-actions {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: var(--darker-bg);
+    border-radius: 4px;
+}
+
+.next-actions h3 {
+    margin-bottom: 1rem;
+}
+
+.spinner {
+    border: 3px solid var(--border-color);
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 1rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-message {
+    text-align: center;
+    color: var(--text-secondary);
+    margin: 1rem 0;
+}
+</style>
+
+<script>
+const STEPS = [
+    { number: 1, name: 'Project Analysis' },
+    { number: 2, name: 'Health Check' },
+    { number: 3, name: 'Beautification Score' },
+    { number: 4, name: 'Recommendations' },
+    { number: 5, name: 'Quick Wins' },
+    { number: 6, name: 'Summary' }
+];
+
+let currentStep = 0;
+
+document.getElementById('startWizardBtn').addEventListener('click', async () => {
+    document.getElementById('startSection').style.display = 'none';
+    document.getElementById('progressSection').style.display = 'block';
+
+    createProgressSteps();
+    await runWizard();
+});
+
+function createProgressSteps() {
+    const container = document.getElementById('progressSteps');
+    container.innerHTML = '';
+
+    STEPS.forEach(step => {
+        const stepDiv = document.createElement('div');
+        stepDiv.className = 'step-indicator';
+        stepDiv.id = `step-${step.number}`;
+        stepDiv.innerHTML = `
+            <div class="step-number">[${step.number}/6]</div>
+            <div class="step-name">${step.name}</div>
+        `;
+        container.appendChild(stepDiv);
+    });
+}
+
+function updateProgress(step) {
+    currentStep = step;
+    const percentage = (step / 6) * 100;
+    document.getElementById('progressBar').style.width = percentage + '%';
+
+    // Update step indicators
+    STEPS.forEach(s => {
+        const stepEl = document.getElementById(`step-${s.number}`);
+        if (s.number < step) {
+            stepEl.className = 'step-indicator completed';
+        } else if (s.number === step) {
+            stepEl.className = 'step-indicator active';
+        } else {
+            stepEl.className = 'step-indicator';
+        }
+    });
+}
+
+async function runWizard() {
+    try {
+        const response = await fetch('/api/setup-wizard/run', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            displayWizardResults(result.steps);
+        } else {
+            showNotification('Setup wizard failed: ' + result.error, 'error');
+        }
+    } catch (error) {
+        showNotification('Error: ' + error.message, 'error');
+    }
+}
+
+function displayWizardResults(steps) {
+    const resultsContainer = document.getElementById('stepResults');
+    resultsContainer.innerHTML = '';
+
+    steps.forEach((step, index) => {
+        updateProgress(step.step);
+
+        const stepResult = document.createElement('section');
+        stepResult.className = 'section card step-result';
+
+        let content = '';
+
+        if (step.name === 'Project Analysis') {
+            content = formatProjectAnalysis(step.data);
+        } else if (step.name === 'Health Check') {
+            content = formatHealthCheck(step.data);
+        } else if (step.name === 'Beautification Score') {
+            content = formatBeautificationScore(step.data);
+        }
+
+        stepResult.innerHTML = `
+            <h3>[${step.step}/6] ${step.name}</h3>
+            ${content}
+        `;
+
+        resultsContainer.appendChild(stepResult);
+    });
+
+    updateProgress(6);
+    showSummary(steps);
+}
+
+function formatProjectAnalysis(data) {
+    return `
+        <div class="result-grid">
+            <div class="result-item">
+                <strong>Detected Type:</strong>
+                ${data.detected_type || 'Unknown'}
+            </div>
+            <div class="result-item">
+                <strong>Confidence:</strong>
+                ${((data.confidence || 0) * 100).toFixed(1)}%
+            </div>
+            <div class="result-item">
+                <strong>Languages:</strong>
+                ${Object.keys(data.languages || {}).join(', ') || 'None'}
+            </div>
+            <div class="result-item">
+                <strong>Frameworks:</strong>
+                ${(data.frameworks || []).join(', ') || 'None'}
+            </div>
+        </div>
+    `;
+}
+
+function formatHealthCheck(data) {
+    const percentage = Math.round((data.overall_score / data.max_score) * 100);
+    return `
+        <div class="result-grid">
+            <div class="result-item">
+                <strong>Overall Score:</strong>
+                ${data.overall_score}/${data.max_score} (${percentage}%)
+            </div>
+            <div class="result-item">
+                <strong>Checks Passed:</strong>
+                ${Object.values(data.checks || {}).filter(c => c.status === '[OK]').length}/${Object.keys(data.checks || {}).length}
+            </div>
+            <div class="result-item">
+                <strong>Quick Wins:</strong>
+                ${(data.quick_wins || []).length} available
+            </div>
+            <div class="result-item">
+                <strong>Critical Issues:</strong>
+                ${(data.critical_issues || []).length} found
+            </div>
+        </div>
+    `;
+}
+
+function formatBeautificationScore(data) {
+    return `
+        <div class="result-grid">
+            <div class="result-item">
+                <strong>Total Score:</strong>
+                ${data.total_score || 0}/${data.max_score || 100}
+            </div>
+            <div class="result-item">
+                <strong>Level:</strong>
+                [${data.level || 'BEGINNER'}]
+            </div>
+            <div class="result-item">
+                <strong>Achievements:</strong>
+                ${(data.achievements || []).length} unlocked
+            </div>
+            <div class="result-item">
+                <strong>Status:</strong>
+                ${data.level_desc || 'Just Getting Started'}
+            </div>
+        </div>
+    `;
+}
+
+function showSummary(steps) {
+    document.getElementById('summarySection').style.display = 'block';
+
+    const summaryContent = document.getElementById('summaryContent');
+    summaryContent.innerHTML = `
+        <p class="success-message">[OK] Your repository has been analyzed!</p>
+        <div class="result-grid">
+            <div class="result-item">
+                <strong>Project Type:</strong>
+                ${steps[0].data.detected_type || 'Unknown'}
+            </div>
+            <div class="result-item">
+                <strong>Health Score:</strong>
+                ${steps[1].data.overall_score}/${steps[1].data.max_score}
+            </div>
+            <div class="result-item">
+                <strong>Beautification Level:</strong>
+                [${steps[2].data.level || 'BEGINNER'}]
+            </div>
+            <div class="result-item">
+                <strong>Improvement Potential:</strong>
+                ${(steps[1].data.quick_wins || []).length} quick wins available
+            </div>
+        </div>
+    `;
+
+    // Scroll to summary
+    document.getElementById('summarySection').scrollIntoView({ behavior: 'smooth' });
+
+    showNotification('Setup wizard completed successfully!', 'success');
+}
+
+function showNotification(message, type) {
+    if (window.GitSage && window.GitSage.showNotification) {
+        window.GitSage.showNotification(message, type);
+    } else {
+        alert(message);
+    }
+}
+</script>
+{% endblock %}

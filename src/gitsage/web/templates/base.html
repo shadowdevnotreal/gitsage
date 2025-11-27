@@ -18,8 +18,17 @@
             </div>
             <div class="navbar-menu">
                 <a href="{{ url_for('index') }}" class="nav-link">Dashboard</a>
+                <a href="{{ url_for('setup_wizard') }}" class="nav-link">Setup Wizard</a>
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-link">Interactive Tools ▾</a>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('readme_generator') }}">README Generator</a>
+                        <a href="{{ url_for('wiki_generator') }}">Wiki Generator</a>
+                        <a href="{{ url_for('health_checker') }}">Health Checker</a>
+                        <a href="{{ url_for('generators') }}">Script Generator</a>
+                    </div>
+                </div>
                 <a href="{{ url_for('repositories') }}" class="nav-link">Repositories</a>
-                <a href="{{ url_for('generators') }}" class="nav-link">Generators</a>
                 <a href="{{ url_for('backups') }}" class="nav-link">Backups</a>
                 <a href="{{ url_for('settings') }}" class="nav-link">Settings</a>
                 <a href="{{ url_for('about') }}" class="nav-link">About</a>
