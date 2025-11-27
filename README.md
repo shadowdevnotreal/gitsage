@@ -1,4 +1,4 @@
-# GitSage v2.2 🚀
+# GitSage v2.3 🚀
 
 <img width="1024" height="1024" alt="gitsage" src="https://github.com/user-attachments/assets/84d13255-acc0-46e9-b014-7f033edac85f" />
 
@@ -29,6 +29,37 @@ GitSage is your **all-in-one GitHub companion** that combines powerful automatio
 - **Developers**: Automate repetitive tasks and manage repositories efficiently
 - **Teams**: Consistent workflows with safe, documented operations
 - **Everyone**: From your first commit to advanced Git workflows
+
+## ✨ What's New in v2.3
+
+**🎯 Full PowerShell Feature Parity** - Windows users rejoice!
+- Complete PowerShell implementation of all interactive tools
+- Launch-GitSage.ps1 - Main interactive menu launcher
+- Generate-ReadmeInteractive.ps1 - Smart README generator with auto-detection
+- Generate-Wiki.ps1 - Professional documentation wiki generator
+- Test-RepositoryHealth.ps1 - Health checker with beautification scoring
+- Initialize-Repository.ps1 - One-command complete repository setup
+- 100% feature parity with Python versions
+
+**🤖 Smart Project Detection**
+- Auto-detects 10+ project types (npm, Python, CLI tools, web apps, etc.)
+- Language and framework identification
+- Smart defaults based on detection
+- Confidence scoring for accuracy
+
+**🏥 Repository Health & Beautification**
+- 13 comprehensive health checks
+- 100-point beautification scoring system
+- 5 levels: Beginner → Intermediate → Advanced → Expert → Master
+- 8 unlockable achievements
+- 6 scoring categories (Documentation, Community, Automation, Code, Visual, Extras)
+- Educational "WHY" explanations for each check
+- Quick wins and critical issues identification
+
+**🎨 Perfect Terminal Alignment**
+- All ASCII characters (no emoji width issues)
+- Consistent box drawing and alignment
+- Professional terminal output across all platforms
 
 ## ✨ What's New in v2.2
 
@@ -171,10 +202,17 @@ gitsage-web    # Web interface
 
 | Script | Purpose | Location |
 |--------|---------|----------|
+| `Launch-GitSage.ps1` | Main launcher with interactive menu | `scripts/powershell/` |
+| `Generate-ReadmeInteractive.ps1` | Interactive README generator | `scripts/powershell/` |
+| `Generate-Wiki.ps1` | Documentation wiki generator | `scripts/powershell/` |
+| `Test-RepositoryHealth.ps1` | Health checker & beautification scorer | `scripts/powershell/` |
+| `Initialize-Repository.ps1` | One-command setup wizard | `scripts/powershell/` |
 | `Delete-Repository.ps1` | Safe repository deletion | `scripts/powershell/` |
 | `Manage-Repository.ps1` | Interactive repository manager | `scripts/powershell/` |
 | `Reset-GitHistory.ps1` | Complete history reset | `scripts/powershell/` |
 | `Migrate-Repository.ps1` | Repository migration | `scripts/powershell/` |
+
+**NEW:** Full feature parity with Python tools! Windows users can now use native PowerShell for all interactive features.
 
 ## 🎮 Usage Examples
 
@@ -256,6 +294,21 @@ bash scripts/git-resets/migrate_repository.sh --mode=full
 ### Repository Operations (PowerShell)
 
 ```powershell
+# NEW: Main interactive launcher
+.\scripts\powershell\Launch-GitSage.ps1
+
+# NEW: One-command repository setup
+.\scripts\powershell\Initialize-Repository.ps1
+
+# NEW: Interactive README generator with auto-detection
+.\scripts\powershell\Generate-ReadmeInteractive.ps1 -Interactive
+
+# NEW: Wiki generator with all pages
+.\scripts\powershell\Generate-Wiki.ps1 -All
+
+# NEW: Repository health check with beautification scoring
+.\scripts\powershell\Test-RepositoryHealth.ps1 -Full
+
 # Safe repository deletion
 .\scripts\powershell\Delete-Repository.ps1
 

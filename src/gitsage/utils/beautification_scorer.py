@@ -15,11 +15,11 @@ class BeautificationScorer:
     """Gamify repository aesthetics with levels, achievements, and scores"""
 
     LEVELS = {
-        'beginner': (0, 29, '🌱', 'Just Getting Started'),
-        'intermediate': (30, 59, '🌿', 'Building Momentum'),
-        'advanced': (60, 79, '🌳', 'Looking Professional'),
-        'expert': (80, 94, '🌟', 'Production Ready'),
-        'master': (95, 100, '💎', 'Open Source Champion')
+        'beginner': (0, 29, '[BEGINNER]', 'Just Getting Started'),
+        'intermediate': (30, 59, '[INTER]', 'Building Momentum'),
+        'advanced': (60, 79, '[ADVANCED]', 'Looking Professional'),
+        'expert': (80, 94, '[*]', 'Production Ready'),
+        'master': (95, 100, '[MASTER]', 'Open Source Champion')
     }
 
     ACHIEVEMENTS = {
@@ -37,37 +37,37 @@ class BeautificationScorer:
     CATEGORIES = {
         'documentation': {
             'name': 'Documentation',
-            'emoji': '📚',
+            'emoji': '[DOCS]',
             'checks': ['README.md', 'Documentation', 'Wiki'],
             'max_points': 26
         },
         'community': {
             'name': 'Community',
-            'emoji': '👥',
+            'emoji': '[USERS]',
             'checks': ['CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'LICENSE'],
             'max_points': 23
         },
         'automation': {
             'name': 'Automation',
-            'emoji': '🤖',
+            'emoji': '[AUTO]',
             'checks': ['GitHub Actions', 'Branch Protection'],
             'max_points': 15
         },
         'security': {
             'name': 'Security',
-            'emoji': '🔒',
+            'emoji': '[LOCK]',
             'checks': ['SECURITY.md', '.gitignore'],
             'max_points': 15
         },
         'discoverability': {
             'name': 'Discoverability',
-            'emoji': '🔍',
+            'emoji': '[SEARCH]',
             'checks': ['Description', 'Topics'],
             'max_points': 6
         },
         'engagement': {
             'name': 'Engagement',
-            'emoji': '💬',
+            'emoji': '[CHAT]',
             'checks': ['Issues'],
             'max_points': 5
         }
@@ -194,13 +194,13 @@ class BeautificationScorer:
     def _get_category_status(self, percentage: float) -> str:
         """Get status emoji for category"""
         if percentage >= 90:
-            return '✅'
+            return '[OK]'
         elif percentage >= 70:
-            return '⚠️'
+            return '[WARN]'
         elif percentage >= 40:
-            return '🔶'
+            return '[MEDIUM]'
         else:
-            return '❌'
+            return '[FAIL]'
 
     def _generate_improvements(self, checks: Dict, category_scores: Dict) -> List[Dict]:
         """Generate prioritized improvement suggestions"""
@@ -270,13 +270,13 @@ class BeautificationScorer:
                 f"[italic]{level_info['description']}[/italic]\n\n"
                 f"Score: [bold green]{results['total_score']}/{results['max_score']}[/bold green] "
                 f"([bold yellow]{results['percentage']:.1f}%[/bold yellow])",
-                title="🌟 Repository Beautification Score",
+                title="[*] Repository Beautification Score",
                 border_style="cyan"
             ))
 
             # Achievements
             if results['achievements']:
-                console.print("\n[bold yellow]🏆 Achievements Unlocked:[/bold yellow]")
+                console.print("\n[bold yellow][TROPHY] Achievements Unlocked:[/bold yellow]")
                 for achievement in results['achievements']:
                     console.print(
                         f"  • [green]{achievement['name']}[/green]: {achievement['desc']} "
@@ -284,7 +284,7 @@ class BeautificationScorer:
                     )
 
             # Category scores
-            console.print("\n[bold cyan]📊 Category Breakdown:[/bold cyan]")
+            console.print("\n[bold cyan][STATS] Category Breakdown:[/bold cyan]")
             cat_table = Table(show_header=True, box=box.ROUNDED)
             cat_table.add_column("Category", style="cyan")
             cat_table.add_column("Status", justify="center")
@@ -303,7 +303,7 @@ class BeautificationScorer:
 
             # Improvements
             if results['improvements']:
-                console.print("\n[bold yellow]💡 Top Improvements:[/bold yellow]")
+                console.print("\n[bold yellow][!] Top Improvements:[/bold yellow]")
                 for imp in results['improvements'][:2]:
                     console.print(f"\n  {imp['emoji']} [cyan]{imp['category']}[/cyan] ({imp['current']})")
                     for sug in imp['suggestions'][:2]:
@@ -319,14 +319,14 @@ class BeautificationScorer:
                     f"Next Level: [bold green]{milestone['emoji']} {milestone['level'].upper()}[/bold green]\n"
                     f"{milestone['description']}\n\n"
                     f"Need: [yellow]{milestone['percentage_needed']}%[/yellow] more points",
-                    title="🎯 Next Milestone",
+                    title="[>>] Next Milestone",
                     border_style="yellow"
                 ))
 
         else:
             # Plain text output
             print("\n" + "="*60)
-            print("🌟 REPOSITORY BEAUTIFICATION SCORE")
+            print("[*] REPOSITORY BEAUTIFICATION SCORE")
             print("="*60)
 
             level_info = results['level_info']
@@ -335,11 +335,11 @@ class BeautificationScorer:
             print(f"\nScore: {results['total_score']}/{results['max_score']} ({results['percentage']:.1f}%)")
 
             if results['achievements']:
-                print("\n🏆 ACHIEVEMENTS:")
+                print("\n[TROPHY] ACHIEVEMENTS:")
                 for achievement in results['achievements']:
                     print(f"  • {achievement['name']}: {achievement['desc']} (+{achievement['points']} pts)")
 
-            print("\n📊 CATEGORY BREAKDOWN:")
+            print("\n[STATS] CATEGORY BREAKDOWN:")
             for cat_id, cat_data in results['category_scores'].items():
                 print(
                     f"  {cat_data['status']} {cat_data['emoji']} {cat_data['name']}: "
@@ -347,7 +347,7 @@ class BeautificationScorer:
                 )
 
             if results['improvements']:
-                print("\n💡 TOP IMPROVEMENTS:")
+                print("\n[!] TOP IMPROVEMENTS:")
                 for imp in results['improvements'][:2]:
                     print(f"\n  {imp['emoji']} {imp['category']} ({imp['current']})")
                     for sug in imp['suggestions'][:2]:
@@ -355,7 +355,7 @@ class BeautificationScorer:
 
             if results['next_milestone']:
                 milestone = results['next_milestone']
-                print(f"\n🎯 NEXT MILESTONE: {milestone['emoji']} {milestone['level'].upper()}")
+                print(f"\n[>>] NEXT MILESTONE: {milestone['emoji']} {milestone['level'].upper()}")
                 print(f"   {milestone['description']}")
                 print(f"   Need: {milestone['percentage_needed']}% more points")
 

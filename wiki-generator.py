@@ -169,7 +169,7 @@ class DocumentationGenerator:
                 "sections": [
                     {
                         "title": "Getting Started",
-                        "icon": "🚀",
+                        "icon": "[ROCKET]",
                         "pages": [
                             {"name": "Home", "template": "home"},
                             {"name": "Quick Start", "template": "quickstart"},
@@ -189,7 +189,7 @@ class DocumentationGenerator:
                     },
                     {
                         "title": "API Reference",
-                        "icon": "🔧",
+                        "icon": "[TOOL]",
                         "pages": [
                             {"name": "Overview", "template": "api-overview"},
                             {"name": "Authentication", "template": "api-auth"},
@@ -199,7 +199,7 @@ class DocumentationGenerator:
                     },
                     {
                         "title": "Developer Guide",
-                        "icon": "💻",
+                        "icon": "[CODE]",
                         "pages": [
                             {"name": "Architecture", "template": "architecture"},
                             {"name": "Contributing", "template": "contributing"},
@@ -247,16 +247,16 @@ class DocumentationGenerator:
             yaml.dump(self.config, f, default_flow_style=False, sort_keys=False)
 
         if RICH_AVAILABLE:
-            rprint(f"[green]✅ Configuration saved:[/green] {config_file}")
+            rprint(f"[green][OK] Configuration saved:[/green] {config_file}")
         else:
-            print(f"✅ Configuration saved: {config_file}")
+            print(f"[OK] Configuration saved: {config_file}")
 
     def generate_github_wiki(self) -> Path:
         """Generate GitHub Wiki format"""
         if RICH_AVAILABLE:
-            rprint("\n[cyan]📚 Generating GitHub Wiki...[/cyan]")
+            rprint("\n[cyan][DOCS] Generating GitHub Wiki...[/cyan]")
         else:
-            print("\n📚 Generating GitHub Wiki...")
+            print("\n[DOCS] Generating GitHub Wiki...")
 
         wiki_dir = self.output_dir / "github-wiki"
         wiki_dir.mkdir(parents=True, exist_ok=True)
@@ -269,9 +269,9 @@ class DocumentationGenerator:
         self.stats["formats"].append("GitHub Wiki")
 
         if RICH_AVAILABLE:
-            rprint(f"[green]✅ GitHub Wiki generated:[/green] {wiki_dir}")
+            rprint(f"[green][OK] GitHub Wiki generated:[/green] {wiki_dir}")
         else:
-            print(f"✅ GitHub Wiki generated: {wiki_dir}")
+            print(f"[OK] GitHub Wiki generated: {wiki_dir}")
 
         return wiki_dir
 
@@ -294,9 +294,9 @@ class DocumentationGenerator:
         self.stats["formats"].append("GitBook")
 
         if RICH_AVAILABLE:
-            rprint(f"[green]✅ GitBook generated:[/green] {gitbook_dir}")
+            rprint(f"[green][OK] GitBook generated:[/green] {gitbook_dir}")
         else:
-            print(f"✅ GitBook generated: {gitbook_dir}")
+            print(f"[OK] GitBook generated: {gitbook_dir}")
 
         return gitbook_dir
 
@@ -325,7 +325,7 @@ class DocumentationGenerator:
 
 ---
 
-## 🚀 **Quick Start**
+## [ROCKET] **Quick Start**
 
 Get started in 5 minutes:
 
@@ -338,26 +338,26 @@ cd {project["name"].lower().replace(" ", "-")}
 python {project["main_script"]}
 ```
 
-**[📖 Full Installation Guide →](Installation)**
+**[📖 Full Installation Guide ->](Installation)**
 
 ---
 
-## ✨ **Key Features**
+## [+] **Key Features**
 
 | Feature | Description |
 |---------|-------------|
 | 🛡️ **Safety First** | Multiple confirmations, automatic backups, verified operations |
-| 📝 **Complete Logging** | Audit trail of all operations with timestamps |
+| [EDIT] **Complete Logging** | Audit trail of all operations with timestamps |
 | ⚙️ **Fully Configurable** | Customize every aspect to your workflow |
 | 🧪 **Well Tested** | 60+ automated tests ensuring reliability |
 | 🌍 **Cross-Platform** | Works on Windows, macOS, and Linux |
-| 🎨 **Multiple Interfaces** | CLI and Web interface options |
+| [STYLE] **Multiple Interfaces** | CLI and Web interface options |
 
 ---
 
-## 📚 **Documentation Navigation**
+## [DOCS] **Documentation Navigation**
 
-### 🎯 Getting Started
+### [>>] Getting Started
 - **[Quick Start Guide](Quick-Start)** - Be productive in 5 minutes
 - **[Installation](Installation)** - Complete setup instructions
 - **[Configuration](Configuration)** - Customize to your needs
@@ -368,7 +368,7 @@ python {project["main_script"]}
 - **[Best Practices](Best-Practices)** - Tips from the community
 - **[Examples](Examples)** - Real-world use cases
 
-### 🔧 API & Development
+### [TOOL] API & Development
 - **[API Overview](API-Overview)** - Integration reference
 - **[Architecture](Architecture)** - How it works internally
 - **[Contributing](Contributing)** - Join the project
@@ -382,7 +382,7 @@ python {project["main_script"]}
 
 ---
 
-## 📊 **Project Information**
+## [STATS] **Project Information**
 
 | | |
 |---|---|
@@ -396,23 +396,23 @@ python {project["main_script"]}
 ## 🔗 **Quick Links**
 
 - 🌐 **[Project Homepage]({project["homepage"]})**
-- 📦 **[Latest Release]({project["github_url"]}/releases/latest)**
+- [PKG] **[Latest Release]({project["github_url"]}/releases/latest)**
 - 🐛 **[Report Issues]({project["issues_url"]})**
-- 💬 **[Discussions]({project["github_url"]}/discussions)**
+- [CHAT] **[Discussions]({project["github_url"]}/discussions)**
 - ⭐ **[Star on GitHub]({project["github_url"]})**
 
 ---
 
-## 💡 **Need Help?**
+## [!] **Need Help?**
 
 - 📖 **[Start with Quick Start](Quick-Start)** - Best first step
-- 🔍 **[Search Documentation](Search)** - Find what you need
-- 💬 **[Ask the Community](Community)** - Get answers fast
+- [SEARCH] **[Search Documentation](Search)** - Find what you need
+- [CHAT] **[Ask the Community](Community)** - Get answers fast
 - 🐛 **[Report a Bug]({project["issues_url"]})** - Help us improve
 
 ---
 
-**📝 Last Updated:** {datetime.now().strftime("%Y-%m-%d")}
+**[EDIT] Last Updated:** {datetime.now().strftime("%Y-%m-%d")}
 
 *This documentation is automatically generated and maintained. {theme_styles.get(theme, "professional")} theme.*
 '''
@@ -427,7 +427,7 @@ python {project["main_script"]}
         sections = self.config["content"]["sections"]
         project = self.config["project"]
 
-        sidebar = "# 📚 Documentation\n\n"
+        sidebar = "# [DOCS] Documentation\n\n"
 
         for section in sections:
             icon = section.get("icon", "📄")
@@ -488,7 +488,7 @@ python {project["main_script"]}
 
 {project["description"]}
 
-## 🚀 Quick Start
+## [ROCKET] Quick Start
 
 ```bash
 git clone {project["github_url"]}.git
@@ -496,7 +496,7 @@ cd {project["name"].lower().replace(" ", "-")}
 python {project["main_script"]}
 ```
 
-## 📚 Documentation
+## [DOCS] Documentation
 
 This GitBook contains comprehensive documentation for {project["name"]}.
 
@@ -728,8 +728,8 @@ fi
 
 WIKI_URL="${REPO_URL%.git}.wiki.git"
 
-echo "🚀 Deploying GitHub Wiki..."
-echo "📦 Repository: $REPO_URL"
+echo "[ROCKET] Deploying GitHub Wiki..."
+echo "[PKG] Repository: $REPO_URL"
 echo "📖 Wiki URL: $WIKI_URL"
 
 TEMP_DIR=$(mktemp -d)
@@ -738,10 +738,10 @@ trap "rm -rf $TEMP_DIR" EXIT
 cd "$TEMP_DIR"
 
 if git clone "$WIKI_URL" wiki 2>/dev/null; then
-    echo "✅ Wiki repository cloned"
+    echo "[OK] Wiki repository cloned"
     cd wiki
 else
-    echo "📝 Creating new wiki repository"
+    echo "[EDIT] Creating new wiki repository"
     mkdir wiki
     cd wiki
     git init
@@ -758,13 +758,13 @@ if ! git diff --staged --quiet; then
     git config user.name "Documentation Bot" 2>/dev/null || true
     git config user.email "docs@generator.local" 2>/dev/null || true
 
-    git commit -m "📚 Auto-update documentation - $(date '+%Y-%m-%d %H:%M:%S')"
+    git commit -m "[DOCS] Auto-update documentation - $(date '+%Y-%m-%d %H:%M:%S')"
     git push -u origin main || git push -u origin master
 
-    echo "✅ Wiki deployed successfully!"
+    echo "[OK] Wiki deployed successfully!"
     echo "🔗 View at: ${REPO_URL%.git}/wiki"
 else
-    echo "✅ No changes to commit"
+    echo "[OK] No changes to commit"
 fi
 '''
 
@@ -782,7 +782,7 @@ set -e
 
 GITBOOK_DIR="./generated-docs/gitbook"
 
-echo "🚀 Building GitBook..."
+echo "[ROCKET] Building GitBook..."
 
 cd "$GITBOOK_DIR"
 
@@ -793,14 +793,14 @@ if ! command -v gitbook &> /dev/null; then
 fi
 
 # Install plugins
-echo "📦 Installing plugins..."
+echo "[PKG] Installing plugins..."
 gitbook install
 
 # Build
 echo "🔨 Building..."
 gitbook build
 
-echo "✅ GitBook built successfully!"
+echo "[OK] GitBook built successfully!"
 echo "📂 Output: $GITBOOK_DIR/_book"
 echo ""
 echo "Deploy options:"
@@ -819,9 +819,9 @@ echo "  3. Netlify: Deploy _book folder"
     def generate_all(self, formats: Optional[List[str]] = None) -> None:
         """Generate all enabled formats"""
         if RICH_AVAILABLE:
-            rprint("\n[bold cyan]🚀 Documentation Generation Starting...[/bold cyan]\n")
+            rprint("\n[bold cyan][ROCKET] Documentation Generation Starting...[/bold cyan]\n")
         else:
-            print("\n🚀 Documentation Generation Starting...\n")
+            print("\n[ROCKET] Documentation Generation Starting...\n")
 
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.load_config()
@@ -972,11 +972,11 @@ Examples:
 
     if args.list:
         if RICH_AVAILABLE:
-            rprint("\n[bold]📚 Available Templates:[/bold]")
+            rprint("\n[bold][DOCS] Available Templates:[/bold]")
             for template in DocumentationGenerator.INDUSTRY_TEMPLATES:
                 rprint(f"  • [cyan]{template}[/cyan]")
 
-            rprint("\n[bold]🎨 Available Themes:[/bold]")
+            rprint("\n[bold][STYLE] Available Themes:[/bold]")
             for theme in DocumentationGenerator.THEMES:
                 rprint(f"  • [cyan]{theme}[/cyan]")
 
@@ -984,10 +984,10 @@ Examples:
             for fmt in DocumentationGenerator.SUPPORTED_FORMATS:
                 rprint(f"  • [cyan]{fmt}[/cyan]")
         else:
-            print("\n📚 Available Templates:")
+            print("\n[DOCS] Available Templates:")
             for template in DocumentationGenerator.INDUSTRY_TEMPLATES:
                 print(f"  • {template}")
-            print("\n🎨 Available Themes:")
+            print("\n[STYLE] Available Themes:")
             for theme in DocumentationGenerator.THEMES:
                 print(f"  • {theme}")
             print("\n📋 Supported Formats:")

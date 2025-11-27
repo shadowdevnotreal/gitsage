@@ -130,9 +130,9 @@ def setup_repository_wizard():
         # Step 5: Setup GitHub features
         console.print("\n[bold cyan][5/6] GitHub Setup Checklist[/bold cyan]")
         console.print("\nPlease enable these features in your GitHub repository:")
-        console.print("  [ ] Enable Wiki (Settings → Features → Wikis)")
-        console.print("  [ ] Enable Issues (Settings → Features → Issues)")
-        console.print("  [ ] Enable Discussions (Settings → Features → Discussions)")
+        console.print("  [ ] Enable Wiki (Settings -> Features -> Wikis)")
+        console.print("  [ ] Enable Issues (Settings -> Features -> Issues)")
+        console.print("  [ ] Enable Discussions (Settings -> Features -> Discussions)")
         console.print("  [ ] Add repository description")
         console.print("  [ ] Add 3-5 topics/tags")
         console.print("  [ ] Add LICENSE file (if not exists)")
@@ -141,9 +141,9 @@ def setup_repository_wizard():
         console.print(Panel.fit(
             "[bold green]Repository Setup Complete![/bold green]\n\n"
             "[white]Your repository now has:[/white]\n"
-            "  [green]✓[/green] Professional README.md\n"
-            "  [green]✓[/green] Complete documentation wiki\n"
-            "  [green]✓[/green] GitHub best practices applied\n\n"
+            "  [green][*][/green] Professional README.md\n"
+            "  [green][*][/green] Complete documentation wiki\n"
+            "  [green][*][/green] GitHub best practices applied\n\n"
             "[yellow]Next steps:[/yellow]\n"
             "  1. Review and commit changes\n"
             "  2. Enable GitHub features (see checklist above)\n"
