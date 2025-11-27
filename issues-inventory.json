@@ -1,0 +1,439 @@
+{
+  "metadata": {
+    "scan_date": "2025-11-27",
+    "total_issues": 38,
+    "repository": "gitsage",
+    "scanner": "Multi-Agent Code Perfection System - Scout Phase"
+  },
+  "categories": {
+    "code_quality": {
+      "count": 12,
+      "issues": [
+        {
+          "id": "CQ001",
+          "severity": "medium",
+          "category": "code_quality",
+          "location": "readme-generator.py:562",
+          "description": "Bare except clause catches all exceptions indiscriminately",
+          "impact": "May hide bugs and make debugging difficult",
+          "suggested_fix": "Replace 'except:' with specific exception types like 'except Exception as e:'",
+          "priority": 65
+        },
+        {
+          "id": "CQ002",
+          "severity": "medium",
+          "category": "code_quality",
+          "location": "check_installation.py:57,73,90",
+          "description": "Multiple bare except clauses (3 occurrences)",
+          "impact": "Suppresses error information needed for troubleshooting",
+          "suggested_fix": "Use specific exception handling and logging",
+          "priority": 65
+        },
+        {
+          "id": "CQ003",
+          "severity": "low",
+          "category": "code_quality",
+          "location": "*.py (16 functions/classes)",
+          "description": "Missing docstrings on 16 functions and classes",
+          "impact": "Reduces code maintainability and developer experience",
+          "suggested_fix": "Add comprehensive docstrings following Google or NumPy style",
+          "priority": 35
+        },
+        {
+          "id": "CQ004",
+          "severity": "low",
+          "category": "code_quality",
+          "location": "Root directory: backup-manager.py, readme-generator.py, script-generator.py, wiki-generator.py",
+          "description": "Python files using hyphens instead of underscores",
+          "impact": "Non-Pythonic naming convention makes imports awkward",
+          "suggested_fix": "Rename to backup_manager.py, readme_generator.py, script_generator.py, wiki_generator.py",
+          "priority": 50
+        },
+        {
+          "id": "CQ005",
+          "severity": "low",
+          "category": "code_quality",
+          "location": "Various *.py files (393 occurrences)",
+          "description": "Extensive use of print() instead of logging",
+          "impact": "Reduces log management flexibility and filtering capabilities",
+          "suggested_fix": "Use logger.info(), logger.debug() etc. for better log control",
+          "priority": 30
+        },
+        {
+          "id": "CQ006",
+          "severity": "medium",
+          "category": "code_quality",
+          "location": "script-generator.py (1337 lines), wiki-generator.py (1014 lines), readme-generator.py (722 lines)",
+          "description": "Very large files indicating monolithic design",
+          "impact": "Reduces maintainability, testability, and code reuse",
+          "suggested_fix": "Refactor into smaller, focused modules with single responsibilities",
+          "priority": 55
+        },
+        {
+          "id": "CQ007",
+          "severity": "high",
+          "category": "code_quality",
+          "location": "src/gitsage/web/app.py",
+          "description": "6 TODO comments indicating incomplete functionality",
+          "impact": "Web API endpoints not fully implemented (config updates, script generation, backup operations, settings)",
+          "suggested_fix": "Implement missing functionality or remove placeholder endpoints",
+          "priority": 75
+        },
+        {
+          "id": "CQ008",
+          "severity": "low",
+          "category": "code_quality",
+          "location": "src/gitsage/web/app.py:162-175",
+          "description": "subprocess.run without input validation",
+          "impact": "Potential command injection if inputs are not sanitized",
+          "suggested_fix": "Add input validation and use subprocess arguments safely",
+          "priority": 40
+        },
+        {
+          "id": "CQ009",
+          "severity": "low",
+          "category": "code_quality",
+          "location": "Multiple Python files",
+          "description": "Inconsistent import ordering and grouping",
+          "impact": "Reduces code readability and maintainability",
+          "suggested_fix": "Use isort or black for consistent import formatting",
+          "priority": 25
+        },
+        {
+          "id": "CQ010",
+          "severity": "medium",
+          "category": "code_quality",
+          "location": "src/gitsage/web/app.py",
+          "description": "3 print() statements in web application",
+          "impact": "Debug output not suitable for production web server",
+          "suggested_fix": "Replace with logger calls",
+          "priority": 45
+        },
+        {
+          "id": "CQ011",
+          "severity": "low",
+          "category": "code_quality",
+          "location": "install.ps1:29",
+          "description": "PowerShell function uses emoji in output (✓)",
+          "impact": "Inconsistent with ASCII-only mandate, may cause alignment issues",
+          "suggested_fix": "Replace ✓ with [OK] or [*] for consistency",
+          "priority": 40
+        },
+        {
+          "id": "CQ012",
+          "severity": "low",
+          "category": "code_quality",
+          "location": "install.ps1:39",
+          "description": "PowerShell function uses emoji in output (✗)",
+          "impact": "Inconsistent with ASCII-only mandate",
+          "suggested_fix": "Replace ✗ with [FAIL] or [X] for consistency",
+          "priority": 40
+        }
+      ]
+    },
+    "security": {
+      "count": 4,
+      "issues": [
+        {
+          "id": "SEC001",
+          "severity": "high",
+          "category": "security",
+          "location": "src/gitsage/web/app.py",
+          "description": "No CSRF protection for Flask application",
+          "impact": "Vulnerable to Cross-Site Request Forgery attacks",
+          "suggested_fix": "Add Flask-WTF with CSRFProtect() or implement CSRF tokens manually",
+          "priority": 85
+        },
+        {
+          "id": "SEC002",
+          "severity": "medium",
+          "category": "security",
+          "location": "src/gitsage/web/app.py API endpoints",
+          "description": "Missing input validation on POST endpoints",
+          "impact": "Potential for injection attacks and malformed data processing",
+          "suggested_fix": "Add input validation using marshmallow or pydantic schemas",
+          "priority": 70
+        },
+        {
+          "id": "SEC003",
+          "severity": "medium",
+          "category": "security",
+          "location": "src/gitsage/web/app.py",
+          "description": "No rate limiting on API endpoints",
+          "impact": "Vulnerable to DoS attacks and API abuse",
+          "suggested_fix": "Implement Flask-Limiter or similar rate limiting",
+          "priority": 60
+        },
+        {
+          "id": "SEC004",
+          "severity": "low",
+          "category": "security",
+          "location": "src/gitsage/web/app.py",
+          "description": "Missing security headers (CSP, X-Frame-Options, etc.)",
+          "impact": "Vulnerable to clickjacking and XSS attacks",
+          "suggested_fix": "Add Flask-Talisman or set security headers manually",
+          "priority": 55
+        }
+      ]
+    },
+    "testing": {
+      "count": 3,
+      "issues": [
+        {
+          "id": "TEST001",
+          "severity": "high",
+          "category": "testing",
+          "location": "tests/ directory",
+          "description": "Low test coverage: only 3 test files for 19 source modules",
+          "impact": "High risk of regressions and bugs in production",
+          "suggested_fix": "Add comprehensive unit and integration tests targeting >80% coverage",
+          "priority": 80
+        },
+        {
+          "id": "TEST002",
+          "severity": "medium",
+          "category": "testing",
+          "location": "PowerShell scripts (10 files)",
+          "description": "No PowerShell tests using Pester framework",
+          "impact": "PowerShell scripts not tested, may break on different Windows versions",
+          "suggested_fix": "Add Pester tests for all PowerShell scripts",
+          "priority": 60
+        },
+        {
+          "id": "TEST003",
+          "severity": "medium",
+          "category": "testing",
+          "location": "src/gitsage/web/",
+          "description": "No web interface tests (E2E or integration)",
+          "impact": "Web UI changes may break functionality without detection",
+          "suggested_fix": "Add Selenium or Playwright tests for web interface",
+          "priority": 65
+        }
+      ]
+    },
+    "accessibility": {
+      "count": 5,
+      "issues": [
+        {
+          "id": "A11Y001",
+          "severity": "medium",
+          "category": "accessibility",
+          "location": "src/gitsage/web/templates/*.html",
+          "description": "No ARIA labels on interactive elements",
+          "impact": "Screen readers cannot properly announce UI elements",
+          "suggested_fix": "Add aria-label, aria-describedby attributes to buttons, forms, and interactive elements",
+          "priority": 50
+        },
+        {
+          "id": "A11Y002",
+          "severity": "medium",
+          "category": "accessibility",
+          "location": "src/gitsage/web/templates/*.html",
+          "description": "Missing semantic HTML5 elements",
+          "impact": "Reduces accessibility and SEO effectiveness",
+          "suggested_fix": "Use <nav>, <main>, <article>, <aside> instead of generic <div>",
+          "priority": 45
+        },
+        {
+          "id": "A11Y003",
+          "severity": "low",
+          "category": "accessibility",
+          "location": "src/gitsage/web/templates/*.html forms",
+          "description": "Form inputs may be missing associated labels",
+          "impact": "Screen readers cannot identify form fields",
+          "suggested_fix": "Ensure all <input> elements have associated <label> with 'for' attribute",
+          "priority": 50
+        },
+        {
+          "id": "A11Y004",
+          "severity": "low",
+          "category": "accessibility",
+          "location": "src/gitsage/web/templates/base.html",
+          "description": "Missing skip navigation link",
+          "impact": "Keyboard users must tab through all navigation on every page",
+          "suggested_fix": "Add 'Skip to main content' link at top of page",
+          "priority": 35
+        },
+        {
+          "id": "A11Y005",
+          "severity": "medium",
+          "category": "accessibility",
+          "location": "src/gitsage/web/templates/*.html",
+          "description": "Color contrast may not meet WCAG AA standards",
+          "impact": "Users with visual impairments may not be able to read text",
+          "suggested_fix": "Audit and adjust color palette to meet WCAG 2.1 AA (4.5:1 contrast ratio)",
+          "priority": 50
+        }
+      ]
+    },
+    "documentation": {
+      "count": 7,
+      "issues": [
+        {
+          "id": "DOC001",
+          "severity": "low",
+          "category": "documentation",
+          "location": "README.md",
+          "description": "Missing API documentation section",
+          "impact": "Developers don't know how to use the web API",
+          "suggested_fix": "Add API endpoints documentation with examples",
+          "priority": 40
+        },
+        {
+          "id": "DOC002",
+          "severity": "low",
+          "category": "documentation",
+          "location": "docs/",
+          "description": "No architecture documentation (diagrams, system design)",
+          "impact": "New contributors struggle to understand codebase structure",
+          "suggested_fix": "Create architecture.md with component diagrams",
+          "priority": 35
+        },
+        {
+          "id": "DOC003",
+          "severity": "low",
+          "category": "documentation",
+          "location": "PowerShell scripts",
+          "description": "PowerShell scripts have minimal inline comments",
+          "impact": "Windows users may not understand complex script logic",
+          "suggested_fix": "Add comment-based help and inline explanations",
+          "priority": 30
+        },
+        {
+          "id": "DOC004",
+          "severity": "low",
+          "category": "documentation",
+          "location": "README.md",
+          "description": "Missing troubleshooting section",
+          "impact": "Users waste time debugging common issues",
+          "suggested_fix": "Add FAQ/Troubleshooting section with common issues and solutions",
+          "priority": 45
+        },
+        {
+          "id": "DOC005",
+          "severity": "low",
+          "category": "documentation",
+          "location": "docs/",
+          "description": "No contributing guidelines for code style",
+          "impact": "Contributors may submit code not matching project conventions",
+          "suggested_fix": "Add CONTRIBUTING.md with code style, testing, and PR guidelines",
+          "priority": 30
+        },
+        {
+          "id": "DOC006",
+          "severity": "low",
+          "category": "documentation",
+          "location": "src/gitsage/utils/",
+          "description": "Utility modules lack usage examples",
+          "impact": "Developers don't know how to use utility functions",
+          "suggested_fix": "Add docstring examples using doctest format",
+          "priority": 35
+        },
+        {
+          "id": "DOC007",
+          "severity": "medium",
+          "category": "documentation",
+          "location": "install.ps1, install.sh",
+          "description": "Installers lack detailed error messages",
+          "impact": "Users get stuck during installation without knowing why",
+          "suggested_fix": "Add informative error messages with solutions",
+          "priority": 55
+        }
+      ]
+    },
+    "performance": {
+      "count": 4,
+      "issues": [
+        {
+          "id": "PERF001",
+          "severity": "low",
+          "category": "performance",
+          "location": "src/gitsage/web/app.py",
+          "description": "No response caching for static API responses",
+          "impact": "Repeated API calls generate unnecessary computation",
+          "suggested_fix": "Implement Flask-Caching for appropriate endpoints",
+          "priority": 35
+        },
+        {
+          "id": "PERF002",
+          "severity": "low",
+          "category": "performance",
+          "location": "wiki-generator.py, readme-generator.py",
+          "description": "File operations may not use buffering efficiently",
+          "impact": "Large file generation may be slow",
+          "suggested_fix": "Review and optimize file I/O patterns",
+          "priority": 25
+        },
+        {
+          "id": "PERF003",
+          "severity": "low",
+          "category": "performance",
+          "location": "src/gitsage/utils/project_detector.py",
+          "description": "Directory scanning may not use efficient algorithms",
+          "impact": "Large repositories may take long to analyze",
+          "suggested_fix": "Add depth limits, use generators, implement caching",
+          "priority": 30
+        },
+        {
+          "id": "PERF004",
+          "severity": "low",
+          "category": "performance",
+          "location": "src/gitsage/web/static/",
+          "description": "CSS/JS assets not minified",
+          "impact": "Slower page load times",
+          "suggested_fix": "Add build step to minify assets",
+          "priority": 25
+        }
+      ]
+    },
+    "maintainability": {
+      "count": 3,
+      "issues": [
+        {
+          "id": "MAINT001",
+          "severity": "low",
+          "category": "maintainability",
+          "location": "requirements.txt",
+          "description": "Dependencies without version pinning",
+          "impact": "Potential for breaking changes from dependency updates",
+          "suggested_fix": "Pin all dependencies to specific versions or ranges",
+          "priority": 50
+        },
+        {
+          "id": "MAINT002",
+          "severity": "low",
+          "category": "maintainability",
+          "location": "Root directory",
+          "description": "No .editorconfig file",
+          "impact": "Inconsistent code formatting across different editors",
+          "suggested_fix": "Add .editorconfig with project formatting rules",
+          "priority": 25
+        },
+        {
+          "id": "MAINT003",
+          "severity": "low",
+          "category": "maintainability",
+          "location": ".github/workflows/",
+          "description": "No CI/CD workflows for automated testing",
+          "impact": "Manual testing required, no automated quality checks",
+          "suggested_fix": "Add GitHub Actions for testing, linting, and deployment",
+          "priority": 60
+        }
+      ]
+    }
+  },
+  "summary": {
+    "high_severity": 3,
+    "medium_severity": 15,
+    "low_severity": 20,
+    "by_category": {
+      "code_quality": 12,
+      "security": 4,
+      "testing": 3,
+      "accessibility": 5,
+      "documentation": 7,
+      "performance": 4,
+      "maintainability": 3
+    }
+  }
+}

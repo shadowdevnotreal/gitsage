@@ -1,0 +1,694 @@
+{
+  "metadata": {
+    "created": "2025-11-27",
+    "total_issues": 38,
+    "estimated_total_effort": "46-68 hours",
+    "priority_formula": "Priority = (Impact × Urgency × 10) / (Effort + Risk)",
+    "scope": "Complete repository improvement following Multi-Agent Code Perfection System"
+  },
+  "priority_calculations": {
+    "SEC001": {
+      "impact": 9,
+      "urgency": 9,
+      "effort": 3,
+      "risk": 2,
+      "priority_score": 162,
+      "rationale": "CSRF vulnerability is critical security issue, relatively easy to fix"
+    },
+    "TEST001": {
+      "impact": 8,
+      "urgency": 7,
+      "effort": 8,
+      "risk": 3,
+      "priority_score": 50.9,
+      "rationale": "Test coverage critical for reliability but high effort"
+    },
+    "CQ007": {
+      "impact": 8,
+      "urgency": 8,
+      "effort": 7,
+      "risk": 4,
+      "priority_score": 58.2,
+      "rationale": "Incomplete web endpoints block other work"
+    },
+    "SEC002": {
+      "impact": 8,
+      "urgency": 8,
+      "effort": 4,
+      "risk": 3,
+      "priority_score": 91.4,
+      "rationale": "Input validation prevents injection attacks"
+    },
+    "CQ001": {
+      "impact": 6,
+      "urgency": 5,
+      "effort": 2,
+      "risk": 1,
+      "priority_score": 100,
+      "rationale": "Bare except clause easy fix, prevents hidden bugs"
+    },
+    "CQ002": {
+      "impact": 6,
+      "urgency": 5,
+      "effort": 2,
+      "risk": 1,
+      "priority_score": 100,
+      "rationale": "Multiple bare excepts, same as CQ001"
+    },
+    "CQ011": {
+      "impact": 4,
+      "urgency": 6,
+      "effort": 1,
+      "risk": 1,
+      "priority_score": 120,
+      "rationale": "Emoji consistency fix, very low effort"
+    },
+    "CQ012": {
+      "impact": 4,
+      "urgency": 6,
+      "effort": 1,
+      "risk": 1,
+      "priority_score": 120,
+      "rationale": "Emoji consistency fix, very low effort"
+    },
+    "MAINT003": {
+      "impact": 7,
+      "urgency": 6,
+      "effort": 5,
+      "risk": 2,
+      "priority_score": 60,
+      "rationale": "CI/CD improves quality but requires tests first"
+    },
+    "CQ004": {
+      "impact": 5,
+      "urgency": 4,
+      "effort": 4,
+      "risk": 5,
+      "priority_score": 22.2,
+      "rationale": "File renames improve consistency but risky, affects imports"
+    },
+    "CQ006": {
+      "impact": 7,
+      "urgency": 5,
+      "effort": 9,
+      "risk": 6,
+      "priority_score": 23.3,
+      "rationale": "Large refactoring improves maintainability but high effort/risk"
+    },
+    "SEC003": {
+      "impact": 6,
+      "urgency": 6,
+      "effort": 3,
+      "risk": 2,
+      "priority_score": 72,
+      "rationale": "Rate limiting prevents DoS, moderate effort"
+    },
+    "SEC004": {
+      "impact": 6,
+      "urgency": 6,
+      "effort": 2,
+      "risk": 1,
+      "priority_score": 120,
+      "rationale": "Security headers easy to add, good protection"
+    },
+    "A11Y001": {
+      "impact": 6,
+      "urgency": 4,
+      "effort": 4,
+      "risk": 2,
+      "priority_score": 40,
+      "rationale": "ARIA labels improve accessibility, moderate effort"
+    },
+    "A11Y002": {
+      "impact": 5,
+      "urgency": 4,
+      "effort": 3,
+      "risk": 2,
+      "priority_score": 40,
+      "rationale": "Semantic HTML improves SEO/a11y"
+    },
+    "A11Y003": {
+      "impact": 6,
+      "urgency": 4,
+      "effort": 3,
+      "risk": 1,
+      "priority_score": 60,
+      "rationale": "Form labels critical for screen readers"
+    },
+    "A11Y004": {
+      "impact": 4,
+      "urgency": 3,
+      "effort": 1,
+      "risk": 1,
+      "priority_score": 60,
+      "rationale": "Skip link easy to add, helps keyboard users"
+    },
+    "A11Y005": {
+      "impact": 7,
+      "urgency": 5,
+      "effort": 4,
+      "risk": 2,
+      "priority_score": 58.3,
+      "rationale": "Color contrast affects all users, requires audit"
+    },
+    "CQ009": {
+      "impact": 3,
+      "urgency": 3,
+      "effort": 2,
+      "risk": 1,
+      "priority_score": 30,
+      "rationale": "Import formatting low impact but easy"
+    },
+    "MAINT002": {
+      "impact": 3,
+      "urgency": 3,
+      "effort": 1,
+      "risk": 1,
+      "priority_score": 45,
+      "rationale": "EditorConfig prevents formatting drift"
+    },
+    "MAINT001": {
+      "impact": 6,
+      "urgency": 5,
+      "effort": 2,
+      "risk": 3,
+      "priority_score": 60,
+      "rationale": "Version pinning prevents breaking changes"
+    },
+    "CQ005": {
+      "impact": 5,
+      "urgency": 4,
+      "effort": 6,
+      "risk": 3,
+      "priority_score": 22.2,
+      "rationale": "Logging improves debugging but 393 occurrences is high effort"
+    },
+    "CQ010": {
+      "impact": 6,
+      "urgency": 5,
+      "effort": 1,
+      "risk": 1,
+      "priority_score": 150,
+      "rationale": "Web app prints easy to fix, improves production readiness"
+    },
+    "CQ003": {
+      "impact": 4,
+      "urgency": 3,
+      "effort": 4,
+      "risk": 1,
+      "priority_score": 24,
+      "rationale": "Docstrings improve maintainability, moderate effort"
+    },
+    "DOC001": {
+      "impact": 6,
+      "urgency": 5,
+      "effort": 3,
+      "risk": 1,
+      "priority_score": 75,
+      "rationale": "API docs help users, requires endpoints implemented first"
+    },
+    "DOC002": {
+      "impact": 5,
+      "urgency": 4,
+      "effort": 4,
+      "risk": 1,
+      "priority_score": 40,
+      "rationale": "Architecture docs help contributors"
+    },
+    "DOC003": {
+      "impact": 4,
+      "urgency": 3,
+      "effort": 3,
+      "risk": 1,
+      "priority_score": 30,
+      "rationale": "PowerShell comments help Windows users"
+    },
+    "DOC004": {
+      "impact": 6,
+      "urgency": 6,
+      "effort": 3,
+      "risk": 1,
+      "priority_score": 90,
+      "rationale": "Troubleshooting section reduces support burden"
+    },
+    "DOC005": {
+      "impact": 5,
+      "urgency": 4,
+      "effort": 3,
+      "risk": 1,
+      "priority_score": 50,
+      "rationale": "Contributing guidelines standardize PRs"
+    },
+    "DOC006": {
+      "impact": 4,
+      "urgency": 3,
+      "effort": 3,
+      "risk": 1,
+      "priority_score": 30,
+      "rationale": "Usage examples help developers"
+    },
+    "DOC007": {
+      "impact": 7,
+      "urgency": 7,
+      "effort": 3,
+      "risk": 2,
+      "priority_score": 98,
+      "rationale": "Better installer error messages reduce user frustration"
+    },
+    "TEST002": {
+      "impact": 6,
+      "urgency": 5,
+      "effort": 6,
+      "risk": 3,
+      "priority_score": 33.3,
+      "rationale": "PowerShell tests ensure Windows compatibility"
+    },
+    "TEST003": {
+      "impact": 7,
+      "urgency": 6,
+      "effort": 7,
+      "risk": 4,
+      "priority_score": 38.2,
+      "rationale": "Web tests catch UI regressions, requires endpoints done"
+    },
+    "PERF001": {
+      "impact": 4,
+      "urgency": 3,
+      "effort": 3,
+      "risk": 2,
+      "priority_score": 24,
+      "rationale": "API caching improves performance"
+    },
+    "PERF002": {
+      "impact": 3,
+      "urgency": 2,
+      "effort": 4,
+      "risk": 3,
+      "priority_score": 8.6,
+      "rationale": "File I/O optimization low priority, requires profiling"
+    },
+    "PERF003": {
+      "impact": 4,
+      "urgency": 3,
+      "effort": 5,
+      "risk": 3,
+      "priority_score": 15,
+      "rationale": "Project detection optimization helps large repos"
+    },
+    "PERF004": {
+      "impact": 3,
+      "urgency": 2,
+      "effort": 3,
+      "risk": 2,
+      "priority_score": 12,
+      "rationale": "Asset minification low priority"
+    },
+    "CQ008": {
+      "impact": 7,
+      "urgency": 6,
+      "effort": 3,
+      "risk": 3,
+      "priority_score": 70,
+      "rationale": "Input validation for subprocess prevents injection"
+    }
+  },
+  "execution_phases": [
+    {
+      "phase": 1,
+      "name": "Quick Wins & Security Foundations",
+      "priority_threshold": ">= 90",
+      "estimated_effort": "6-8 hours",
+      "issues": [
+        {
+          "id": "SEC001",
+          "priority": 162,
+          "description": "Add CSRF protection",
+          "effort_hours": 2
+        },
+        {
+          "id": "CQ010",
+          "priority": 150,
+          "description": "Replace print() in web app with logger",
+          "effort_hours": 0.5
+        },
+        {
+          "id": "CQ011",
+          "priority": 120,
+          "description": "Replace ✓ emoji in install.ps1",
+          "effort_hours": 0.25
+        },
+        {
+          "id": "CQ012",
+          "priority": 120,
+          "description": "Replace ✗ emoji in install.ps1",
+          "effort_hours": 0.25
+        },
+        {
+          "id": "SEC004",
+          "priority": 120,
+          "description": "Add security headers to Flask app",
+          "effort_hours": 1
+        },
+        {
+          "id": "CQ001",
+          "priority": 100,
+          "description": "Fix bare except in readme-generator.py",
+          "effort_hours": 0.5
+        },
+        {
+          "id": "CQ002",
+          "priority": 100,
+          "description": "Fix bare excepts in check_installation.py",
+          "effort_hours": 0.5
+        },
+        {
+          "id": "DOC007",
+          "priority": 98,
+          "description": "Improve installer error messages",
+          "effort_hours": 2
+        },
+        {
+          "id": "SEC002",
+          "priority": 91.4,
+          "description": "Add input validation to API endpoints",
+          "effort_hours": 3
+        },
+        {
+          "id": "DOC004",
+          "priority": 90,
+          "description": "Add troubleshooting section to README",
+          "effort_hours": 2
+        }
+      ],
+      "deliverables": [
+        "Security vulnerabilities patched",
+        "Quick code quality wins implemented",
+        "Better error messages for users"
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "Web API Completion & Security Hardening",
+      "priority_threshold": "60-89",
+      "estimated_effort": "12-16 hours",
+      "issues": [
+        {
+          "id": "DOC001",
+          "priority": 75,
+          "description": "Add API documentation",
+          "effort_hours": 3
+        },
+        {
+          "id": "SEC003",
+          "priority": 72,
+          "description": "Add rate limiting",
+          "effort_hours": 2
+        },
+        {
+          "id": "CQ008",
+          "priority": 70,
+          "description": "Add subprocess input validation",
+          "effort_hours": 2
+        },
+        {
+          "id": "MAINT003",
+          "priority": 60,
+          "description": "Set up CI/CD with GitHub Actions",
+          "effort_hours": 4
+        },
+        {
+          "id": "MAINT001",
+          "priority": 60,
+          "description": "Pin dependency versions",
+          "effort_hours": 1
+        },
+        {
+          "id": "A11Y003",
+          "priority": 60,
+          "description": "Add form labels",
+          "effort_hours": 2
+        },
+        {
+          "id": "A11Y004",
+          "priority": 60,
+          "description": "Add skip navigation link",
+          "effort_hours": 0.5
+        },
+        {
+          "id": "CQ007",
+          "priority": 58.2,
+          "description": "Implement TODO endpoints in web API",
+          "effort_hours": 8,
+          "note": "BLOCKER for other work"
+        },
+        {
+          "id": "A11Y005",
+          "priority": 58.3,
+          "description": "Audit and fix color contrast",
+          "effort_hours": 3
+        }
+      ],
+      "deliverables": [
+        "Complete web API implementation",
+        "Full security hardening",
+        "CI/CD pipeline operational",
+        "Improved accessibility"
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "Testing & Quality Assurance",
+      "priority_threshold": "40-59",
+      "estimated_effort": "16-20 hours",
+      "issues": [
+        {
+          "id": "TEST001",
+          "priority": 50.9,
+          "description": "Add comprehensive Python test coverage",
+          "effort_hours": 10
+        },
+        {
+          "id": "DOC005",
+          "priority": 50,
+          "description": "Create CONTRIBUTING.md",
+          "effort_hours": 2
+        },
+        {
+          "id": "MAINT002",
+          "priority": 45,
+          "description": "Add .editorconfig",
+          "effort_hours": 0.5
+        },
+        {
+          "id": "A11Y001",
+          "priority": 40,
+          "description": "Add ARIA labels",
+          "effort_hours": 3
+        },
+        {
+          "id": "A11Y002",
+          "priority": 40,
+          "description": "Use semantic HTML5 elements",
+          "effort_hours": 2
+        },
+        {
+          "id": "DOC002",
+          "priority": 40,
+          "description": "Create architecture documentation",
+          "effort_hours": 3
+        },
+        {
+          "id": "TEST003",
+          "priority": 38.2,
+          "description": "Add web interface E2E tests",
+          "effort_hours": 8
+        },
+        {
+          "id": "TEST002",
+          "priority": 33.3,
+          "description": "Add PowerShell Pester tests",
+          "effort_hours": 6
+        }
+      ],
+      "deliverables": [
+        "80%+ test coverage",
+        "E2E and integration tests",
+        "Complete accessibility compliance",
+        "Architecture documentation"
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "Code Quality & Documentation",
+      "priority_threshold": "20-39",
+      "estimated_effort": "8-12 hours",
+      "issues": [
+        {
+          "id": "DOC003",
+          "priority": 30,
+          "description": "Add PowerShell comments",
+          "effort_hours": 2
+        },
+        {
+          "id": "DOC006",
+          "priority": 30,
+          "description": "Add usage examples to utilities",
+          "effort_hours": 2
+        },
+        {
+          "id": "CQ009",
+          "priority": 30,
+          "description": "Standardize import formatting",
+          "effort_hours": 1
+        },
+        {
+          "id": "PERF001",
+          "priority": 24,
+          "description": "Add Flask caching",
+          "effort_hours": 2
+        },
+        {
+          "id": "CQ003",
+          "priority": 24,
+          "description": "Add missing docstrings",
+          "effort_hours": 3
+        },
+        {
+          "id": "CQ006",
+          "priority": 23.3,
+          "description": "Refactor large files",
+          "effort_hours": 12,
+          "note": "HIGH EFFORT - Consider deferring"
+        },
+        {
+          "id": "CQ004",
+          "priority": 22.2,
+          "description": "Rename hyphenated Python files",
+          "effort_hours": 3,
+          "note": "RISKY - May break imports"
+        },
+        {
+          "id": "CQ005",
+          "priority": 22.2,
+          "description": "Replace all print() with logger",
+          "effort_hours": 8,
+          "note": "HIGH EFFORT - 393 occurrences"
+        }
+      ],
+      "deliverables": [
+        "Complete documentation",
+        "Code formatting standardized",
+        "Performance optimizations"
+      ]
+    },
+    {
+      "phase": 5,
+      "name": "Performance & Polish (Optional)",
+      "priority_threshold": "< 20",
+      "estimated_effort": "4-8 hours",
+      "issues": [
+        {
+          "id": "PERF003",
+          "priority": 15,
+          "description": "Optimize project detection",
+          "effort_hours": 4
+        },
+        {
+          "id": "PERF004",
+          "priority": 12,
+          "description": "Minify CSS/JS assets",
+          "effort_hours": 2
+        },
+        {
+          "id": "PERF002",
+          "priority": 8.6,
+          "description": "Optimize file I/O",
+          "effort_hours": 3
+        }
+      ],
+      "deliverables": [
+        "Performance optimizations",
+        "Asset minification",
+        "Final polish"
+      ],
+      "note": "Low priority - defer if time constrained"
+    }
+  ],
+  "resource_allocation": {
+    "immediate_focus": [
+      "SEC001",
+      "SEC002",
+      "SEC004",
+      "CQ001",
+      "CQ002",
+      "CQ010",
+      "CQ011",
+      "CQ012"
+    ],
+    "next_sprint": [
+      "CQ007",
+      "DOC001",
+      "DOC004",
+      "DOC007",
+      "MAINT001",
+      "MAINT003"
+    ],
+    "backlog": [
+      "CQ004",
+      "CQ005",
+      "CQ006",
+      "PERF002",
+      "PERF003",
+      "PERF004"
+    ]
+  },
+  "risk_assessment": {
+    "high_risk_changes": [
+      {
+        "id": "CQ004",
+        "risk": "File renames will break imports and tests",
+        "mitigation": "Create comprehensive test suite first, use git mv to preserve history"
+      },
+      {
+        "id": "CQ006",
+        "risk": "Large refactoring may introduce bugs",
+        "mitigation": "Incremental refactoring with tests after each change"
+      },
+      {
+        "id": "CQ007",
+        "risk": "Implementing TODOs may reveal architecture issues",
+        "mitigation": "Review existing code patterns, design before implementing"
+      }
+    ],
+    "low_risk_quick_wins": [
+      "CQ011",
+      "CQ012",
+      "SEC004",
+      "MAINT002",
+      "A11Y004",
+      "CQ009"
+    ]
+  },
+  "success_metrics": {
+    "code_quality": {
+      "target": "No bare except clauses, <10 print statements in src/",
+      "current": "4 bare excepts, 393 prints"
+    },
+    "security": {
+      "target": "All OWASP top 10 protections in place",
+      "current": "Missing CSRF, input validation, rate limiting"
+    },
+    "testing": {
+      "target": "80%+ code coverage, all critical paths tested",
+      "current": "3 test files for 19 modules"
+    },
+    "accessibility": {
+      "target": "WCAG 2.1 AA compliance",
+      "current": "No ARIA labels, missing semantic HTML"
+    },
+    "documentation": {
+      "target": "All public APIs documented, user guides complete",
+      "current": "16 missing docstrings, no API docs"
+    }
+  }
+}

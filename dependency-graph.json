@@ -1,0 +1,378 @@
+{
+  "metadata": {
+    "created": "2025-11-27",
+    "total_nodes": 38,
+    "total_edges": 24,
+    "graph_type": "directed_acyclic"
+  },
+  "nodes": {
+    "CQ001": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "exception_handling"
+    },
+    "CQ002": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "exception_handling"
+    },
+    "CQ003": {
+      "dependencies": [],
+      "blocks": ["DOC006"],
+      "can_parallel": true,
+      "batch_group": "documentation"
+    },
+    "CQ004": {
+      "dependencies": [],
+      "blocks": ["TEST001"],
+      "can_parallel": false,
+      "batch_group": "file_structure",
+      "note": "File renames will break imports, must update tests after"
+    },
+    "CQ005": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "logging"
+    },
+    "CQ006": {
+      "dependencies": [],
+      "blocks": ["TEST001", "CQ003"],
+      "can_parallel": false,
+      "batch_group": "refactoring",
+      "note": "Large refactoring should be done before adding tests and docs"
+    },
+    "CQ007": {
+      "dependencies": [],
+      "blocks": ["SEC002", "TEST003"],
+      "can_parallel": false,
+      "batch_group": "web_implementation",
+      "note": "Must implement TODOs before adding validation and tests"
+    },
+    "CQ008": {
+      "dependencies": ["CQ007"],
+      "blocks": [],
+      "can_parallel": false,
+      "batch_group": "web_security"
+    },
+    "CQ009": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "formatting"
+    },
+    "CQ010": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "logging"
+    },
+    "CQ011": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "emoji_cleanup"
+    },
+    "CQ012": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "emoji_cleanup"
+    },
+    "SEC001": {
+      "dependencies": [],
+      "blocks": ["TEST003"],
+      "can_parallel": false,
+      "batch_group": "web_security",
+      "note": "CSRF protection needed before E2E tests"
+    },
+    "SEC002": {
+      "dependencies": ["CQ007"],
+      "blocks": ["TEST003"],
+      "can_parallel": false,
+      "batch_group": "web_security"
+    },
+    "SEC003": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "web_security"
+    },
+    "SEC004": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "web_security"
+    },
+    "TEST001": {
+      "dependencies": ["CQ004", "CQ006"],
+      "blocks": [],
+      "can_parallel": false,
+      "batch_group": "testing",
+      "note": "Add tests after refactoring and file renames"
+    },
+    "TEST002": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "testing"
+    },
+    "TEST003": {
+      "dependencies": ["CQ007", "SEC001", "SEC002"],
+      "blocks": [],
+      "can_parallel": false,
+      "batch_group": "testing",
+      "note": "Add web tests after implementing endpoints and security"
+    },
+    "A11Y001": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "accessibility"
+    },
+    "A11Y002": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "accessibility"
+    },
+    "A11Y003": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "accessibility"
+    },
+    "A11Y004": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "accessibility"
+    },
+    "A11Y005": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "accessibility"
+    },
+    "DOC001": {
+      "dependencies": ["CQ007"],
+      "blocks": [],
+      "can_parallel": false,
+      "batch_group": "documentation",
+      "note": "Document API after implementing endpoints"
+    },
+    "DOC002": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "documentation"
+    },
+    "DOC003": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "documentation"
+    },
+    "DOC004": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "documentation"
+    },
+    "DOC005": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "documentation"
+    },
+    "DOC006": {
+      "dependencies": ["CQ003"],
+      "blocks": [],
+      "can_parallel": false,
+      "batch_group": "documentation"
+    },
+    "DOC007": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "documentation"
+    },
+    "PERF001": {
+      "dependencies": ["CQ007"],
+      "blocks": [],
+      "can_parallel": false,
+      "batch_group": "performance",
+      "note": "Add caching after implementing endpoints"
+    },
+    "PERF002": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "performance"
+    },
+    "PERF003": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "performance"
+    },
+    "PERF004": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "performance"
+    },
+    "MAINT001": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "maintenance"
+    },
+    "MAINT002": {
+      "dependencies": [],
+      "blocks": [],
+      "can_parallel": true,
+      "batch_group": "maintenance"
+    },
+    "MAINT003": {
+      "dependencies": ["TEST001", "TEST002", "TEST003"],
+      "blocks": [],
+      "can_parallel": false,
+      "batch_group": "maintenance",
+      "note": "Add CI/CD after creating tests"
+    }
+  },
+  "batch_groups": {
+    "exception_handling": {
+      "issues": ["CQ001", "CQ002"],
+      "can_run_parallel": true,
+      "estimated_effort": "low",
+      "description": "Replace bare except clauses with specific exception handling"
+    },
+    "emoji_cleanup": {
+      "issues": ["CQ011", "CQ012"],
+      "can_run_parallel": true,
+      "estimated_effort": "low",
+      "description": "Replace emoji characters in PowerShell with ASCII equivalents"
+    },
+    "logging": {
+      "issues": ["CQ005", "CQ010"],
+      "can_run_parallel": true,
+      "estimated_effort": "medium",
+      "description": "Replace print() statements with logger calls"
+    },
+    "formatting": {
+      "issues": ["CQ009"],
+      "can_run_parallel": true,
+      "estimated_effort": "low",
+      "description": "Standardize import ordering and formatting"
+    },
+    "file_structure": {
+      "issues": ["CQ004"],
+      "can_run_parallel": false,
+      "estimated_effort": "medium",
+      "description": "Rename hyphenated Python files to use underscores"
+    },
+    "refactoring": {
+      "issues": ["CQ006"],
+      "can_run_parallel": false,
+      "estimated_effort": "high",
+      "description": "Break down large monolithic files into smaller modules"
+    },
+    "web_implementation": {
+      "issues": ["CQ007"],
+      "can_run_parallel": false,
+      "estimated_effort": "high",
+      "description": "Implement TODO endpoints in web API"
+    },
+    "web_security": {
+      "issues": ["SEC001", "SEC002", "SEC003", "SEC004", "CQ008"],
+      "can_run_parallel": true,
+      "estimated_effort": "medium",
+      "description": "Add CSRF protection, input validation, rate limiting, security headers"
+    },
+    "accessibility": {
+      "issues": ["A11Y001", "A11Y002", "A11Y003", "A11Y004", "A11Y005"],
+      "can_run_parallel": true,
+      "estimated_effort": "medium",
+      "description": "Improve web interface accessibility"
+    },
+    "documentation": {
+      "issues": ["CQ003", "DOC001", "DOC002", "DOC003", "DOC004", "DOC005", "DOC006", "DOC007"],
+      "can_run_parallel": true,
+      "estimated_effort": "medium",
+      "description": "Add docstrings, guides, and examples"
+    },
+    "testing": {
+      "issues": ["TEST001", "TEST002", "TEST003"],
+      "can_run_parallel": true,
+      "estimated_effort": "high",
+      "description": "Add comprehensive test coverage"
+    },
+    "performance": {
+      "issues": ["PERF001", "PERF002", "PERF003", "PERF004"],
+      "can_run_parallel": true,
+      "estimated_effort": "low",
+      "description": "Optimize performance bottlenecks"
+    },
+    "maintenance": {
+      "issues": ["MAINT001", "MAINT002", "MAINT003"],
+      "can_run_parallel": true,
+      "estimated_effort": "low",
+      "description": "Improve project maintainability"
+    }
+  },
+  "execution_order": {
+    "phase_1_quick_wins": {
+      "batches": ["exception_handling", "emoji_cleanup", "formatting", "maintenance"],
+      "estimated_time": "2-4 hours",
+      "risk": "low",
+      "note": "Independent fixes that can be done in parallel"
+    },
+    "phase_2_foundation": {
+      "batches": ["file_structure", "logging"],
+      "estimated_time": "4-6 hours",
+      "risk": "medium",
+      "note": "Structural changes that affect other work"
+    },
+    "phase_3_major_work": {
+      "batches": ["refactoring", "web_implementation"],
+      "estimated_time": "16-24 hours",
+      "risk": "high",
+      "note": "Large refactoring and feature implementation"
+    },
+    "phase_4_security": {
+      "batches": ["web_security"],
+      "estimated_time": "4-6 hours",
+      "risk": "medium",
+      "note": "Security improvements for web interface"
+    },
+    "phase_5_quality": {
+      "batches": ["testing", "accessibility", "performance"],
+      "estimated_time": "12-16 hours",
+      "risk": "medium",
+      "note": "Quality improvements and test coverage"
+    },
+    "phase_6_polish": {
+      "batches": ["documentation"],
+      "estimated_time": "8-12 hours",
+      "risk": "low",
+      "note": "Documentation and final polish"
+    }
+  },
+  "critical_path": [
+    "CQ007",
+    "SEC001",
+    "SEC002",
+    "TEST003",
+    "DOC001",
+    "PERF001"
+  ],
+  "notes": {
+    "blocking_issues": "CQ006, CQ007 are major blockers for other work",
+    "parallel_opportunities": "Many issues can be fixed in parallel within phases",
+    "risk_mitigation": "Test after each phase before proceeding to next"
+  }
+}
