@@ -299,6 +299,186 @@ echo "Script generation will be fully implemented"
             logger.error(f"Settings update error: {e}")
             return jsonify({"success": False, "error": str(e)}), 500
 
+    # Interactive Tools Routes
+    @app.route("/readme-generator")
+    def readme_generator():
+        """README generator page."""
+        return render_template("readme_generator.html")
+
+    @app.route("/wiki-generator")
+    def wiki_generator():
+        """Wiki generator page."""
+        return render_template("wiki_generator.html")
+
+    @app.route("/health-checker")
+    def health_checker():
+        """Repository health checker page."""
+        return render_template("health_checker.html")
+
+    @app.route("/setup-wizard")
+    def setup_wizard():
+        """Repository setup wizard page."""
+        return render_template("setup_wizard.html")
+
+    # Interactive Tools API Endpoints
+    @app.route("/api/detect-project", methods=["POST"])
+    def api_detect_project():
+        """Detect project type and return analysis."""
+        try:
+            from gitsage.utils import ProjectDetector
+
+            detector = ProjectDetector()
+            result = detector.detect()
+
+            return jsonify({"success": True, "data": result})
+        except Exception as e:
+            logger.error(f"Project detection error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @app.route("/api/check-health", methods=["POST"])
+    def api_check_health():
+        """Check repository health."""
+        try:
+            from gitsage.utils import RepositoryHealthChecker
+
+            checker = RepositoryHealthChecker()
+            result = checker.check_all()
+
+            return jsonify({"success": True, "data": result})
+        except Exception as e:
+            logger.error(f"Health check error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @app.route("/api/beautification-score", methods=["POST"])
+    def api_beautification_score():
+        """Get beautification score."""
+        try:
+            from gitsage.utils import BeautificationScorer
+
+            scorer = BeautificationScorer()
+            result = scorer.calculate_score()
+
+            return jsonify({"success": True, "data": result})
+        except Exception as e:
+            logger.error(f"Beautification score error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @app.route("/api/generate-readme", methods=["POST"])
+    def api_generate_readme():
+        """Generate README content."""
+        try:
+            data = request.get_json()
+
+            # Import README generator logic
+            project_name = data.get("projectName", "My Project")
+            description = data.get("description", "")
+            features = data.get("features", [])
+            installation = data.get("installation", "")
+            usage = data.get("usage", "")
+            license_type = data.get("license", "MIT")
+
+            # Generate README content
+            readme_content = f"""# {project_name}
+
+> {description}
+
+## Features
+
+{chr(10).join([f"- {feature}" for feature in features])}
+
+## Installation
+
+```bash
+{installation}
+```
+
+## Usage
+
+```bash
+{usage}
+```
+
+## License
+
+{license_type}
+"""
+
+            return jsonify({"success": True, "content": readme_content})
+        except Exception as e:
+            logger.error(f"README generation error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @app.route("/api/generate-wiki", methods=["POST"])
+    def api_generate_wiki():
+        """Generate wiki pages."""
+        try:
+            data = request.get_json()
+            pages = data.get("pages", ["Home", "Installation", "Usage"])
+
+            # Generate wiki pages
+            wiki_pages = []
+            for page in pages:
+                wiki_pages.append(
+                    {
+                        "name": page,
+                        "filename": f"{page}.md",
+                        "content": f"# {page}\n\nContent for {page} page.",
+                    }
+                )
+
+            return jsonify({"success": True, "pages": wiki_pages})
+        except Exception as e:
+            logger.error(f"Wiki generation error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
+
+    @app.route("/api/setup-wizard/run", methods=["POST"])
+    def api_setup_wizard_run():
+        """Run complete setup wizard."""
+        try:
+            from gitsage.utils import (
+                BeautificationScorer,
+                ProjectDetector,
+                RepositoryHealthChecker,
+            )
+
+            steps = []
+
+            # Step 1: Detect project
+            detector = ProjectDetector()
+            detection = detector.detect()
+            steps.append(
+                {
+                    "step": 1,
+                    "name": "Project Analysis",
+                    "status": "completed",
+                    "data": detection,
+                }
+            )
+
+            # Step 2: Health check
+            checker = RepositoryHealthChecker()
+            health = checker.check_all()
+            steps.append(
+                {"step": 2, "name": "Health Check", "status": "completed", "data": health}
+            )
+
+            # Step 3: Beautification score
+            scorer = BeautificationScorer()
+            beauty = scorer.calculate_score()
+            steps.append(
+                {
+                    "step": 3,
+                    "name": "Beautification Score",
+                    "status": "completed",
+                    "data": beauty,
+                }
+            )
+
+            return jsonify({"success": True, "steps": steps})
+        except Exception as e:
+            logger.error(f"Setup wizard error: {e}")
+            return jsonify({"success": False, "error": str(e)}), 500
+
     # Error handlers
     @app.errorhandler(404)
     def not_found(error):
