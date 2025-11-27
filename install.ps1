@@ -262,18 +262,18 @@ if (-not (Test-Path $ConfigPath)) {
 # See docs for all available options
 
 project:
-  name: "GitSage"
-  version: "2.2.0"
+  name: GitSage
+  version: 2.3.0
 
 backup:
   enabled: true
-  backup_dir: "$($GitSageDir -replace '\\', '/')/backups"
+  backup_dir: $($GitSageDir -replace '\\', '/')/backups
   max_backups_per_repo: 10
   retention_days: 30
 
 logging:
-  level: "INFO"
-  log_dir: "$($GitSageDir -replace '\\', '/')/logs"
+  level: INFO
+  log_dir: $($GitSageDir -replace '\\', '/')/logs
   console_output: true
   file_output: true
 
