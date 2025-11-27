@@ -54,8 +54,8 @@ def check_git():
             check=True
         )
         return True, result.stdout.strip()
-    except:
-        return False, "Not installed"
+    except (subprocess.CalledProcessError, FileNotFoundError, OSError) as e:
+        return False, f"Not installed ({type(e).__name__})"
 
 
 def check_gh_cli():
@@ -70,8 +70,8 @@ def check_gh_cli():
         )
         version = result.stdout.strip().split()[2]
         return True, f"gh {version}"
-    except:
-        return False, "Not installed"
+    except (subprocess.CalledProcessError, FileNotFoundError, OSError, IndexError) as e:
+        return False, f"Not installed ({type(e).__name__})"
 
 
 def check_gh_auth():
@@ -87,8 +87,8 @@ def check_gh_auth():
         if result.returncode == 0:
             return True, "Authenticated"
         return False, "Not authenticated"
-    except:
-        return False, "Cannot check"
+    except (FileNotFoundError, OSError) as e:
+        return False, f"Cannot check ({type(e).__name__})"
 
 
 def check_python_package(package_name):

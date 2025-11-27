@@ -559,7 +559,8 @@ class ReadmeGenerator:
                 try:
                     indices = [int(x.strip()) - 1 for x in badge_input.split(',')]
                     config['badges']['shields'] = [all_badges[i] for i in indices if 0 <= i < len(all_badges)]
-                except:
+                except (ValueError, IndexError) as e:
+                    console.print(f"[yellow][WARN] Invalid badge selection: {e}. Using defaults.[/yellow]")
                     config['badges']['shields'] = ['license', 'version', 'stars', 'maintained']
 
         # Features

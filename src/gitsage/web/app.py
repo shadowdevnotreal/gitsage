@@ -6,6 +6,11 @@ from typing import Optional
 
 from flask import Flask, flash, jsonify, redirect, render_template, request, url_for
 from flask_cors import CORS
+try:
+    from flask_wtf.csrf import CSRFProtect
+    CSRF_AVAILABLE = True
+except ImportError:
+    CSRF_AVAILABLE = False
 
 from gitsage.__version__ import PROJECT_NAME, __version__
 from gitsage.config import get_config
@@ -36,6 +41,25 @@ def create_app(config: Optional[dict] = None) -> Flask:
 
     # Enable CORS
     CORS(app)
+
+    # Enable CSRF protection
+    if CSRF_AVAILABLE:
+        csrf = CSRFProtect()
+        csrf.init_app(app)
+        logger.info("CSRF protection enabled")
+    else:
+        logger.warning("Flask-WTF not installed, CSRF protection disabled. Install with: pip install Flask-WTF")
+
+    # Security headers
+    @app.after_request
+    def add_security_headers(response):
+        """Add security headers to all responses."""
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+        response.headers['X-XSS-Protection'] = '1; mode=block'
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+        response.headers['Content-Security-Policy'] = "default-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: https:;"
+        return response
 
     # Initialize
     gitsage_config = get_config()
@@ -501,9 +525,9 @@ def main():
     """Run the web interface."""
     app = create_app()
 
-    print(f"Starting {PROJECT_NAME} Web Interface v{__version__}")
-    print("Access at: http://localhost:5000")
-    print("Press Ctrl+C to stop")
+    logger.info(f"Starting {PROJECT_NAME} Web Interface v{__version__}")
+    logger.info("Access at: http://localhost:5000")
+    logger.info("Press Ctrl+C to stop")
 
     app.run(host="0.0.0.0", port=5000, debug=True)
 
