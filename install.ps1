@@ -223,12 +223,12 @@ if ($InstallType -eq "user") {
 
     # Create batch wrapper
     Write-Info "Creating launcher script..."
-    $WrapperContent = @"
+    $WrapperContent = @'
 @echo off
 set GITSAGE_VENV=%USERPROFILE%\.gitsage\venv
 call "%GITSAGE_VENV%\Scripts\activate.bat"
 python -m gitsage.cli.launcher %*
-"@
+'@
     Set-Content -Path "$GitSageDir\gitsage.bat" -Value $WrapperContent
     Write-Success "Launcher script created"
 
