@@ -122,8 +122,12 @@ cd gitsage
 # Linux/macOS
 ./install.sh
 
-# Windows (PowerShell as Administrator)
+# Windows (PowerShell 7+ recommended, run as Administrator)
 .\install.ps1
+
+# Note: PowerShell 7+ is recommended for Windows
+# Install from: https://aka.ms/powershell-release?tag=stable
+# Or via winget: winget install Microsoft.PowerShell
 ```
 
 **Manual Installation:**
@@ -343,22 +347,26 @@ bash scripts/git-resets/migrate_repository.sh --mode=full
 ### Windows Setup
 
 ```powershell
-# 1. Install Git for Windows (includes Git Bash)
+# 1. Install PowerShell 7+ (RECOMMENDED)
+winget install Microsoft.PowerShell
+# Or download: https://aka.ms/powershell-release?tag=stable
+
+# 2. Install Git for Windows (includes Git Bash)
 # Download: https://git-scm.com/download/win
 winget install Git.Git
 
-# 2. Install GitHub CLI
+# 3. Install GitHub CLI
 winget install GitHub.cli
 
-# 3. Python tools work in PowerShell/CMD
+# 4. Python tools work in PowerShell/CMD
 python launcher.py
 python backup-manager.py
 
-# 4. Use native PowerShell scripts (RECOMMENDED for Windows)
+# 5. Use native PowerShell scripts (RECOMMENDED for Windows)
 .\scripts\powershell\Delete-Repository.ps1
 .\scripts\powershell\Manage-Repository.ps1
 
-# 5. Or use Bash scripts via Git Bash
+# 6. Or use Bash scripts via Git Bash
 bash scripts/bash/delete-repo.sh
 ```
 
