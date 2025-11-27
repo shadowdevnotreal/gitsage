@@ -20,8 +20,27 @@ param(
     [switch]$Interactive,
     [switch]$Analyze,
     [switch]$HealthCheck,
-    [string]$Output = "README.md"
+    [string]$Output = ""  # Empty means use default output folder
 )
+
+# ============================================
+# Output Folder Configuration
+# ============================================
+$DefaultOutputDir = ".\gitsage-output"
+$ReadmeOutputDir = "$DefaultOutputDir\readmes"
+
+# Create output directories
+if (-not (Test-Path $DefaultOutputDir)) {
+    New-Item -ItemType Directory -Path $DefaultOutputDir -Force | Out-Null
+}
+if (-not (Test-Path $ReadmeOutputDir)) {
+    New-Item -ItemType Directory -Path $ReadmeOutputDir -Force | Out-Null
+}
+
+# Set default output path if not specified
+if ([string]::IsNullOrEmpty($Output)) {
+    $Output = "$ReadmeOutputDir\README.md"
+}
 
 # Color output functions
 function Write-ColorOutput {

@@ -22,8 +22,27 @@ param(
     [switch]$All,
     [switch]$ShowSetup,
     [string]$Page,
-    [string]$Output = "wiki"
+    [string]$Output = ""  # Empty means use default output folder
 )
+
+# ============================================
+# Output Folder Configuration
+# ============================================
+$DefaultOutputDir = ".\gitsage-output"
+$WikiOutputDir = "$DefaultOutputDir\wiki"
+
+# Create output directories
+if (-not (Test-Path $DefaultOutputDir)) {
+    New-Item -ItemType Directory -Path $DefaultOutputDir -Force | Out-Null
+}
+if (-not (Test-Path $WikiOutputDir)) {
+    New-Item -ItemType Directory -Path $WikiOutputDir -Force | Out-Null
+}
+
+# Set default output path if not specified
+if ([string]::IsNullOrEmpty($Output)) {
+    $Output = $WikiOutputDir
+}
 
 # Color output functions
 function Write-ColorOutput {
