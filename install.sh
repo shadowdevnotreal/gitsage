@@ -384,3 +384,24 @@ echo
 
 success "Happy GitSaging!"
 echo
+
+# Offer to launch GitSage
+echo -e "${CYAN}${BOLD}Would you like to launch GitSage now?${NC}"
+read -rp "Launch GitSage? [Y/n]: " LAUNCH_NOW
+
+if [[ "$LAUNCH_NOW" =~ ^[Yy]?$ ]] || [[ -z "$LAUNCH_NOW" ]]; then
+    echo
+    info "Launching GitSage..."
+    echo
+
+    if [[ "$INSTALL_MODE" == "user" ]]; then
+        # Activate virtual environment and run
+        source "$VENV_DIR/bin/activate"
+        python -m gitsage.cli.launcher
+    else
+        # System/dev install
+        gitsage
+    fi
+fi
+
+echo

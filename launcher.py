@@ -38,10 +38,16 @@ def main():
             return
 
     # Interactive mode selection
-    print(f"{Colors.BLUE}Choose interface mode:{Colors.END}\n")
-    print(f"  {Colors.GREEN}1.{Colors.END} CLI Mode (Terminal Interface)")
-    print(f"  {Colors.GREEN}2.{Colors.END} Web Mode (Browser Interface)")
-    print(f"  {Colors.GREEN}3.{Colors.END} Repository Setup Wizard")
+    print(f"{Colors.BLUE}What would you like to do?{Colors.END}\n")
+    print(f"  {Colors.GREEN}1.{Colors.END} Repository Tools (Interactive Menu)")
+    print(f"      View tools, generate READMEs, wikis, manage repositories")
+    print()
+    print(f"  {Colors.GREEN}2.{Colors.END} Complete Repository Setup (Wizard)")
+    print(f"      One-command setup: analyze + README + wiki + best practices")
+    print()
+    print(f"  {Colors.GREEN}3.{Colors.END} Web Interface (Browser)")
+    print(f"      Launch browser-based interface at http://localhost:5000")
+    print()
     print(f"  {Colors.GREEN}4.{Colors.END} Exit\n")
 
     try:
@@ -50,9 +56,9 @@ def main():
         if choice == '1':
             launch_cli()
         elif choice == '2':
-            launch_web()
-        elif choice == '3':
             setup_repository_wizard()
+        elif choice == '3':
+            launch_web()
         elif choice == '4':
             print(f"\n{Colors.YELLOW}Goodbye!{Colors.END}\n")
             sys.exit(0)
@@ -95,6 +101,7 @@ def setup_repository_wizard():
         from rich.console import Console
         from rich.panel import Panel
         from rich.prompt import Confirm
+        import os
 
         console = Console()
 
@@ -103,6 +110,43 @@ def setup_repository_wizard():
             "[dim]Complete repository setup in one command![/dim]",
             border_style="cyan"
         ))
+
+        # Step 0: Determine project location
+        console.print("\n[bold yellow][>>] Project Location[/bold yellow]")
+        current_dir = Path.cwd()
+
+        # Check if current directory is a git repository
+        is_git_repo = (current_dir / ".git").exists()
+
+        if is_git_repo:
+            console.print(f"[green]Detected git repository:[/green] {current_dir}")
+            use_current = Confirm.ask("Use this directory?", default=True)
+            if not use_current:
+                project_path = console.input("[cyan]Enter project path:[/cyan] ").strip()
+                if project_path:
+                    os.chdir(project_path)
+                    console.print(f"[green]Changed to:[/green] {project_path}")
+        else:
+            console.print(f"[yellow]Current directory is not a git repository:[/yellow] {current_dir}")
+            console.print("[dim]GitSage works best with git repositories[/dim]\n")
+
+            choice = console.input(
+                "[cyan]Options:[/cyan]\n"
+                "  1. Use current directory anyway\n"
+                "  2. Enter different project path\n"
+                "  3. Cancel\n"
+                "[cyan]Choice [1-3]:[/cyan] "
+            ).strip()
+
+            if choice == '2':
+                project_path = console.input("[cyan]Enter project path:[/cyan] ").strip()
+                if project_path:
+                    os.chdir(project_path)
+                    console.print(f"[green]Changed to:[/green] {project_path}")
+            elif choice == '3':
+                console.print("[yellow]Cancelled[/yellow]")
+                return
+            # choice == '1' continues with current directory
 
         # Step 1: Analyze project
         console.print("\n[bold yellow][1/6] Analyzing project...[/bold yellow]")
