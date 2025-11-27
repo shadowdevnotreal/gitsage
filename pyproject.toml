@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools>=64.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -32,6 +32,7 @@ dependencies = [
     "rich>=13.0.0",
     "Flask>=3.0.0",
     "Flask-CORS>=4.0.0",
+    "Flask-WTF>=1.2.0",
     "GitPython>=3.1.40",
 ]
 
