@@ -13,6 +13,37 @@ param(
 # Requires PowerShell 5.0+
 #Requires -Version 5.0
 
+# Check PowerShell version and recommend upgrade
+$PSVersion = $PSVersionTable.PSVersion
+if ($PSVersion.Major -lt 7) {
+    Write-Host ""
+    Write-Host "================================================" -ForegroundColor Yellow
+    Write-Host "  PowerShell Version Notice" -ForegroundColor Yellow
+    Write-Host "================================================" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Current version: PowerShell $($PSVersion.Major).$($PSVersion.Minor)" -ForegroundColor White
+    Write-Host "Recommended: PowerShell 7+" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "While this installer may work on PowerShell 5.1, PowerShell 7+ is" -ForegroundColor Yellow
+    Write-Host "recommended for the best experience and compatibility." -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Install PowerShell 7:" -ForegroundColor Cyan
+    Write-Host "  winget install Microsoft.PowerShell" -ForegroundColor White
+    Write-Host ""
+    Write-Host "Or download from:" -ForegroundColor Cyan
+    Write-Host "  https://aka.ms/powershell-release?tag=stable" -ForegroundColor White
+    Write-Host ""
+
+    $continue = Read-Host "Continue with PowerShell $($PSVersion.Major).$($PSVersion.Minor) anyway? [y/N]"
+    if ($continue -notmatch '^[Yy]') {
+        Write-Host ""
+        Write-Host "Installation cancelled. Please upgrade to PowerShell 7+ and try again." -ForegroundColor Yellow
+        Write-Host ""
+        exit 0
+    }
+    Write-Host ""
+}
+
 # Configuration
 $GitSageDir = "$env:USERPROFILE\.gitsage"
 $InstallDir = "$env:ProgramFiles\GitSage"
