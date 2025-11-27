@@ -19,8 +19,23 @@
 param(
     [switch]$Full,
     [switch]$Quick,
-    [switch]$Beauty
+    [switch]$Beauty,
+    [switch]$SaveReport  # Save report to file
 )
+
+# ============================================
+# Output Folder Configuration
+# ============================================
+$DefaultOutputDir = ".\gitsage-output"
+$HealthOutputDir = "$DefaultOutputDir\health-reports"
+
+# Create output directories
+if (-not (Test-Path $DefaultOutputDir)) {
+    New-Item -ItemType Directory -Path $DefaultOutputDir -Force | Out-Null
+}
+if (-not (Test-Path $HealthOutputDir)) {
+    New-Item -ItemType Directory -Path $HealthOutputDir -Force | Out-Null
+}
 
 # Color output functions
 function Write-ColorOutput {
