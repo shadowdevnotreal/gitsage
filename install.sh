@@ -38,15 +38,15 @@ info() {
 }
 
 success() {
-    echo -e "${GREEN}[✓]${NC} $1"
+    echo -e "${GREEN}[OK]${NC} $1"
 }
 
 warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
+    echo -e "${YELLOW}[WARN]${NC} $1"
 }
 
 error() {
-    echo -e "${RED}[✗]${NC} $1"
+    echo -e "${RED}[FAIL]${NC} $1"
 }
 
 header() {
@@ -163,9 +163,9 @@ echo
 header "Installation Options"
 
 echo "Choose installation type:"
-echo "  1. ${GREEN}User Install${NC} (Recommended) - Install to ~/.gitsage with virtual environment"
-echo "  2. ${YELLOW}System Install${NC} - Install globally to $INSTALL_DIR (requires sudo)"
-echo "  3. ${BLUE}Development Install${NC} - Install in editable mode for development"
+echo -e "  1. ${GREEN}User Install${NC} (Recommended) - Install to ~/.gitsage with virtual environment"
+echo -e "  2. ${YELLOW}System Install${NC} - Install globally to $INSTALL_DIR (requires sudo)"
+echo -e "  3. ${BLUE}Development Install${NC} - Install in editable mode for development"
 echo
 
 read -rp "Enter choice [1-3]: " INSTALL_TYPE
@@ -351,36 +351,36 @@ echo
 
 if [[ "$INSTALL_MODE" == "user" ]]; then
     echo "To use GitSage:"
-    echo "  ${GREEN}$INSTALL_LOCATION${NC}"
+    echo -e "  ${GREEN}$INSTALL_LOCATION${NC}"
     echo
     echo "If not in PATH, add this to your shell RC file:"
-    echo "  ${CYAN}export PATH=\"\$HOME/.local/bin:\$PATH\"${NC}"
+    echo -e "  ${CYAN}export PATH=\"\$HOME/.local/bin:\$PATH\"${NC}"
 elif [[ "$INSTALL_MODE" == "system" ]]; then
     echo "GitSage is available system-wide:"
-    echo "  ${GREEN}gitsage${NC}"
+    echo -e "  ${GREEN}gitsage${NC}"
 else
     echo "GitSage is installed in development mode"
-    echo "  ${GREEN}gitsage${NC}"
+    echo -e "  ${GREEN}gitsage${NC}"
 fi
 
 echo
 echo "Quick start:"
-echo "  ${CYAN}gitsage${NC}              # Launch interactive menu"
-echo "  ${CYAN}gitsage --help${NC}       # Show help"
-echo "  ${CYAN}python launcher.py${NC}   # Alternative launcher"
+echo -e "  ${CYAN}gitsage${NC}              # Launch interactive menu"
+echo -e "  ${CYAN}gitsage --help${NC}       # Show help"
+echo -e "  ${CYAN}python launcher.py${NC}   # Alternative launcher"
 echo
 
 if ! gh auth status &> /dev/null 2>&1; then
     warning "Don't forget to authenticate GitHub CLI:"
-    echo "  ${CYAN}gh auth login${NC}"
+    echo -e "  ${CYAN}gh auth login${NC}"
     echo
 fi
 
 echo "Documentation:"
 echo "  README.md"
 echo "  docs/"
-echo "  ${BLUE}https://github.com/shadowdevnotreal/gitsage${NC}"
+echo -e "  ${BLUE}https://github.com/shadowdevnotreal/gitsage${NC}"
 echo
 
-success "Happy GitSaging! 🚀"
+success "Happy GitSaging!"
 echo
