@@ -19,55 +19,83 @@
 
 ## 🎯 **REALISTIC IMPROVEMENTS (No .exe, No tkinter, No over-simplification)**
 
-### **1. CLI: Simple Text-Based File Browser** ✅ IMPLEMENTED
+### **1. Native OS File/Folder Picker Dialogs** ✅ IMPLEMENTED
 
 **Problem:** Novices don't know file paths
-**Solution:** Text-based folder browser (no GUI needed)
+**Solution:** Open native OS dialog window (NO tkinter needed!)
 
 **How it works:**
+
+User runs Setup Wizard → CLI says "Opening folder picker dialog..." → **Native OS window appears!**
+
+#### **Windows:**
+Opens standard Windows folder browser dialog using PowerShell:
 ```
-📁 Select Project Folder
-────────────────────────────────────────────────────────────
-
-Quick access:
-  1. 📂 Desktop (/home/user/Desktop)
-  2. 📂 Documents (/home/user/Documents)
-  3. 📂 Downloads (/home/user/Downloads)
-  4. 📂 Current directory (/home/user/gitsage)
-
-  5. 🔍 Browse for folder
-  0. ❌ Cancel
-
-Choice: _
+┌─────────────────────────────────────────┐
+│ Select folder                       × │
+├─────────────────────────────────────────┤
+│ 📁 Desktop                              │
+│ 📁 Documents                            │
+│ 📁 Downloads                            │
+│ 📁 Pictures                             │
+│ 📂 my-project      ← User clicks here  │
+│ 📁 Videos                               │
+│                                         │
+├─────────────────────────────────────────┤
+│           [Select Folder]  [Cancel]    │
+└─────────────────────────────────────────┘
 ```
 
-**If they choose "Browse":**
+#### **macOS:**
+Opens native macOS folder chooser using AppleScript:
 ```
-📁 Current location: /home/user/Documents
-────────────────────────────────────────────────────────────
-  0. ⬆️  .. (Go up)
-  1. 📂 my-website
-  2. 📂 python-project
-  3. 📂 lesson-plans
+┌─────────────────────────────────────────┐
+│                                     ⚪⚪⚪│
+│ Choose a folder:                        │
+├─────────────────────────────────────────┤
+│ ⭐ Favorites                            │
+│   📁 Desktop                            │
+│   📁 Documents                          │
+│   📁 Downloads                          │
+│                                         │
+│ 📂 my-project      ← User clicks here  │
+│                                         │
+├─────────────────────────────────────────┤
+│                  [Cancel]  [Choose]    │
+└─────────────────────────────────────────┘
+```
 
-────────────────────────────────────────────────────────────
-Commands:
-  • Enter number to navigate
-  • Type 's' to select current folder
-  • Type 'q' to cancel
-  • Type path directly (e.g., /home/user/project)
-
-Choice: _
+#### **Linux:**
+Opens zenity/kdialog/yad dialog (tries all three):
+```
+┌─────────────────────────────────────────┐
+│ Select folder                       × │
+├─────────────────────────────────────────┤
+│ Location: /home/user                   │
+│                                         │
+│ 📁 Desktop                              │
+│ 📁 Documents                            │
+│ 📁 Downloads                            │
+│ 📂 my-project      ← User clicks here  │
+│                                         │
+├─────────────────────────────────────────┤
+│               [Cancel]  [OK]           │
+└─────────────────────────────────────────┘
 ```
 
 **Benefits:**
-- ✅ Works in terminal (no tkinter)
-- ✅ Shows common folders first
-- ✅ Allows browsing like a file manager
-- ✅ Pros can still type path directly
-- ✅ Novices can navigate visually
+- ✅ **Actual GUI window** (not text-based)
+- ✅ Native OS look and feel
+- ✅ No tkinter dependency
+- ✅ No additional Python packages needed
+- ✅ Works on Windows, macOS, Linux
+- ✅ Click folders to navigate (familiar!)
+- ✅ Can't type wrong path
 
-**Implementation:** `src/gitsage/utils/cli_file_browser.py` ✓
+**Implementation:**
+- `src/gitsage/utils/cli_file_browser.py`
+- Uses: PowerShell, osascript, zenity/kdialog/yad
+- Functions: `browse_for_folder()`, `browse_for_file()`, `get_project_folder()`
 
 ---
 
