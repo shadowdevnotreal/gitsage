@@ -38,28 +38,23 @@ def main():
             return
 
     # Interactive mode selection
-    print(f"{Colors.BLUE}What would you like to do?{Colors.END}\n")
-    print(f"  {Colors.GREEN}1.{Colors.END} Repository Tools (Interactive Menu)")
-    print(f"      View tools, generate READMEs, wikis, manage repositories")
+    print(f"{Colors.BLUE}Choose interface:{Colors.END}\n")
+    print(f"  {Colors.GREEN}1.{Colors.END} CLI Interface (Terminal)")
+    print(f"      Interactive menu with all repository tools")
     print()
-    print(f"  {Colors.GREEN}2.{Colors.END} Complete Repository Setup (Wizard)")
-    print(f"      One-command setup: analyze + README + wiki + best practices")
+    print(f"  {Colors.GREEN}2.{Colors.END} Web Interface (Browser)")
+    print(f"      Launch browser at http://localhost:5000")
     print()
-    print(f"  {Colors.GREEN}3.{Colors.END} Web Interface (Browser)")
-    print(f"      Launch browser-based interface at http://localhost:5000")
-    print()
-    print(f"  {Colors.GREEN}4.{Colors.END} Exit\n")
+    print(f"  {Colors.GREEN}3.{Colors.END} Exit\n")
 
     try:
-        choice = input(f"{Colors.CYAN}Enter choice [1-4]: {Colors.END}").strip()
+        choice = input(f"{Colors.CYAN}Enter choice [1-3]: {Colors.END}").strip()
 
         if choice == '1':
             launch_cli()
         elif choice == '2':
-            setup_repository_wizard()
-        elif choice == '3':
             launch_web()
-        elif choice == '4':
+        elif choice == '3':
             print(f"\n{Colors.YELLOW}Goodbye!{Colors.END}\n")
             sys.exit(0)
         else:
@@ -80,10 +75,6 @@ def launch_cli():
 
 def launch_web():
     """Launch web interface."""
-    print(f"\n{Colors.GREEN}Launching web interface...{Colors.END}\n")
-    print(f"{Colors.CYAN}Access at: http://localhost:5000{Colors.END}")
-    print(f"{Colors.YELLOW}Press Ctrl+C to stop{Colors.END}\n")
-
     from gitsage.web.app import main as web_main
     web_main()
 

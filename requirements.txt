@@ -8,6 +8,7 @@ rich>=13.0.0          # Beautiful terminal output
 # Web interface dependencies
 Flask>=3.0.0          # Web framework
 Flask-CORS>=4.0.0     # CORS support for API
+Flask-WTF>=1.2.0      # CSRF protection and forms
 
 # Optional but recommended
 GitPython>=3.1.40     # Python Git library

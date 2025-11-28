@@ -247,14 +247,15 @@ class UserInterface:
 
         while True:
             choices = [
-                "🗑️  Repository Deletion (Interactive Bash Script)",
-                "🔧 Repository Manager (Advanced Bash Features)",
-                "📚 Documentation Generator (Wiki, GitBook, Confluence & More)",
+                "🚀 Complete Repository Setup (Wizard - Recommended for new repos)",
                 "📝 README Generator (Awesome READMEs with Badges)",
-                "🎓 Script Generator & GitHub Learning (Educational!)",
+                "📚 Documentation Generator (Wiki, GitBook, Confluence & More)",
                 "💾 Backup Manager (Create/Restore Repository Backups)",
-                "🔄 Reset Git History (Keep Files, Fresh Start)",
+                "🔧 Repository Manager (Advanced Bash Features)",
                 "🔀 Migrate Repository (Move/Transfer)",
+                "🔄 Reset Git History (Keep Files, Fresh Start)",
+                "🗑️  Repository Deletion (Interactive Bash Script)",
+                "🎓 Script Generator & GitHub Learning (Educational!)",
                 "🛠️  Install Missing Tools",
                 "🔗 Open Installation Links",
                 "🔍 Check Environment Again",
@@ -263,23 +264,21 @@ class UserInterface:
 
             choice = self.get_user_choice("What would you like to do?", choices)
 
-            if choice == 0:  # Delete Repository
-                script_path = project_root / "scripts" / "bash" / "delete-repo.sh"
-                if script_path.exists():
-                    self.print_status(
-                        "Launching Interactive GitHub Repository Deletion Script...", "INFO"
-                    )
-                    self.launch_script(script_path, "bash")
-                else:
-                    self.print_status(f"Deletion script not found at {script_path}", "ERROR")
+            if choice == 0:  # Complete Repository Setup (Wizard)
+                self.print_status("Launching Repository Setup Wizard...", "INFO")
+                from launcher import setup_repository_wizard
+                try:
+                    setup_repository_wizard()
+                except Exception as e:
+                    self.print_status(f"Wizard error: {e}", "ERROR")
 
-            elif choice == 1:  # Repository Manager
-                script_path = project_root / "scripts" / "bash" / "repo-manager.sh"
+            elif choice == 1:  # README Generator
+                script_path = project_root / "readme-generator.py"
                 if script_path.exists():
-                    self.print_status("Launching Advanced Repository Manager (Bash)...", "INFO")
-                    self.launch_script(script_path, "bash")
+                    self.print_status("Launching README Generator...", "INFO")
+                    self.launch_script(script_path, "python")
                 else:
-                    self.print_status(f"Repository manager not found at {script_path}", "ERROR")
+                    self.print_status("README generator not found.", "ERROR")
 
             elif choice == 2:  # Documentation Generator
                 script_path = project_root / "wiki-generator.py"
@@ -290,26 +289,7 @@ class UserInterface:
                 else:
                     self.print_status("Documentation generator not found.", "ERROR")
 
-            elif choice == 3:  # README Generator
-                script_path = project_root / "readme-generator.py"
-                if script_path.exists():
-                    self.print_status("Launching README Generator...", "INFO")
-                    self.launch_script(script_path, "python")
-                else:
-                    self.print_status("README generator not found.", "ERROR")
-
-            elif choice == 4:  # Script Generator & GitHub Learning
-                script_path = project_root / "script-generator.py"
-                if script_path.exists():
-                    self.print_status("Launching Script Generator & GitHub Learning...", "INFO")
-                    self.print_status(
-                        "Generate custom automation scripts while learning GitHub!", "INFO"
-                    )
-                    self.launch_script(script_path, "python")
-                else:
-                    self.print_status("Script generator not found.", "ERROR")
-
-            elif choice == 5:  # Backup Manager
+            elif choice == 3:  # Backup Manager
                 script_path = project_root / "backup-manager.py"
                 if script_path.exists():
                     self.print_status("Launching Backup Manager...", "INFO")
@@ -317,6 +297,22 @@ class UserInterface:
                     self.launch_script(script_path, "python")
                 else:
                     self.print_status("Backup manager not found.", "ERROR")
+
+            elif choice == 4:  # Repository Manager
+                script_path = project_root / "scripts" / "bash" / "repo-manager.sh"
+                if script_path.exists():
+                    self.print_status("Launching Advanced Repository Manager (Bash)...", "INFO")
+                    self.launch_script(script_path, "bash")
+                else:
+                    self.print_status(f"Repository manager not found at {script_path}", "ERROR")
+
+            elif choice == 5:  # Migrate Repository
+                script_path = project_root / "scripts" / "git-resets" / "migrate_repository.sh"
+                if script_path.exists():
+                    self.print_status("Launching Repository Migration Tool...", "INFO")
+                    self.launch_script(script_path, "bash")
+                else:
+                    self.print_status(f"Migration script not found at {script_path}", "ERROR")
 
             elif choice == 6:  # Reset Git History
                 script_path = project_root / "scripts" / "git-resets" / "reset_git_history.sh"
@@ -329,25 +325,38 @@ class UserInterface:
                 else:
                     self.print_status("Git history reset script not found.", "ERROR")
 
-            elif choice == 7:  # Migrate Repository
-                script_path = project_root / "scripts" / "git-resets" / "migrate_repository.sh"
+            elif choice == 7:  # Repository Deletion
+                script_path = project_root / "scripts" / "bash" / "delete-repo.sh"
                 if script_path.exists():
-                    self.print_status("Launching Repository Migration Tool...", "INFO")
+                    self.print_status(
+                        "Launching Interactive GitHub Repository Deletion Script...", "INFO"
+                    )
                     self.launch_script(script_path, "bash")
                 else:
-                    self.print_status("Repository migration script not found.", "ERROR")
+                    self.print_status(f"Deletion script not found at {script_path}", "ERROR")
 
-            elif choice == 8:  # Install tools
+            elif choice == 8:  # Script Generator & GitHub Learning
+                script_path = project_root / "script-generator.py"
+                if script_path.exists():
+                    self.print_status("Launching Script Generator & GitHub Learning...", "INFO")
+                    self.print_status(
+                        "Generate custom automation scripts while learning GitHub!", "INFO"
+                    )
+                    self.launch_script(script_path, "python")
+                else:
+                    self.print_status("Script generator not found.", "ERROR")
+
+            elif choice == 9:  # Install tools
                 self.show_installation_help(detected)
 
-            elif choice == 9:  # Open links
+            elif choice == 10:  # Open links
                 self.open_installation_links(detected)
 
-            elif choice == 10:  # Re-check
+            elif choice == 11:  # Re-check
                 detected = self.detector.detect_all()
                 self.show_environment_status(detected)
 
-            elif choice == 11:  # Exit
+            elif choice == 12:  # Exit
                 self.print_status("Thank you for using GitSage!", "SUCCESS")
                 sys.exit(0)
 
