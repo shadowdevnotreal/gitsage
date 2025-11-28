@@ -1,0 +1,30 @@
+badges:
+  enabled: true
+  license: MIT
+  python_version: 3.8+
+  shields:
+  - license
+  - python
+  - platform
+  - github-stars
+features:
+- Universal installers and launchers for all platforms
+- Native OS file/folder picker dialogs
+- Wiki and documentation generator
+- README generator with templates
+- Repository health checker
+- Backup and restore tools
+project:
+  description: Automate your GitHub workflow while mastering Git from novice to expert
+  name: GitSage
+  repository: shadowdevnotreal/gitsage
+  tagline: The Ultimate GitHub Management & Learning Platform
+  type: cli-tool
+  version: 2.3.0
+sections:
+  contributing: true
+  examples: true
+  features: true
+  installation: true
+  license: true
+  usage: true

@@ -1,0 +1,33 @@
+{
+  "title": "GitHub Repository Manager",
+  "description": "A comprehensive, cross-platform toolkit for safe GitHub repository management and automated documentation generation",
+  "author": "Repository Manager Contributors",
+  "language": "en",
+  "gitbook": "3.2.3",
+  "root": ".",
+  "structure": {
+    "readme": "README.md",
+    "summary": "SUMMARY.md"
+  },
+  "plugins": [
+    "search",
+    "sharing",
+    "fontsettings"
+  ],
+  "pluginsConfig": {
+    "sharing": {
+      "github": true,
+      "facebook": false,
+      "twitter": true
+    }
+  },
+  "links": {
+    "sidebar": {
+      "GitHub": "https://github.com/user/github-repo-manager"
+    }
+  },
+  "pdf": {
+    "fontSize": 12,
+    "paperSize": "a4"
+  }
+}
