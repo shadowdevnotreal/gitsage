@@ -32,9 +32,24 @@ GitSage is your **all-in-one GitHub companion** that combines powerful automatio
 
 ## ✨ What's New in v2.3
 
+**🚀 Universal Launchers & Installers**
+- ONE universal installer for all platforms (install.sh, install.ps1)
+- ONE universal launcher for all platforms (launch.sh, Launch-GitSage.ps1, launcher.py)
+- Cross-platform parity: Python, PowerShell, Bash
+- Post-install launch prompts on all platforms
+- Two tools: CLI Interface and Web Interface
+
+**📁 Native OS File Picker Dialogs**
+- No tkinter needed - uses native OS dialogs!
+- Windows: PowerShell FolderBrowserDialog
+- macOS: AppleScript choose folder
+- Linux: zenity/kdialog/yad
+- Click to browse instead of typing paths
+- Perfect for novice and pro users alike
+
 **🎯 Full PowerShell Feature Parity** - Windows users rejoice!
 - Complete PowerShell implementation of all interactive tools
-- Launch-GitSage.ps1 - Main interactive menu launcher
+- Launch-GitSage.ps1 - Universal launcher calling Python backend
 - Generate-ReadmeInteractive.ps1 - Smart README generator with auto-detection
 - Generate-Wiki.ps1 - Professional documentation wiki generator
 - Test-RepositoryHealth.ps1 - Health checker with beautification scoring
@@ -152,9 +167,11 @@ python launcher.py
 
 ### Quick Launch
 
+**All Platforms:**
 ```bash
 # Interactive mode selection (CLI or Web)
 python launcher.py
+# Or: python -m gitsage
 
 # Launch CLI directly
 python launcher.py --cli
@@ -163,9 +180,25 @@ python launcher.py --cli
 python launcher.py --web
 # Access at http://localhost:5000
 
-# Or use entry points (after pip install)
+# After installation:
 gitsage        # CLI interface
 gitsage-web    # Web interface
+```
+
+**Bash (Linux/macOS):**
+```bash
+./launch.sh              # Interactive mode
+./launch.sh --cli        # CLI directly
+./launch.sh --web        # Web directly
+./launch.sh --setup-repo # Repository setup wizard
+```
+
+**PowerShell (Windows):**
+```powershell
+.\scripts\powershell\Launch-GitSage.ps1           # Interactive mode
+.\scripts\powershell\Launch-GitSage.ps1 -CLI      # CLI directly
+.\scripts\powershell\Launch-GitSage.ps1 -Web      # Web directly
+.\scripts\powershell\Launch-GitSage.ps1 -SetupRepo # Setup wizard
 ```
 
 ## 📋 Core Features
