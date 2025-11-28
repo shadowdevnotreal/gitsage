@@ -395,3 +395,24 @@ Write-Host ""
 
 Write-Success "Happy GitSaging! 🚀"
 Write-Host ""
+
+# Offer to launch GitSage
+Write-Host "Would you like to launch GitSage now?" -ForegroundColor Cyan
+$LaunchNow = Read-Host "Launch GitSage? [Y/n]"
+
+if ($LaunchNow -match '^[Yy]?$' -or [string]::IsNullOrWhiteSpace($LaunchNow)) {
+    Write-Host ""
+    Write-Info "Launching GitSage..."
+    Write-Host ""
+
+    if ($InstallType -eq "user") {
+        # Activate virtual environment and run
+        & "$GitSageDir\venv\Scripts\Activate.ps1"
+        python -m gitsage
+    } else {
+        # System/dev install
+        gitsage
+    }
+}
+
+Write-Host ""
