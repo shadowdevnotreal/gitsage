@@ -397,7 +397,7 @@ if [[ "$LAUNCH_NOW" =~ ^[Yy]?$ ]] || [[ -z "$LAUNCH_NOW" ]]; then
     if [[ "$INSTALL_MODE" == "user" ]]; then
         # Activate virtual environment and run
         source "$VENV_DIR/bin/activate"
-        python -m gitsage.cli.launcher
+        python -m gitsage
     else
         # System/dev install
         gitsage
