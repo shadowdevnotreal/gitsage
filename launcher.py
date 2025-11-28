@@ -113,10 +113,14 @@ def setup_repository_wizard():
             console.print(f"[green]Detected git repository:[/green] {current_dir}")
             use_current = Confirm.ask("Use this directory?", default=True)
             if not use_current:
-                project_path = console.input("[cyan]Enter project path:[/cyan] ").strip()
+                from gitsage.utils.cli_file_browser import get_project_folder
+                project_path = get_project_folder("Select your project folder")
                 if project_path:
                     os.chdir(project_path)
                     console.print(f"[green]Changed to:[/green] {project_path}")
+                else:
+                    console.print("[yellow]Cancelled[/yellow]")
+                    return
         else:
             console.print(f"[yellow]Current directory is not a git repository:[/yellow] {current_dir}")
             console.print("[dim]GitSage works best with git repositories[/dim]\n")
@@ -124,16 +128,20 @@ def setup_repository_wizard():
             choice = console.input(
                 "[cyan]Options:[/cyan]\n"
                 "  1. Use current directory anyway\n"
-                "  2. Enter different project path\n"
+                "  2. Browse for different folder\n"
                 "  3. Cancel\n"
                 "[cyan]Choice [1-3]:[/cyan] "
             ).strip()
 
             if choice == '2':
-                project_path = console.input("[cyan]Enter project path:[/cyan] ").strip()
+                from gitsage.utils.cli_file_browser import get_project_folder
+                project_path = get_project_folder("Select your project folder")
                 if project_path:
                     os.chdir(project_path)
                     console.print(f"[green]Changed to:[/green] {project_path}")
+                else:
+                    console.print("[yellow]Cancelled[/yellow]")
+                    return
             elif choice == '3':
                 console.print("[yellow]Cancelled[/yellow]")
                 return
