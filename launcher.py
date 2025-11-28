@@ -80,10 +80,6 @@ def launch_cli():
 
 def launch_web():
     """Launch web interface."""
-    print(f"\n{Colors.GREEN}Launching web interface...{Colors.END}\n")
-    print(f"{Colors.CYAN}Access at: http://localhost:5000{Colors.END}")
-    print(f"{Colors.YELLOW}Press Ctrl+C to stop{Colors.END}\n")
-
     from gitsage.web.app import main as web_main
     web_main()
 
