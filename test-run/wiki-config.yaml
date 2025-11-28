@@ -1,0 +1,129 @@
+project:
+  name: GitHub Repository Manager
+  tagline: Safe and powerful GitHub repository management
+  description: A comprehensive, cross-platform toolkit for safe GitHub repository
+    management and automated documentation generation
+  version: 2.0.0
+  author: Repository Manager Contributors
+  license: MIT
+  github_url: https://github.com/user/github-repo-manager
+  homepage: https://github.com/user/github-repo-manager
+  issues_url: https://github.com/user/github-repo-manager/issues
+  main_script: launcher.py
+  language: Python
+  keywords:
+  - github
+  - repository
+  - management
+  - automation
+  - documentation
+template:
+  type: api-documentation
+  theme: professional
+  custom_css: true
+  custom_logo: null
+  favicon: null
+formats:
+  github_wiki:
+    enabled: true
+    sidebar: true
+    footer: true
+    auto_nav: true
+  gitbook:
+    enabled: true
+    theme: default
+    plugins:
+    - search
+    - sharing
+    - fontsettings
+    pdf: true
+  confluence:
+    enabled: false
+    space_key: DOCS
+    parent_page: Documentation
+  notion:
+    enabled: false
+    workspace: null
+  readthedocs:
+    enabled: false
+    theme: sphinx_rtd_theme
+  mkdocs:
+    enabled: false
+    theme: material
+  pdf:
+    enabled: false
+    format: A4
+    toc: true
+content:
+  sections:
+  - title: Getting Started
+    icon: '[ROCKET]'
+    pages:
+    - name: Home
+      template: home
+    - name: Quick Start
+      template: quickstart
+    - name: Installation
+      template: installation
+    - name: Configuration
+      template: configuration
+  - title: User Guides
+    icon: "\U0001F4D6"
+    pages:
+    - name: Basic Usage
+      template: basic-usage
+    - name: Advanced Features
+      template: advanced
+    - name: Best Practices
+      template: best-practices
+    - name: Examples
+      template: examples
+  - title: API Reference
+    icon: '[TOOL]'
+    pages:
+    - name: Overview
+      template: api-overview
+    - name: Authentication
+      template: api-auth
+    - name: Endpoints
+      template: api-endpoints
+    - name: SDKs
+      template: api-sdks
+  - title: Developer Guide
+    icon: '[CODE]'
+    pages:
+    - name: Architecture
+      template: architecture
+    - name: Contributing
+      template: contributing
+    - name: Testing
+      template: testing
+    - name: Deployment
+      template: deployment
+  - title: Support
+    icon: "\U0001F198"
+    pages:
+    - name: Troubleshooting
+      template: troubleshooting
+    - name: FAQ
+      template: faq
+    - name: Community
+      template: community
+    - name: Contact
+      template: contact
+features:
+  search: true
+  syntax_highlighting: true
+  code_copy: true
+  dark_mode: true
+  edit_on_github: true
+  last_updated: true
+  breadcrumbs: true
+  table_of_contents: true
+analytics:
+  google_analytics: null
+  plausible: null
+seo:
+  meta_description: null
+  og_image: null
+  twitter_card: true
