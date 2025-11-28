@@ -1,0 +1,16 @@
+{
+  "backups": [
+    {
+      "backup_id": "gitsage-test-backup_manual_20251128_163522",
+      "repo_name": "gitsage-test-backup",
+      "repo_path": "/home/user/gitsage",
+      "operation": "manual",
+      "timestamp": "20251128_163522",
+      "archive_path": "output/backups/gitsage-test-backup_manual_20251128_163522/gitsage-test-backup_manual_20251128_163522.tar.gz",
+      "archive_size": 15557094,
+      "repo_size": 32050147,
+      "checksum": "f3f6d48b7ed55e59f047f4879141d15ac9224dce6e9d52d5ce99f934157b7421",
+      "metadata": {}
+    }
+  ]
+}

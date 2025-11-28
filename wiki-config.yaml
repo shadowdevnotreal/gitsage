@@ -38,20 +38,20 @@ formats:
     - fontsettings
     pdf: true
   confluence:
-    enabled: false
+    enabled: true
     space_key: DOCS
     parent_page: Documentation
   notion:
-    enabled: false
+    enabled: true
     workspace: null
   readthedocs:
-    enabled: false
+    enabled: true
     theme: sphinx_rtd_theme
   mkdocs:
-    enabled: false
+    enabled: true
     theme: material
   pdf:
-    enabled: false
+    enabled: true
     format: A4
     toc: true
 content:
